@@ -1,3 +1,36 @@
 body {
-    background-color: skyblue;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; 
+    line-height: 1.6; 
+    color: #333; 
+    background-color: #ffffff; 
+    box-sizing: border-box; 
+}
+
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal; 
+}
+
+p {
+    margin: 0 0 1em; 
+}
+
+a {
+    color: #3498db; 
+    text-decoration: none; 
+}
+
+a:hover {
+    text-decoration: underline; 
 }

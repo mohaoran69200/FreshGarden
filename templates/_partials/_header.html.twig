@@ -1,0 +1,28 @@
+<header>
+	<nav>
+		<ul>
+			<li>
+				<a href="{{ path('home') }}"> <img src="../../assets/logo/logo_fresh_garden-removebg.png" alt="logo"/></a>
+			</li>
+			<li>
+				<a href="{{ path('fruits') }}">Fruits</a>
+			</li>
+			<li>
+				<a href="{{ path('legumes') }}">Légumes</a>
+			</li>
+			<li>
+				<a href="{{ path('autres') }}">Autres</a>
+			</li>
+		</ul>
+		<div id="search">
+			<input type="search" placeholder="Search"/>
+			<button type="submit"></button>
+		</div>
+		<ul>
+			{# <li><a href="{{ path('message') }}">button message</a></li>
+			<li><a href="{{ path('favorite') }}">button favorite</a></li>
+			<li><a href="{{ path('basket') }}">button panier</a></li> #}
+			<li><a href="{{ path('login') }}">button connexion</a></li>
+		</ul>
+	</nav>
+</header>
