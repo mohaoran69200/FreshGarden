@@ -27,10 +27,27 @@ p {
 }
 
 a {
-    color: #3498db; 
+    color: #3F7D20; 
     text-decoration: none; 
 }
 
 a:hover {
     text-decoration: underline; 
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    font-weight: 400;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700; 
+}
+
+body, p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
 }

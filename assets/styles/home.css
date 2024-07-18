@@ -1,0 +1,9 @@
+.img-home {
+    position: absolute;
+    top: 65%;
+    right: -275px; 
+    transform: translateY(-50%);
+    width: 65%;
+    height: auto;
+}
+
