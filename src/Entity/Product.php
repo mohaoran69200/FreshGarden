@@ -6,6 +6,7 @@ use App\Enum\ProductUnit;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -28,6 +29,8 @@ class Product
     private ?User $user = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom de produit")]
+    #[Assert\Length(min: 2, max: 30)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]

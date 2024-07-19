@@ -1,0 +1,41 @@
+{{ form_start(form) }}
+<h2>
+{% if product is defined %}
+Mise à jour {{ product.name }}
+{% else %}
+Nouvelle annonces 
+{% endif %}
+</h2>
+<div>
+{{ form_label(form.categorie) }}
+{{ form_widget(form.categorie) }}
+{{ form_errors(form.categorie) }}
+</div>
+<div>
+{{ form_label(form.name) }}
+{{ form_widget(form.name) }}
+{{ form_errors(form.name) }}
+</div>
+<div>
+{{ form_label(form.price) }}
+{{ form_widget(form.price) }}
+{{ form_errors(form.price) }}
+</div>
+<div>
+{{ form_label(form.unit) }}
+{{ form_widget(form.unit) }}
+{{ form_errors(form.unit) }}
+</div>
+<div>
+{{ form_label(form.image) }}
+{{ form_widget(form.image) }}
+{{ form_errors(form.image) }}
+</div>
+<div>
+{{ form_label(form.stock) }}
+{{ form_widget(form.stock) }}
+{{ form_errors(form.stock) }}
+</div>
+
+<button type="submit">Ajouter</button>
+{{ form_end(form) }}

@@ -7,8 +7,8 @@
 	<section>
 		<h1>Votre marché local en ligne</h1>
 		<p>Vendez vos récoltes et achetez des frais de vos voisins.</p>
-		<button id="vendre-btn">Vendez</button>
-		<button id="acheter-btn">Achetez</button>
+		<a href="{{ path('app_product_new') }}" class="btn-vente">Vendez</a>
+        <a href="{{ path('app_product_new') }}" class="btn-achat">Achetez</a>
 		<img src="{{asset('images/img_header.webp')}}" alt="image d'acceuil" class="img-home">
 	</section>
 
