@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -43,14 +44,14 @@ class ProductType extends AbstractType
                 'class' => ProductUnit::class
             ])
             ->add('stock')
-            ->add('categorie', IntegerType::class, [
+            ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
             ])
-            ->add('image', EntityType::class, [
-                'class' => Image::class,
-                'choice_label' => 'imageUrl',
-            ]);
+            ->add('image', ImageType::class, [
+                'label' => 'Image'
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -7,8 +7,10 @@ use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[Vich\Uploadable()]
 class Product
 {
     #[ORM\Id]
@@ -20,7 +22,7 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\ManyToOne(inversedBy: 'products', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Image $image = null;
 
@@ -47,6 +49,8 @@ class Product
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    // getters et setters...
 
     public function getId(): ?int
     {

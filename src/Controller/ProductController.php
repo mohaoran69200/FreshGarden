@@ -7,15 +7,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Product;
+use App\Entity\Image;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProductType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/product', name: 'app_product_')]
 class ProductController extends AbstractController
 {
     #[Route('/new', name: 'new')]
+    #[IsGranted('ROLE_USER')]
     public function new(
-        Product $Product,
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
@@ -24,6 +26,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $product
+                ->setUser($this->getUser())
                 ->setCreatedAt(new \DateTimeImmutable())
                 ->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->persist($product);
@@ -36,6 +39,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/update/{id}', name: 'update')]
+    #[IsGranted('ROLE_USER')]
     public function update(
         Product $product,
         Request $request,
@@ -64,6 +68,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/remove/{id}', name: 'remove')]
+    #[IsGranted('ROLE_USER')]
     public function remove(Product $product, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($product);

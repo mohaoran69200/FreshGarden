@@ -1,12 +1,19 @@
 <div>
-<div>
-<div>
-{{ product.image }}
-</div>
-<h3>{{ product.name }}</h3>
-<span>{{ product.price }}€ /{{ product.unit }}</span>
-<span>{{ product.stock }} {{ product.unit }}</span>
-<button>Modifier</button>
-<button>Supprimer</button>
-</div>
+	<div>
+		<div>
+			<img src="{{ vich_uploader_asset(product.image) }}" alt="image du produit">
+		</div>
+		<h3>{{ product.name }}</h3>
+		<span>{{ product.price }}€ /{{ product.unit.value }}</span>
+		<span>{{ product.stock }}
+			{{ product.unit.value }}</span>
+		<a href="{{ path('app_product_update', { id: product.id }) }}">
+			<button>Modifier</button>
+		</a>
+		<form action="{{ path('app_product_remove', { id: product.id }) }}" method="post">
+			<input type="hidden" name="_method" value="DELETE">
+			<input type="hidden" name="_token" value="{{ ('delete' ~ product.id) }}">
+			<button type="submit">Supprimer</button>
+		</form>
+	</div>
 </div>
