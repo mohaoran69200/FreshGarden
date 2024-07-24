@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Connexion
+	Inscription
 {% endblock %}
 
 {% block body %}
@@ -45,7 +45,6 @@
 			font-size: 16px;
 			background-color: #72B01D;
 			color: white;
-			margin-top: 10px;
 		}
 
 		.form-container .alert {
@@ -71,27 +70,16 @@
 	</style>
 
 	<div class="form-container">
-		<form method="post" action="{{ path('login') }}">
-			{% if error %}
-				<div class="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+		<h1>Rejoignez-nous</h1>
 
-			{% if app.user %}
-				<div class="mb-3">
-					{{ app.user.userIdentifier }},
-					<a href="{{ path('logout') }}" class="btn btn-danger">Se déconnecter</a>
-				</div>
-			{% else %}
-				<h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
-				<label for="username">Email</label>
-				<input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
-				<label for="password">Mot de passe</label>
-				<input type="password" name="_password" id="password" autocomplete="current-password" required>
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+		{{ form_errors(registrationForm) }}
 
-				<button class="btn" type="submit">Se connecter</button>
-				<a href="{{ path('register') }}" class="btn btn-secondary">S'inscrire</a>
-			{% endif %}
-		</form>
+		{{ form_start(registrationForm) }}
+		{{ form_row(registrationForm.email) }}
+		{{ form_row(registrationForm.plainPassword) }}
+		{{ form_row(registrationForm.agreeTerms) }}
+
+		<button type="submit" class="btn">S'inscrire</button>
+		{{ form_end(registrationForm) }}
 	</div>
 {% endblock %}

@@ -1,3 +1,4 @@
+/* Styles communs pour le header */
 header img {
     height: 100px;
 }
@@ -12,43 +13,111 @@ a:hover {
 
 .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 0;
+    padding: 10px;
 }
 
-.pages {
+.nav-action {
     display: flex;
-    justify-content: center;
-    list-style-type: none;
+    align-items: center;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.desktop-menu {
+    display: flex;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.pages li {
-    display: flex;
+
+.desktop-menu li {
     margin: 0 15px;
 }
 
-.pages a {
+.desktop-menu a {
     text-decoration: none;
-    color: inherit;
-    color: #3F7D20;
+    color: #72B01D;
+    font-size: 18px;
 }
 
-.pages a:hover {
-    text-decoration: underline;
+.btn-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-nav li {
+    margin-left: 10px;
+}
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.burger-menu span {
+    height: 3px;
+    width: 30px;
+    background-color: #3F7D20;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu {
+    display: none;
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 2;
+    padding: 20px;
+    overflow-y: auto; */
+}
+
+.mobile-menu.open {
+    display: block;
+}
+
+.mobile-menu .logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+.close-menu {
+    font-size: 30px;
+    color: #454955;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 #search {
+    display: flex;
+    align-items: center;
     position: relative;
     width: 300px;
+    /* Ajustez la largeur selon vos besoins */
 }
 
 #search-input {
     width: 100%;
-    padding: 10px;
-    padding-right: 40px;
+    padding: 10px 40px 10px 10px;
+    /* Augmentez le padding à droite pour laisser de la place au bouton */
     box-sizing: border-box;
     border: 1px solid #72B01D;
     border-radius: 6px;
@@ -62,12 +131,13 @@ a:hover {
 
 #search-button {
     position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    right: 10px;
+    /* Ajustez pour bien positionner le bouton */
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
-    padding: 10px;
+    padding: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -80,32 +150,189 @@ a:hover {
     height: 20px;
 }
 
-#message-button {
-    height:30px;
-    width:30px;
-    border-radius: 50px;
-    outline: none;
-    border: none;
-}
-
-#favorite-button {
-    height:30px;
-    width:30px;
-    border-radius: 50px;
-    outline: none;
-    border: none;
-}
-
-#connexion-button {
-    height:30px;
-    width:30px;
-    border-radius: 50px;
-    outline: none;
-    border: none;
-}
-
 #message-button,
 #favorite-button,
-#connexion-button:hover {
+#connexion-button {
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+}
+
+#message-button:hover,
+#favorite-button:hover {
+    color: #fff;
+    background-color: #72B01D;
+}
+
+.nav .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 7px;
+}
+
+.nav .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.nav .dropdown-content a:hover {
+    background-color: #ffffff;
+}
+
+.nav .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.nav .dropdown:hover #connexion-button {
+    color: #fff;
+    background-color: #72B01D;
+}
+
+.sticky-buttons li {
+    display: none;
+    margin: 0;
+    list-style-type: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .sticky-buttons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 10px 0;
+        border-top: 1px solid #fff;
+        z-index: 1000;
+    }
+
+    .sticky-buttons li {
+        display: inline-block;
+        /* Assurez-vous que les éléments sont en ligne */
+        margin: 0;
+        list-style-type: none;
+    }
+
+    .sticky-buttons li button {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        outline: none;
+        border: none;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .desktop-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .btn-nav {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: none;
+        /* Masqué par défaut */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        /* Fond vert */
+        z-index: 2;
+        padding: 20px;
+        overflow-y: auto;
+        /* Assure que le contenu s'ajuste */
+        box-sizing: border-box;
+    }
+
+    .mobile-menu.open {
+        display: block;
+        /* Affiche le menu quand il est ouvert */
+    }
+
+    .mobile-menu .pages {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Centre les éléments horizontalement */
+        justify-content: center;
+        /* Centre les éléments verticalement */
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .mobile-menu .pages li {
+        margin: 15px 0;
+        /* Espacement entre les éléments */
+    }
+
+    .mobile-menu .pages a {
+        text-decoration: none;
+        color: #72B01D;
+        /* Couleur du texte */
+        font-size: 24px;
+        /* Taille du texte */
+        font-weight: bold;
+        /* Gras pour le texte */
+    }
+
+    .mobile-menu .pages a:hover {
+        text-decoration: underline;
+        /* Souligner au survol */
+    }
+
+    .close-menu {
+        font-size: 30px;
+        color: #72B01D;
+        /* Couleur du bouton de fermeture */
+        border: none;
+        background: none;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .pages li {
+        list-style-type: none;
+    }
+    
+    #mobile-connexion-button:hover {
+        background-color: #72B01D;
+        color: #fff;
+    }
 }

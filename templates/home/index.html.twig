@@ -4,17 +4,23 @@
 {% endblock %}
 
 {% block body %}
-	<section>
-		<h1>Votre marché local en ligne</h1>
-		<p>Vendez vos récoltes et achetez des frais de vos voisins.</p>
-		<a href="{{ path('app_product_new') }}" class="btn-vente">Vendez</a>
-        <a href="{{ path('app_product_new') }}" class="btn-achat">Achetez</a>
-		<img src="{{asset('images/img_header.webp')}}" alt="image d'acceuil" class="img-home">
+	<section class="home-presentation">
+		<div class="title">
+			<h1>Votre marché local en ligne</h1>
+			<p>Vendez vos récoltes et achetez les produits frais de vos voisins.</p>
+			<div class="btn">
+				<a href="{{ path('app_product_new') }}" class="btn-vente">Vendez</a>
+				<a href="{{ path('app_product_new') }}" class="btn-achat">Achetez</a>
+			</div>
+		</div>
+		<div class="img-home-container">
+			<img src="{{asset('images/img_header.png')}}" alt="image d'acceuil" class="img-home">
+		</div>
 	</section>
 
 	<main>
 		<section>
-			<h1>Annonces</h1>
+			<h2>Annonces</h2>
 			<div>
 				{% for product in products %}
 					{% include '_partials/product/_cardProduct.html.twig' %}
