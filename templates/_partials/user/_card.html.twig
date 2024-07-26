@@ -1,0 +1,15 @@
+<div>
+	<div>
+		<div>
+			<img src="{{ vich_uploader_asset(userProfile.image) }}" alt="Photo de profil">
+		</div>
+		<a href="{{ path('app_user_edit', { id: user.id }) }}">
+			<button>Modifier</button>
+		</a>
+		<form action="{{ path('app_user_remove', { id: user.id }) }}" method="post">
+			<input type="hidden" name="_method" value="DELETE">
+			<input type="hidden" name="_token" value="{{ ('delete' ~ user.id) }}">
+			<button type="submit">Supprimer mon compte</button>
+		</form>
+	</div>
+</div>

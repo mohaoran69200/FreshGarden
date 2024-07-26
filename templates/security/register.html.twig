@@ -45,6 +45,7 @@
 			font-size: 16px;
 			background-color: #72B01D;
 			color: white;
+			margin-bottom: 20px;
 		}
 
 		.form-container .alert {
@@ -55,6 +56,19 @@
 
 		.btn:hover {
 			background-color: #3F7D20;
+		}
+
+		.terms__container {
+			display: flex;
+		}
+
+		.terms__container .terms {
+			margin-left: 20px;
+		}
+
+		.terms__container .checkbox {
+			width: 18px;
+			height: 18px;
 		}
 
 		@media(max-width: 1024px) and(min-width: 768px) {
@@ -77,9 +91,14 @@
 		{{ form_start(registrationForm) }}
 		{{ form_row(registrationForm.email) }}
 		{{ form_row(registrationForm.plainPassword) }}
-		{{ form_row(registrationForm.agreeTerms) }}
+		<div class="terms__container">
+			{{ form_widget(registrationForm.agreeTerms, {'attr':{'class':'checkbox'}}) }}
+			{{ form_label(registrationForm.agreeTerms,  null, {'label_attr':{'class':'terms'}}) }}
+
+		</div>
 
 		<button type="submit" class="btn">S'inscrire</button>
+		<p>Vous êtes déja inscris? <a href="{{ path('login') }}">Connectez-vous</a></p>
 		{{ form_end(registrationForm) }}
 	</div>
 {% endblock %}
