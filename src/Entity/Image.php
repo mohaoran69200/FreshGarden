@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-#[Vich\Uploadable()]
+#[Vich\Uploadable]
 class Image
 {
     #[ORM\Id]
@@ -21,7 +21,7 @@ class Image
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Vich\UploadableField(mapping: 'product', fileNameProperty: 'name')]
+    #[Vich\UploadableField(mapping: 'profile_images', fileNameProperty: 'name')]
     private ?File $imageFile = null;
 
     /**
@@ -77,7 +77,7 @@ class Image
     /**
      * @return Collection<int, Product>
      */
-    public function getProduct(): Collection
+    public function getProducts(): Collection
     {
         return $this->products;
     }

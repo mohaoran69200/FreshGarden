@@ -2,17 +2,17 @@
 
 namespace App\Form;
 
-use App\Entity\Image;
-use App\Entity\User;
 use App\Entity\UserProfile;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Enum\UserGender;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class EditUserProfileType extends AbstractType
 {
@@ -48,24 +48,16 @@ class EditUserProfileType extends AbstractType
                 'label' => 'Numéro de téléphone',
                 'required' => false,
             ])
-            ->add('gender', ChoiceType::class, [
+            ->add('gender', EnumType::class, [
                 'label' => 'Genre',
-                'choices' => [
-                    'Homme' => 'male',
-                    'Femme' => 'female',
-                    'Autre' => 'other',
-                ],
+                'class' => UserGender::class,
                 'required' => false,
             ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'email',
-                'label' => 'Utilisateur',
-                'required' => false,
-            ])
-            ->add('image', ImageType::class, [
+            ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de profil',
                 'required' => false,
+                'download_uri'=> false,
+                'allow_delete' => false
             ])
         ;
     }

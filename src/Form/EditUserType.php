@@ -25,7 +25,9 @@ class EditUserType extends AbstractType
                 'required' => false,
                 'mapped' => false, 
             ])
-            ->add('userProfile', EditUserProfileType::class)
+            ->add('userProfile', EditUserProfileType::class, [
+                'label' => false,
+            ])
         ;
     }
 

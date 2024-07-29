@@ -6,8 +6,11 @@ use App\Enum\UserGender;
 use App\Repository\UserProfileRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserProfileRepository::class)]
+#[Vich\Uploadable]
 class UserProfile
 {
     #[ORM\Id]
@@ -17,10 +20,14 @@ class UserProfile
 
     #[ORM\OneToOne(inversedBy: 'userProfile', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $User = null;
+    private ?User $user = null;
 
-    #[ORM\OneToOne(inversedBy: 'userProfile', cascade: ['persist', 'remove'])]
-    private ?Image $image = null;
+    #[Vich\UploadableField(mapping: 'user_profile', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageName = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
@@ -46,6 +53,9 @@ class UserProfile
     #[ORM\Column(nullable: true, enumType: UserGender::class)]
     private ?UserGender $gender = null;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,27 +63,40 @@ class UserProfile
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(User $User): static
+    public function setUser(User $user): static
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function getImageFile(): ?File
     {
-        return $this->image;
+        return $this->imageFile;
     }
 
-    public function setImage(?Image $image): static
+    public function setImageFile(?File $imageFile = null): void
     {
-        $this->image = $image;
-
-        return $this;
+        $this->imageFile = $imageFile;
+        if ($imageFile) {
+            // If the file is uploaded, update the updatedAt property
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
 
     public function getLastName(): ?string
     {
@@ -167,6 +190,18 @@ class UserProfile
     public function setGender(?UserGender $gender): static
     {
         $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

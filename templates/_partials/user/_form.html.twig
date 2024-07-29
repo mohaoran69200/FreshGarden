@@ -1,0 +1,57 @@
+{{ form_start(form) }}
+<div>
+	{{ form_label(form.lastName) }}
+	{{ form_widget(form.lastName) }}
+	{{ form_errors(form.lastName) }}
+</div>
+
+<div>
+	{{ form_label(form.firstName) }}
+	{{ form_widget(form.firstName) }}
+	{{ form_errors(form.firstName) }}
+</div>
+
+<div>
+	{{ form_label(form.address) }}
+	{{ form_widget(form.address) }}
+	{{ form_errors(form.address) }}
+</div>
+
+<div>
+	{{ form_label(form.postalCode) }}
+	{{ form_widget(form.postalCode) }}
+	{{ form_errors(form.postalCode) }}
+</div>
+
+<div>
+	{{ form_label(form.city) }}
+	{{ form_widget(form.city) }}
+	{{ form_errors(form.city) }}
+</div>
+
+<div>
+	{{ form_label(form.dateBirth) }}
+	{{ form_widget(form.dateBirth) }}
+	{{ form_errors(form.dateBirth) }}
+</div>
+
+<div>
+	{{ form_label(form.phoneNumber) }}
+	{{ form_widget(form.phoneNumber) }}
+	{{ form_errors(form.phoneNumber) }}
+</div>
+
+<div>
+	{{ form_label(form.gender) }}
+	{{ form_widget(form.gender) }}
+	{{ form_errors(form.gender) }}
+</div>
+
+<div>
+	{{ form_label(form.image) }}
+	{{ form_widget(form.image) }}
+	{{ form_errors(form.image) }}
+</div>
+
+<button type="submit">Enregistrer</button>
+{{ form_end(form) }}
