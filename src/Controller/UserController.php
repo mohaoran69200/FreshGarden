@@ -24,9 +24,18 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
+        if ($this->getUser() !== $user) {
+            return $this->redirectToRoute('home');
+        }
+
         // Récupère le profil de l'utilisateur
         $userProfile = $user->getUserProfile();
-        
+
         // Crée les formulaires pour l'utilisateur et le profil
         $form = $this->createForm(EditUserType::class, $user);
 
@@ -43,8 +52,17 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            
+
+            $this->addFlash(
+                'success',
+                'Les informations de votre compte ont été mises à jour avec succès.'
+            );
             return $this->redirectToRoute('home');
+        } else {
+            $this->addFlash(
+                'danger',
+                'Le mot de passe renseigné est incorrect.'
+            );
         }
 
         return $this->render('user/edit.html.twig', [

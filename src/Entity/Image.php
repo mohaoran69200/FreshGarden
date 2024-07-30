@@ -18,10 +18,10 @@ class Image
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
-    #[Vich\UploadableField(mapping: 'profile_images', fileNameProperty: 'name')]
+    #[Vich\UploadableField(mapping: 'product', fileNameProperty: 'name')]
     private ?File $imageFile = null;
 
     /**
@@ -32,9 +32,6 @@ class Image
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
-
-    #[ORM\OneToOne(mappedBy: 'image', cascade: ['persist', 'remove'])]
-    private ?UserProfile $userProfile = null;
 
     public function __construct()
     {
@@ -112,28 +109,6 @@ class Image
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getUserProfile(): ?UserProfile
-    {
-        return $this->userProfile;
-    }
-
-    public function setUserProfile(?UserProfile $userProfile): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($userProfile === null && $this->userProfile !== null) {
-            $this->userProfile->setImage(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($userProfile !== null && $userProfile->getImage() !== $this) {
-            $userProfile->setImage($this);
-        }
-
-        $this->userProfile = $userProfile;
 
         return $this;
     }
