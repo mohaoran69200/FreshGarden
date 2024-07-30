@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\UserGender;
 use App\Repository\UserProfileRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -55,6 +56,11 @@ class UserProfile
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    public function __construct() {
+        $this->updatedAt = new DateTimeImmutable();
+    }
+    
 
     public function getId(): ?int
     {
