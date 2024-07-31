@@ -7,12 +7,13 @@ use App\Repository\UserProfileRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserProfileRepository::class)]
 #[Vich\Uploadable]
-class UserProfile
+class UserProfile implements Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -210,5 +211,17 @@ class UserProfile
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function serialize() {
+        return serialize([
+        $this->id
+        ]);
+    }
+
+    public function unserialize (string $data) {
+        list (
+            $this->id,
+        ) = unserialize($data);
     }
 }

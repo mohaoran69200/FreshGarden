@@ -3,8 +3,8 @@
 namespace App\Enum;
 
 enum ProductUnit: string {
-    case KG = 'kg';
-    case PIECE = 'piece';
+    case Kg = 'kg';
+    case Pièce = 'piece';
 
     public function toString(): string
     {

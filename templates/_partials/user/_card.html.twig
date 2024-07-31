@@ -1,9 +1,15 @@
 <div>
 	<div>
-		<div>
-			<img src="{{ vich_uploader_asset(userProfile.image) }}" alt="Photo de profil">
-		</div>
-		<a href="{{ path('app_user_edit', { id: user.id }) }}">
+	<div>
+			<img src="{{ vich_uploader_asset(userProfile.getImageName) }}" alt="Photo de profil">
+		</div> 
+		<h3>
+			{{ user.email }}
+		</h3>
+		<span>
+			{{ userProfile.lastName }}
+		</span> 
+		<a href="{{ path('app_user_edit_user', { id: user.id }) }}">
 			<button>Modifier</button>
 		</a>
 		<form action="{{ path('app_user_remove', { id: user.id }) }}" method="post">

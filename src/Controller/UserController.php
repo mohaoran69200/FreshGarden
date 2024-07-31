@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use App\Repository\UserProfileRepository;
 use App\Form\EditUserType;
 use App\Form\EditUserProfileType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+#[Route('/user', name: 'app_user_')]
 class UserController extends AbstractController
 {
     #[Route('/edit-user/{id}', name: 'edit_user')]
@@ -68,6 +70,30 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
+            'userProfile' => $userProfile,
         ]);
     }
-}
+
+        #[Route('/show/{id}', name: 'show')]
+        public function show(User $user, UserProfileRepository $userProfile): Response
+        {
+            // $user->getcategorie();
+            return $this->render('user/show.html.twig', [
+                'user' => $userProfile->findBy(
+                    ['id' => $user->getId(1)]
+                ),
+                'userProfile' => $userProfile
+            ]);
+        }
+    
+        #[Route('/remove/{id}', name: 'remove')]
+        #[IsGranted('ROLE_USER')]
+        public function remove(User $user, EntityManagerInterface $entityManager): Response
+        {
+            $entityManager->remove($user);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('home');
+        }
+    }
+

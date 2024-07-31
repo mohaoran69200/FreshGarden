@@ -64,7 +64,7 @@ class UserFixtures extends Fixture
                 ->setCity($faker->city())
                 ->setPhoneNumber('0600000000')
                 ->setPostalCode($faker->postcode())
-                ->setGender(UserGender::MAN)
+                ->setGender(UserGender::Man)
                 ->setImageName($i. '-profil.jpg')
             ;
 
