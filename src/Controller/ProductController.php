@@ -5,9 +5,8 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
-use App\Entity\Image;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProductType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -38,22 +37,28 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/update/{id}', name: 'update')]
+    #[Route('/edit-product/{id}', name: 'update')]
     #[IsGranted('ROLE_USER')]
     public function update(
         Product $product,
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
+        // Vérifiez que l'utilisateur connecté est le propriétaire du produit
+        if ($this->getUser() !== $product->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->persist($product);
             $entityManager->flush();
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
         }
         return $this->render('product/new.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
             'product' => $product
         ]);
     }
@@ -61,7 +66,6 @@ class ProductController extends AbstractController
     #[Route('/show/{id}', name: 'show')]
     public function show(Product $product): Response
     {
-        $product->getcategorie();
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
@@ -71,6 +75,11 @@ class ProductController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function remove(Product $product, EntityManagerInterface $entityManager): Response
     {
+        // Vérifiez que l'utilisateur connecté est le propriétaire du produit
+        if ($this->getUser() !== $product->getUser()) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à supprimer ce produit.');
+        }
+
         $entityManager->remove($product);
         $entityManager->flush();
 

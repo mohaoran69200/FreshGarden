@@ -30,7 +30,6 @@ class UserProfile implements Serializable
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageName = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
@@ -58,10 +57,10 @@ class UserProfile implements Serializable
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->updatedAt = new DateTimeImmutable();
     }
-    
 
     public function getId(): ?int
     {
@@ -76,7 +75,6 @@ class UserProfile implements Serializable
     public function setUser(User $user): static
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -89,7 +87,6 @@ class UserProfile implements Serializable
     {
         $this->imageFile = $imageFile;
         if ($imageFile) {
-            // If the file is uploaded, update the updatedAt property
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
@@ -113,7 +110,6 @@ class UserProfile implements Serializable
     public function setLastName(?string $lastName): static
     {
         $this->lastName = $lastName;
-
         return $this;
     }
 
@@ -209,18 +205,19 @@ class UserProfile implements Serializable
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
     }
 
-    public function serialize() {
+    public function serialize()
+    {
         return serialize([
-        $this->id
+            $this->id
         ]);
     }
 
-    public function unserialize (string $data) {
-        list (
+    public function unserialize(string $data)
+    {
+        list(
             $this->id,
         ) = unserialize($data);
     }

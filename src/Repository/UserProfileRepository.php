@@ -5,10 +5,13 @@ namespace App\Repository;
 use App\Entity\UserProfile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @extends ServiceEntityRepository<UserProfile>
  */
+#[Vich\Uploadable]
 class UserProfileRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

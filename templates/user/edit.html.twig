@@ -1,4 +1,3 @@
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier Profil{% endblock %}
@@ -10,6 +9,10 @@
         {{ form_widget(form) }}
         <button type="submit">Mettre à jour</button>
     {{ form_end(form) }}
-    <img src="{{ vich_uploader_asset(app.user.userProfile) }}" alt="">
 
+    {% if app.user.userProfile and app.user.userProfile.imageFile %}
+        <img src="{{ vich_uploader_asset(app.user.userProfile, 'imageFile') }}" alt="Photo de profil">
+    {% else %}
+        <img src="{{ asset('path/to/default/image.png') }}" alt="Image par défaut">
+    {% endif %}
 {% endblock %}

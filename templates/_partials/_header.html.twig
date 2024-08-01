@@ -44,8 +44,8 @@
 					</svg>
 				</button>
 				<div class="dropdown-content">
-					{% if app.user %}
-						{# <a href="{{ path('account') }}">Profil</a> #}
+					{% if app.user is not null and app.user is defined %} 
+						<a href="{{ path('app_user_show', {id: app.user.id}) }}">Mon profil</a>
 						<a href="{{ path('logout') }}">Déconnexion</a>
 					{% else %}
 						<a href="{{ path('login') }}">Connexion</a>

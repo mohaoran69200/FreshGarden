@@ -7,26 +7,24 @@
 			{{ product.name }}
 		</h3>
 		<span>
-			{{ product.price }}€ /{{ product.unit.value }}
+			{{ product.price }}€ /
+			{{ product.unit.value }}
 		</span>
 		<span>
 			{{ product.stock }}
 			{{ product.unit.value }}
 		</span>
 
-		<a href="{{ path('app_product_show', { id: product.id }) }}">
-			<button>Voir</button>
-		</a>
+		{% if app.user and app.user == product.user %}
+			<a href="{{ path('app_product_update', { id: product.id }) }}">
+				<button>Modifier</button>
+			</a>
 
-		<a href="{{ path('app_product_update', { id: product.id }) }}">
-			<button>Modifier</button>
-		</a>
-
-		<form action="{{ path('app_product_remove', { id: product.id }) }}" method="post">
-			<input type="hidden" name="_method" value="DELETE">
-			<input type="hidden" name="_token" value="{{ ('delete' ~ product.id) }}">
-			<button type="submit">Supprimer</button>
-		</form>
-
+			<form action="{{ path('app_product_remove', { id: product.id }) }}" method="post">
+				<input type="hidden" name="_method" value="DELETE">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+				<button type="submit">Supprimer</button>
+			</form>
+		{% endif %}
 	</div>
 </div>
