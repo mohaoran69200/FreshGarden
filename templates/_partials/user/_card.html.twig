@@ -1,16 +1,94 @@
-<div>
-	<div>
-		<div>
-			{# Vérifie si le profil utilisateur et l'image sont définis avant d'afficher l'image #}
-			{% if user.userProfile and user.userProfile.imageFile %}
-				<img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil">
-			{% endif %}
-		</div>
-		<h3>{{ user.email }}</h3>
-		<span>{{ user.userProfile ? user.userProfile.lastName : '' }}</span>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Card</title>
+	<style>
+		/* Styles généraux pour les cartes */
+		.user-card {
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			background-color: #fff;
+			margin: 20px;
+			padding: 20px;
+			width: 300px;
+			text-align: center;
+			overflow: hidden;
+			transition: transform 0.2s, box-shadow 0.2s;
+		}
 
-		{# Affiche les boutons de modification et suppression uniquement pour l'utilisateur connecté #}
-		{% if app.user and app.user.id == user.id %}
+		.user-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		}
+
+		.user-card img {
+			width: 100%;
+			height: 200px; /* Fixed height for profile image */
+			object-fit: cover; /* Ensure the image covers the container */
+			border-radius: 50%; /* Makes the image circular */
+			margin-bottom: 15px;
+		}
+
+		.user-card h3 {
+			font-size: 1.25rem;
+			margin: 10px 0;
+		}
+
+		.user-card span {
+			display: block;
+			margin: 5px 0;
+			font-size: 1rem;
+			color: #333;
+		}
+
+		.user-card .actions {
+			margin-top: 15px;
+		}
+
+		.user-card button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			padding: 10px 15px;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 0.9rem;
+			margin: 0 5px;
+			transition: background-color 0.2s;
+		}
+
+		.user-card button:hover {
+			background-color: #0056b3;
+		}
+
+		.user-card form {
+			display: inline;
+		}
+
+		.user-card form button {
+			background-color: #dc3545;
+		}
+
+		.user-card form button:hover {
+			background-color: #c82333;
+		}
+	</style>
+</head>
+<body>
+<div class="user-card">
+	<div>
+		{# Vérifie si le profil utilisateur et l'image sont définis avant d'afficher l'image #}
+		{% if user.userProfile and user.userProfile.imageFile %}
+			<img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil">
+		{% endif %}
+	</div>
+	<h3>{{ user.email }}</h3>
+	<span>{{ user.userProfile ? user.userProfile.lastName : '' }}</span>
+
+	{# Affiche les boutons de modification et suppression uniquement pour l'utilisateur connecté #}
+	{% if app.user and app.user.id == user.id %}
+		<div class="actions">
 			<a href="{{ path('app_user_edit_user', { id: user.id }) }}">
 				<button>Modifier</button>
 			</a>
@@ -20,6 +98,8 @@
 				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
 				<button type="submit">Supprimer mon compte</button>
 			</form>
-		{% endif %}
-	</div>
+		</div>
+	{% endif %}
 </div>
+</body>
+</html>

@@ -79,6 +79,8 @@ class UserFixtures extends Fixture
                 ->setUserProfile($userProfile)
                 ;
 
+            $this->addReference('user_'. $i, $user);
+
             
             $manager->persist($user);
         }

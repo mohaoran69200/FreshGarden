@@ -19,6 +19,10 @@ class EditUserProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('userName', TextType::class, [
+                'label' => 'Pseudo',
+                'required' => false,
+            ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
                 'required' => false,

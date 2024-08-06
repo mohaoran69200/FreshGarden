@@ -43,7 +43,10 @@ class ProductType extends AbstractType
             ->add('unit', EnumType::class, [
                 'class' => ProductUnit::class
             ])
-            ->add('stock')
+            ->add('stock', IntegerType::class, [
+                'label' => 'Stock',
+                'required' => true,
+            ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',

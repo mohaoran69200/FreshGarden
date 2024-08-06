@@ -23,49 +23,56 @@ class ProductController extends AbstractController
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $product
-                ->setUser($this->getUser())
+            $product->setUser($this->getUser())
                 ->setCreatedAt(new \DateTimeImmutable())
                 ->setUpdatedAt(new \DateTimeImmutable());
+
             $entityManager->persist($product);
             $entityManager->flush();
-            return $this->redirectToRoute('home');
+
+            $this->addFlash('success', 'Produit ajouté avec succès.');
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        } elseif ($form->isSubmitted()) {
+            $this->addFlash('error', 'Le formulaire contient des erreurs.');
         }
+
         return $this->render('product/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/edit-product/{id}', name: 'update')]
+    #[Route('/update/{id}', name: 'update')]
     #[IsGranted('ROLE_USER')]
-    public function update(
+    public function edit(
         Product $product,
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
         // Vérifiez que l'utilisateur connecté est le propriétaire du produit
         if ($this->getUser() !== $product->getUser()) {
-            return $this->redirectToRoute('login');
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier ce produit.');
         }
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setUpdatedAt(new \DateTimeImmutable());
-            $entityManager->persist($product);
             $entityManager->flush();
+            $this->addFlash('success', 'Produit mis à jour avec succès.');
             return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
         }
+
         return $this->render('product/new.html.twig', [
             'form' => $form->createView(),
-            'product' => $product
+            'product' => $product,
         ]);
     }
 
     #[Route('/show/{id}', name: 'show')]
-    public function show(Product $product): Response
-    {
+    public function show(Product $product): Response {
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
@@ -73,8 +80,7 @@ class ProductController extends AbstractController
 
     #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted('ROLE_USER')]
-    public function remove(Product $product, EntityManagerInterface $entityManager): Response
-    {
+    public function remove(Product $product, EntityManagerInterface $entityManager): Response {
         // Vérifiez que l'utilisateur connecté est le propriétaire du produit
         if ($this->getUser() !== $product->getUser()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à supprimer ce produit.');
@@ -82,6 +88,7 @@ class ProductController extends AbstractController
 
         $entityManager->remove($product);
         $entityManager->flush();
+        $this->addFlash('success', 'Produit supprimé avec succès.');
 
         return $this->redirectToRoute('home');
     }

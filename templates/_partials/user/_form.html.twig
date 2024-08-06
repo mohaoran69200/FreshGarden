@@ -1,4 +1,13 @@
-{{ form_start(form) }}
+<div class="form-container">
+	{{ form_start(form) }}
+
+	<div>
+		{{ form_label(form.userName) }}
+		{{ form_widget(form.userName) }}
+		{{ form_errors(form.userName) }}
+	</div>
+
+
 <div>
 	{{ form_label(form.lastName) }}
 	{{ form_widget(form.lastName) }}
@@ -47,11 +56,12 @@
 	{{ form_errors(form.gender) }}
 </div>
 
-<div>
+	<div class="profile-image-container">
 	{{ form_label(form.image) }}
 	{{ form_widget(form.image) }}
 	{{ form_errors(form.image) }}
-</div>
-
+	</div>
+	<button id="save-cropped-image">Enregistrer l'image recadrée</button>
 <button type="submit">Enregistrer</button>
 {{ form_end(form) }}
+</div>

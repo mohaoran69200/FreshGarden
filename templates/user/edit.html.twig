@@ -5,14 +5,28 @@
 {% block body %}
     <h1>Modifier les informations de l'utilisateur</h1>
 
-    {{ form_start(form) }}
+    <div class="form-container">
+        {{ form_start(form) }}
         {{ form_widget(form) }}
         <button type="submit">Mettre à jour</button>
-    {{ form_end(form) }}
+        {{ form_end(form) }}
 
-    {% if app.user.userProfile and app.user.userProfile.imageFile %}
-        <img src="{{ vich_uploader_asset(app.user.userProfile, 'imageFile') }}" alt="Photo de profil">
-    {% else %}
-        <img src="{{ asset('path/to/default/image.png') }}" alt="Image par défaut">
-    {% endif %}
+        <div class="profile-image-container">
+            <img id="profile-image" class="profile-image" src="{{ vich_uploader_asset(app.user.userProfile, 'imageFile') }}" alt="Photo de profil">
+        </div>
+
+        <!-- Champ de fichier pour sélectionner une image -->
+        <input type="file" id="input-image" accept="image/*">
+
+        <!-- Modal pour recadrer l'image -->
+        <div id="cropper-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img id="image-to-crop" src="" alt="Recadrer l'image">
+                <button id="crop-image">Recadrer</button>
+            </div>
+        </div>
+
+        <button id="delete-image" class="btn-delete-image">Supprimer l'image</button>
+    </div>
 {% endblock %}
