@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherchez{% endblock %}
+
+{% block body %}
+    {% include '_partials/search/_form.html.twig' %}
+
+    <section>
+        {% if results is not empty %}
+        {%  for product in results %}
+        {% include '_partials/product/_cardProduct.html.twig' %}
+        {% endfor %}
+        {% else %}
+        <div>Aucun résultat</div>
+        {% endif %}
+    </section>
+{% endblock %}

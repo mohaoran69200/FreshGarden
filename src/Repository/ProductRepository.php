@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DTO\SearchDto;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,4 +41,29 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function search(SearchDto $search): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if ($search->getSearch()) {
+            $qb->andWhere('p.name LIKE :search')
+                ->setParameter('search', '%' . $search->getSearch() . '%');
+        }
+        if ($search->getCategorie()) {
+               $qb->andWhere('p.categorie = :categorie')
+                   ->setParameter('categorie', $search->getCategorie());
+        }
+        if ($search->getMinPrice()) {
+            $qb->andWhere('p.price >= :minPrice')
+                ->setParameter('minPrice', $search->getMinPrice());
+        }
+        if ($search->getMaxPrice()) {
+            $qb->andWhere('p.price <= :maxPrice')
+                ->setParameter('maxPrice', $search->getMaxPrice());
+        }
+
+
+        return $qb->getQuery()->getResult();
+    }
 }
