@@ -36,7 +36,6 @@ a:hover {
     margin: 0;
 }
 
-
 .desktop-menu li {
     margin: 0 15px;
 }
@@ -75,15 +74,6 @@ a:hover {
 
 .mobile-menu {
     display: none;
-    /* position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    z-index: 2;
-    padding: 20px;
-    overflow-y: auto; */
 }
 
 .mobile-menu.open {
@@ -107,17 +97,13 @@ a:hover {
 }
 
 #search {
-    display: flex;
-    align-items: center;
     position: relative;
-    width: 300px;
-    /* Ajustez la largeur selon vos besoins */
+    width: 300px; /* Ajustez la largeur selon vos besoins */
 }
 
 #search-input {
     width: 100%;
-    padding: 10px 40px 10px 10px;
-    /* Augmentez le padding à droite pour laisser de la place au bouton */
+    padding: 10px 40px 10px 10px; /* Augmentez le padding à droite pour laisser de la place au bouton */
     box-sizing: border-box;
     border: 1px solid #72B01D;
     border-radius: 6px;
@@ -125,14 +111,13 @@ a:hover {
 
 #search-input:focus,
 #search-input:active {
-    border: 1px solid #72B01D;
+    border-color: #72B01D;
     outline: none;
 }
 
 #search-button {
     position: absolute;
-    right: 10px;
-    /* Ajustez pour bien positionner le bouton */
+    right: 10px; /* Ajustez pour bien positionner le bouton */
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -155,7 +140,7 @@ a:hover {
 #connexion-button {
     height: 30px;
     width: 30px;
-    border-radius: 50px;
+    border-radius: 50%;
     outline: none;
     border: none;
     background-color: #ffffff;
@@ -194,7 +179,7 @@ a:hover {
 }
 
 .nav .dropdown-content a:hover {
-    background-color: #ffffff;
+    background-color: #f1f1f1;
 }
 
 .nav .dropdown:hover .dropdown-content {
@@ -269,11 +254,9 @@ a:hover {
         width: 100%;
         height: 100%;
         background-color: #fff;
-        /* Fond vert */
         z-index: 2;
         padding: 20px;
         overflow-y: auto;
-        /* Assure que le contenu s'ajuste */
         box-sizing: border-box;
     }
 
@@ -286,9 +269,7 @@ a:hover {
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* Centre les éléments horizontalement */
         justify-content: center;
-        /* Centre les éléments verticalement */
         height: 100%;
         margin: 0;
         padding: 0;
@@ -297,28 +278,22 @@ a:hover {
 
     .mobile-menu .pages li {
         margin: 15px 0;
-        /* Espacement entre les éléments */
     }
 
     .mobile-menu .pages a {
         text-decoration: none;
         color: #72B01D;
-        /* Couleur du texte */
         font-size: 24px;
-        /* Taille du texte */
         font-weight: bold;
-        /* Gras pour le texte */
     }
 
     .mobile-menu .pages a:hover {
         text-decoration: underline;
-        /* Souligner au survol */
     }
 
     .close-menu {
         font-size: 30px;
         color: #72B01D;
-        /* Couleur du bouton de fermeture */
         border: none;
         background: none;
         cursor: pointer;
@@ -330,7 +305,7 @@ a:hover {
     .pages li {
         list-style-type: none;
     }
-    
+
     #mobile-connexion-button:hover {
         background-color: #72B01D;
         color: #fff;
