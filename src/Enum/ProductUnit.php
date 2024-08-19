@@ -3,9 +3,8 @@
 namespace App\Enum;
 
 enum ProductUnit: string {
-    case Kg = 'kg';
-    case Pièce = 'piece';
-    case Litre = "litre";
+    case Kg = 'Kg';
+    case Pièce = 'Piece';
 
     public function toString(): string
     {

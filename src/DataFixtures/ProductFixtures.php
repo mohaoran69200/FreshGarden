@@ -2,30 +2,86 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Categorie;
 use App\Entity\Product;
+use App\Entity\Image;
+use App\Enum\ProductUnit;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use DateTimeImmutable;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        $faker = Factory::create('fr_FR');
+
+        $productsData = [
+            'Fruits' => ['Pomme', 'Orange', 'Fraise', 'Datte'],
+            'Legumes' => ['Carotte', 'Poivron', 'Tomate'],
+            'Autre' => ['Œuf de poule', 'Fromage']
+        ];
+
+        $categories = [];
+
+        foreach ($productsData as $categoryName => $products) {
+            $categorie = new Categorie();
+            $categorie->setName($categoryName);
+            $manager->persist($categorie);
+            $categories[$categoryName] = $categorie;
+        }
+
+        $imagePaths = [
+            'Pomme' => 'public/uploads/product/pomme.jpg',
+            'Orange' => 'public/uploads/product/orange.jpg',
+            'Fraise' => 'public/uploads/product/fraise.jpg',
+            'Datte' => 'public/uploads/product/datte.jpg',
+            'Carotte' => 'public/uploads/product/carotte.jpg',
+            'Poivron' => 'public/uploads/product/poivron.jpg',
+            'Tomate' => 'public/uploads/product/tomate.jpg',
+            'Œuf de poule' => 'public/uploads/product/oeuf.jpg',
+            'Fromage' => 'public/uploads/product/fromage.jpg'
+        ];
+
+        $images = [];
+        foreach ($imagePaths as $productName => $path) {
+            $image = new Image();
+            $image
+                ->setName(basename($path))
+                ->setUpdatedAt(new DateTimeImmutable());
+            $manager->persist($image);
+            $images[$productName] = $image;
+
+        }
+
         for ($i = 0; $i < 15; $i++) {
+            $categoryName = $faker->randomElement(array_keys($productsData));
+            $productName = $faker->randomElement($productsData[$categoryName]);
+            $randomUnit = $faker->randomElement(ProductUnit::cases());
+            $productImage = $images[$productName] ?? null;
+
             $product = new Product();
             $product
-                ->setName($i)
-                ->setPrice($i)
-                ->setUnit()
-                ->setStock(stock: int)
-                ->setUser($this->getReference('user_'. rand(0, 4)))
-;
+                ->setName($productName)
+                ->setPrice($faker->randomFloat(2, 1, 20))
+                ->setUnit($randomUnit)
+                ->setStock($faker->numberBetween(1, 100))
+                ->setUser($this->getReference('user_' . rand(0, 4)))
+                ->setCategorie($categories[$categoryName])
+                ->setImage($productImage)
+                ->setCreatedAt(new DateTimeImmutable())
+                ->setUpdatedAt(new DateTimeImmutable());
+
             $manager->persist($product);
         }
 
         $manager->flush();
     }
-    public function getDependencies(): array {
+
+    public function getDependencies(): array
+    {
         return [UserFixtures::class];
     }
 }

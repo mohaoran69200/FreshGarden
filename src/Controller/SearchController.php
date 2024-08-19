@@ -13,31 +13,31 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/search', name: 'app_')]
 class SearchController extends AbstractController
 {
-#[Route('', name: 'search')]
-public function index(Request $request, ProductRepository $productRepository): Response
-{
-$search = new SearchDto();
-$form = $this->createForm(SearchType::class, $search);
-$form->handleRequest($request);
+    #[Route('', name: 'search')]
+    public function index(Request $request, ProductRepository $productRepository): Response
+    {
+        $search = new SearchDto();
+        $form = $this->createForm(SearchType::class, $search);
+        $form->handleRequest($request);
 
 // Initialisation des résultats
-$results = [];
+        $results = [];
 
 // Vérifie si le formulaire est soumis et valide
-if ($form->isSubmitted() && $form->isValid()) {
-$results = $productRepository->search($search);
-} else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $results = $productRepository->search($search);
+        } else {
 // Vérifie si une recherche via la barre de recherche du header est envoyée
-$searchTerm = $request->query->get('search');
-if ($searchTerm) {
-$search->setSearch($searchTerm);
-$results = $productRepository->search($search);
-}
-}
+            $searchTerm = $request->query->get('search');
+            if ($searchTerm) {
+                $search->setSearch($searchTerm);
+                $results = $productRepository->search($search);
+            }
+        }
 
-return $this->render('search/index.html.twig', [
-'form' => $form,
-'results' => $results
-]);
-}
+        return $this->render('search/index.html.twig', [
+            'form' => $form,
+            'results' => $results
+        ]);
+    }
 }
