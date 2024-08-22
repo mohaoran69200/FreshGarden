@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+            color: #888;
+        }
+
+        .cart-item a {
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .cart-item a:hover {
+            color: #d93636;
+        }
+
+        .total-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .total-container h3 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .total-container span {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #888;
+            font-size: 1.2rem;
+            margin-top: 50px;
+        }
+
+        .checkout-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="cart-container">
+        <h1>Mon panier</h1>
+
+        {% if cart|length == 0 %}
+            <div class="empty-cart">
+                <p>Aucun article dans votre panier.</p>
+            </div>
+        {% else %}
+            {% set total = 0 %}
+            {% for item in cart %}
+                <div class="cart-item">
+                    <div>
+                        <h3>{{ item.product.name }}</h3>
+                        <p>{{ item.product.price }}€</p>
+                    </div>
+                    <div>
+                        <a href="{{ path('cart_remove', {id: item.product.id}) }}">Retirer</a>
+                    </div>
+                </div>
+                {% set total = total + item.product.price %}
+            {% endfor %}
+
+            <div class="total-container">
+                <h3>Total: {{ total }}€</h3>
+            </div>
+
+            <div class="total-container">
+                <button class="checkout-btn">Acheter</button>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
