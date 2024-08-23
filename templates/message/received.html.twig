@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+            <h1>Messagerie</h1>
+
+            <div>
+                <a href="{{ path('/send') }}">Envoyer un message</a>
+            </div>
+
+        </section>
+    </main>
+
+{% endblock %}

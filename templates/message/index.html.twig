@@ -1,20 +1,134 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MessageController!{% endblock %}
+{% block title %}Messagerie{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .message-section {
+            margin: 20px;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        h1, h2 {
+            color: #333;
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/VAI-CM08-SG28-ADMIN/Documents/devweb_mohamed/Projet/FreshGarden/src/Controller/MessageController.php</code></li>
-        <li>Your template at <code>C:/Users/VAI-CM08-SG28-ADMIN/Documents/devweb_mohamed/Projet/FreshGarden/templates/message/index.html.twig</code></li>
-    </ul>
-</div>
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .message-table th, .message-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .message-table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        .message-table tr.read td {
+            font-weight: normal;
+        }
+
+        .message-table tr.unread td {
+            font-weight: bold;
+        }
+
+        .view-btn, .delete-btn, .send-btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .view-btn {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .view-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            transition: background-color 0.2s;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        .send-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #218838;
+        }
+
+        .delete-form {
+            display: inline;
+        }
+    </style>
+
+    <main>
+        <section class="message-section">
+            <h1>Messagerie</h1>
+            <h2>Boîte de réception</h2>
+            <p>Vous avez reçu {{ app.user.received|length }} messages</p>
+
+            <table class="message-table">
+                <thead>
+                <tr>
+                    <th>De</th>
+                    <th>Sujet</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for message in app.user.received %}
+                    <tr class="{% if message.isRead == 0 %}unread{% else %}read{% endif %}">
+                        <td>
+                            {{ message.sender.email }}
+                        </td>
+                        <td>
+                            <a href="{{ path('message_read', {id: message.id}) }}">{{ message.title }}</a>
+                        </td>
+                        <td>
+                            {{ message.createdAt|date('d/m/Y H:i') }}
+                        </td>
+                        <td>
+                            <a href="{{ path('message_read', {id: message.id}) }}" class="view-btn">Voir</a>
+                            <form action="{{ path('message_delete', {id: message.id}) }}" method="post" class="delete-form">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+                                <button type="submit" class="delete-btn">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun message reçu.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="send-message">
+                <a href="{{ path('send') }}" class="send-btn">Envoyer un message</a>
+            </div>
+        </section>
+    </main>
 {% endblock %}

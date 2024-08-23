@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envoyer un message{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+            <h1>Envoyer un message</h1>
+
+            {{ form(form) }}
+
+            <div>
+                <a href="{{ path('/message') }}">Retour aux messages</a>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

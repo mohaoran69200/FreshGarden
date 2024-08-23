@@ -7,9 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/cart', name: 'cart_')]
 class CartController extends AbstractController
 {
-    #[Route('/mon-panier', name: 'cart_index')]
+    #[Route('/', name: 'index')]
     public function index(CartService $cartService): Response
     {
         return $this->render('cart/index.html.twig',
@@ -18,21 +19,21 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/mon-panier/add/{id}', name: 'cart_add')]
+    #[Route('/add/{id}', name: 'add')]
     public function addToCart(CartService $cartService, int $id): Response
     {
         $cartService->addToCart($id);
         return $this->redirectToRoute('cart_index');
     }
 
-    #[Route('/mon-panier/remove/{id}', name: 'cart_remove')]
+    #[Route('/remove/{id}', name: 'remove')]
     public function removeToCart(CartService $cartService, int $id): Response
     {
         $cartService->removeToCart($id);
         return $this->redirectToRoute('cart_index');
     }
 
-    #[Route('/mon-panier/removeAll', name: 'cart_removeAll')]
+    #[Route('/removeAll', name: 'removeAll')]
     public function removeAll(CartService $cartService): Response
     {
         $cartService->removeCartAll();
