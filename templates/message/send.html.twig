@@ -3,16 +3,97 @@
 {% block title %}Envoyer un message{% endblock %}
 
 {% block body %}
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input[type="submit"],
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .form-group input[type="submit"]:hover,
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn {
+            background-color: #007bff;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
     <main>
         <section>
-            <h1>Envoyer un message</h1>
+            <div class="form-container">
+                <h1>Envoyer un message à {{ recipient.userProfile.userName ? recipient.userProfile.userName : recipient.userProfile.firstName }}</h1>
 
-            {{ form(form) }}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit">{{ form.submit.vars.label }}</button>
+                {{ form_end(form) }}
 
-            <div>
-                <a href="{{ path('/message') }}">Retour aux messages</a>
+                <div class="form-footer">
+                    <a href="{{ path('message_index') }}" class="btn">Retour aux messages</a>
+                </div>
             </div>
         </section>
     </main>
-
 {% endblock %}

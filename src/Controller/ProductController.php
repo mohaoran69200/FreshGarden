@@ -9,11 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProductType;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/product', name: 'app_product_')]
 class ProductController extends AbstractController
 {
+    private AuthorizationCheckerInterface $authChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authChecker)
+    {
+        $this->authChecker = $authChecker;
+    }
+
     #[Route('/new', name: 'new')]
     #[IsGranted('ROLE_USER')]
     public function new(
@@ -25,8 +33,8 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setUser($this->getUser())
-                ->setCreatedAt(new \DateTimeImmutable())
+            $product->setUser($this->getUser())  // L'utilisateur connecté est défini comme propriétaire du produit
+            ->setCreatedAt(new \DateTimeImmutable())
                 ->setUpdatedAt(new \DateTimeImmutable());
 
             $entityManager->persist($product);
@@ -50,10 +58,7 @@ class ProductController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
-        // Vérifiez que l'utilisateur connecté est le propriétaire du produit
-        if ($this->getUser() !== $product->getUser()) {
-            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier ce produit.');
-        }
+        $this->denyAccessUnlessGranted('edit', $product);  // Vérifiez si l'utilisateur peut éditer le produit
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -73,6 +78,7 @@ class ProductController extends AbstractController
 
     #[Route('/show/{id}', name: 'show')]
     public function show(Product $product): Response {
+        // Tout le monde peut voir les produits
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
@@ -81,10 +87,7 @@ class ProductController extends AbstractController
     #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted('ROLE_USER')]
     public function remove(Product $product, EntityManagerInterface $entityManager): Response {
-        // Vérifiez que l'utilisateur connecté est le propriétaire du produit
-        if ($this->getUser() !== $product->getUser()) {
-            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à supprimer ce produit.');
-        }
+        $this->denyAccessUnlessGranted('delete', $product);  // Vérifiez si l'utilisateur peut supprimer le produit
 
         $entityManager->remove($product);
         $entityManager->flush();

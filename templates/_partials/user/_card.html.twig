@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 	<title>User Card</title>
 	<style>
-		/* Styles généraux pour les cartes */
 		.user-card {
 			border: 1px solid #ddd;
 			border-radius: 8px;
@@ -24,9 +23,9 @@
 
 		.user-card img {
 			width: 100%;
-			height: 200px; /* Fixed height for profile image */
-			object-fit: cover; /* Ensure the image covers the container */
-			border-radius: 50%; /* Makes the image circular */
+			height: 200px;
+			object-fit: cover;
+			border-radius: 50%;
 			margin-bottom: 15px;
 		}
 
@@ -73,18 +72,74 @@
 		.user-card form button:hover {
 			background-color: #c82333;
 		}
+
+		.ads-list {
+			margin-top: 15px;
+			text-align: left;
+		}
+
+		.ads-list h4 {
+			font-size: 1.1rem;
+			margin-bottom: 10px;
+		}
+
+		.ads-list ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		.ads-list li {
+			margin-bottom: 10px;
+		}
 	</style>
 </head>
 <body>
 <div class="user-card">
 	<div>
-		{# Vérifie si le profil utilisateur et l'image sont définis avant d'afficher l'image #}
+		{# Affichage de la photo de profil si elle est définie #}
 		{% if user.userProfile and user.userProfile.imageFile %}
 			<img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil">
 		{% endif %}
 	</div>
+
+	{# Affichage de l'email de l'utilisateur #}
 	<h3>{{ user.email }}</h3>
-	<span>{{ user.userProfile ? user.userProfile.lastName : '' }}</span>
+
+	{# Affichage du nom d'utilisateur ou du prénom #}
+	<span>
+		{% if user.userProfile.userName %}
+			{{ user.userProfile.userName }}
+		{% else %}
+			{{ user.userProfile.firstName }}
+		{% endif %}
+	</span>
+
+	{# Affichage de la ville de l'utilisateur #}
+	<span>{{ user.userProfile.city }}</span>
+
+	{# Bouton Contacter pour envoyer un message à l'utilisateur #}
+	<div class="actions">
+		<a href="{{ path('message_send', { id: user.id }) }}">
+			<button>Contacter</button>
+		</a>
+
+	</div>
+
+	{# Affichage des annonces de l'utilisateur #}
+	<div class="ads-list">
+		<h4>Ses annonces :</h4>
+		<ul>
+			{% for product in user.products %}
+				<li>
+					<a href="{{ path('app_product_show', { id: product.id }) }}">
+						{{ product.name }} - {{ product.price }}€
+					</a>
+				</li>
+			{% else %}
+				<li>Aucune annonce disponible.</li>
+			{% endfor %}
+		</ul>
+	</div>
 
 	{# Affiche les boutons de modification et suppression uniquement pour l'utilisateur connecté #}
 	{% if app.user and app.user.id == user.id %}

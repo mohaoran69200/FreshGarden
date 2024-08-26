@@ -23,11 +23,7 @@ class MessageType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => 'Message',
             ])
-            ->add('recipient', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'email',
-            ])
-            ->add('envoyer', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
             ])
         ;

@@ -8,11 +8,11 @@
             <h1>Messagerie</h1>
             <h2>{{ message.title }}</h2>
             <p>Message de {{ message.sender.email }}</p>
-            <p>Le {{ message.createdAt }}</p>
+            <p>Le {{ message.createdAt|date('d/m/Y H:i') }}</p>
             <div>{{ message.message }}</div>
 
             <div>
-                <a href="{{ path('/message') }}">Retour aux messages</a>
+                <a href="{{ path('message_index') }}">Retour aux messages</a>
             </div>
         </section>
     </main>

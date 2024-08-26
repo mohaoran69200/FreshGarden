@@ -92,15 +92,16 @@
 
 		<!-- Affichage de l'utilisateur et de la ville -->
 		<span>
-    Ajouté par :
-    {% if product.user.userProfile.userName is not empty %}
-		{{ product.user.userProfile.firstName }}
-	{% else %}
-		{{ product.user.userProfile.firstName }}
-	{% endif %}
-</span>
+        <a href="{{ path('app_user_show', { id: product.user.id }) }}">
+            {% if product.user.userProfile.userName is not empty %}
+				{{ product.user.userProfile.firstName }}
+			{% else %}
+				{{ product.user.userProfile.firstName }}
+			{% endif %}
+        </a>
+    </span>
 
-		<span>Ville : {{ product.user.userProfile.city}}</span>
+		<span>{{ product.user.userProfile.city}}</span>
 
 		<!-- Bouton Favoris -->
 		<button id="favorite-button" onclick="window.location.href='{{ path('favorite') }}'">
