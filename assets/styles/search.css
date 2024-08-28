@@ -1,0 +1,84 @@
+.search-section {
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.search-section form {
+    display: flex;
+    flex-direction: column; /* Aligne les éléments du formulaire verticalement */
+    align-items: center; /* Centre le formulaire */
+    gap: 10px; /* Espacement entre les éléments du formulaire */
+    max-width: 400px; /* Largeur maximale du formulaire */
+    margin: 0 auto; /* Centre le formulaire horizontalement */
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-section input,
+.search-section select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%; /* S'assure que les champs prennent toute la largeur disponible */
+}
+
+.search-section input[type="text"],
+.search-section input[type="number"] {
+    max-width: 180px; /* Largeur maximale des champs de texte */
+}
+
+.search-section select {
+    max-width: 150px; /* Largeur maximale des listes déroulantes */
+}
+
+.btn-submit {
+    background-color: #72B01D;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px; /* Espacement au-dessus du bouton */
+}
+
+.btn-submit:hover {
+    background-color: #3F7D20;
+}
+
+/* Styles pour la grille de produits */
+.products-section {
+    padding: 20px;
+}
+
+.grid-container {
+    display: flex;
+    justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes par défaut */
+    gap: 20px;
+}
+
+/* Pour les tablettes, 2 colonnes */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Pour les mobiles, 1 colonne */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -23,7 +23,7 @@ class SearchType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Choisissez une categorie',
+                'placeholder' => 'Catégorie',
                 'required' => false,
                 'label' => 'Type de produit'
             ])
@@ -35,6 +35,7 @@ class SearchType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
+                    'placeholder' => 'Prix minimum',
                     'min' => 0,
                 ]
             ])
@@ -42,6 +43,7 @@ class SearchType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
+                    'placeholder' => 'Prix maximum',
                     'min' => 0,
                 ]
             ])

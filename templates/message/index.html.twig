@@ -101,14 +101,21 @@
                 <tbody>
                 {% for message in app.user.received %}
                     <tr class="{% if message.isRead == 0 %}unread{% else %}read{% endif %}">
-                        <td>{{ message.sender.email }}</td>
+                        <td>
+                            {% if message.sender.userProfile.userName is not empty %}
+                                {{ message.sender.userProfile.userName }}
+                            {% elseif message.sender.userProfile.firstName is not empty %}
+                                {{ message.sender.userProfile.firstName }}
+                            {% else %}
+                                {{ message.sender.email }}
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="{{ path('message_read', {id: message.id}) }}">{{ message.title }}</a>
                         </td>
                         <td>
                             {{ message.createdAt|date('d/m/Y H:i') }}
                         </td>
-
                         <td>
                             <a href="{{ path('message_read', {id: message.id}) }}" class="view-btn">Voir</a>
                             <form action="{{ path('message_delete', {id: message.id}) }}" method="post" class="delete-form">
@@ -125,8 +132,9 @@
                 </tbody>
             </table>
 
+
             <div class="send-message">
-                <a href="{{ path('message_send') }}" class="send-btn">Envoyer un message</a>
+                <a href="{{ path('message_send', {id: app.user.id}) }}" class="send-btn">Envoyer un message</a>
             </div>
         </section>
     </main>

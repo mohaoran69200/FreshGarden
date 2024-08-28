@@ -21,7 +21,7 @@ class SearchController extends AbstractController
         $form->handleRequest($request);
 
 // Initialisation des résultats
-        $results = [];
+        $results = $productRepository->findAll();
 
 // Vérifie si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {

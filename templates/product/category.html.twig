@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ categorie }}{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+            <h2>Annonces de {{ categorie }}</h2>
+            <div class="grid-container">
+                <div class="grid">
+                    {% for product in products %}
+                        {% include '_partials/product/_cardProduct.html.twig' %}
+                    {% else %}
+                        <p>Aucun produit disponible dans cette catégorie.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

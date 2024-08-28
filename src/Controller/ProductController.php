@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CategorieRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,5 +96,38 @@ class ProductController extends AbstractController
         $this->addFlash('success', 'Produit supprimé avec succès.');
 
         return $this->redirectToRoute('home');
+    }
+
+    #[Route('/fruits', name: 'fruits')]
+    public function fruits(ProductRepository $productRepository, CategorieRepository $categorieRepository): Response {
+        $categorie = $categorieRepository->findOneBy(['name' => 'Fruits']);
+        $products = $productRepository->findBy(['categorie' => $categorie]);
+
+        return $this->render('product/category.html.twig', [
+            'products' => $products,
+            'categorie' => 'Fruits',
+        ]);
+    }
+
+    #[Route('/legumes', name: 'legumes')]
+    public function legumes(ProductRepository $productRepository, CategorieRepository $categorieRepository): Response {
+        $categorie = $categorieRepository->findOneBy(['name' => 'Legumes']);
+        $products = $productRepository->findBy(['categorie' => $categorie]);
+
+        return $this->render('product/category.html.twig', [
+            'products' => $products,
+            'categorie' => 'Légumes',
+        ]);
+    }
+
+    #[Route('/autres', name: 'autres')]
+    public function autre(ProductRepository $productRepository, CategorieRepository $categorieRepository): Response {
+        $categorie = $categorieRepository->findOneBy(['name' => 'Autre']);
+        $products = $productRepository->findBy(['categorie' => $categorie]);
+
+        return $this->render('product/category.html.twig', [
+            'products' => $products,
+            'categorie' => 'Autre',
+        ]);
     }
 }

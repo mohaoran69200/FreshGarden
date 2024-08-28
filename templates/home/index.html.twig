@@ -21,12 +21,43 @@
 	<main>
 		<section>
 			<h2>Annonces</h2>
-			<div>
-				{% for product in products %}
-					{% include '_partials/product/_cardProduct.html.twig' %}
-				{% endfor %}
+			<div class="grid-container">
+				<div class="category">
+					<h3>Fruits</h3>
+					<div class="grid">
+						{% for product in products %}
+							{% if product.categorie.name == 'Fruits' %}
+								{% include '_partials/product/_cardProduct.html.twig' %}
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="category">
+					<h3>Légumes</h3>
+					<div class="grid">
+						{% for product in products %}
+							{% if product.categorie.name == 'Legumes' %}
+								{% include '_partials/product/_cardProduct.html.twig' %}
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="category">
+					<h3>Autres Produits</h3>
+					<div class="grid">
+						{% for product in products %}
+							{% if product.categorie.name == 'Autre' %}
+								{% include '_partials/product/_cardProduct.html.twig' %}
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
 			</div>
 		</section>
 	</main>
+
+
 
 {% endblock %}

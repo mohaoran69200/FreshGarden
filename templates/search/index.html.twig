@@ -3,15 +3,43 @@
 {% block title %}Recherchez{% endblock %}
 
 {% block body %}
-    {% include '_partials/search/_form.html.twig' %}
+    <main>
+        <section class="search-section">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.search) }}
+                {{ form_widget(form.search) }}
+                {{ form_errors(form.search) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.categorie) }}
+                {{ form_widget(form.categorie) }}
+                {{ form_errors(form.categorie) }}
+            </div>
+            <div class="form-group">
+                <label>Prix</label>
+                {{ form_widget(form.minPrice) }}
+                {{ form_errors(form.minPrice) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(form.maxPrice) }}
+                {{ form_errors(form.maxPrice) }}
+            </div>
+            <button type="submit" class="btn-submit">Recherchez</button>
+            {{ form_end(form) }}
+        </section>
 
-    <section>
-        {% if results is not empty %}
-        {%  for product in results %}
-        {% include '_partials/product/_cardProduct.html.twig' %}
-        {% endfor %}
-        {% else %}
-        <div>Aucun résultat</div>
-        {% endif %}
-    </section>
+        <section class="products-section">
+            <h2>Nos Produits</h2>
+            <div class="grid-container">
+                <div class="grid">
+                    {% for product in results %}
+                        {% include '_partials/product/_cardProduct.html.twig' %}
+                    {% else %}
+                        <p>Aucun produit trouvé.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
