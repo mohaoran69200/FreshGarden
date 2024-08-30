@@ -61,7 +61,8 @@ class EditUserProfileType extends AbstractType
                 'label' => 'Photo de profil',
                 'required' => false,
                 'download_uri'=> false,
-                'allow_delete' => false
+                'allow_delete' => true,
+                'image_uri' => false
             ])
         ;
     }

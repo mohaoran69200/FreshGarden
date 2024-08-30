@@ -1,67 +1,69 @@
 <div class="form-container">
-	{{ form_start(form) }}
+	{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
 
-	<div>
+	<div class="form-group">
 		{{ form_label(form.userName) }}
-		{{ form_widget(form.userName) }}
+		{{ form_widget(form.userName, { 'attr': {'class': 'form-control'} }) }}
 		{{ form_errors(form.userName) }}
 	</div>
 
+	<div class="form-group">
+		{{ form_label(form.lastName) }}
+		{{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.lastName) }}
+	</div>
 
-<div>
-	{{ form_label(form.lastName) }}
-	{{ form_widget(form.lastName) }}
-	{{ form_errors(form.lastName) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.firstName) }}
+		{{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.firstName) }}
+	</div>
 
-<div>
-	{{ form_label(form.firstName) }}
-	{{ form_widget(form.firstName) }}
-	{{ form_errors(form.firstName) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.address) }}
+		{{ form_widget(form.address, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.address) }}
+	</div>
 
-<div>
-	{{ form_label(form.address) }}
-	{{ form_widget(form.address) }}
-	{{ form_errors(form.address) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.postalCode) }}
+		{{ form_widget(form.postalCode, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.postalCode) }}
+	</div>
 
-<div>
-	{{ form_label(form.postalCode) }}
-	{{ form_widget(form.postalCode) }}
-	{{ form_errors(form.postalCode) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.city) }}
+		{{ form_widget(form.city, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.city) }}
+	</div>
 
-<div>
-	{{ form_label(form.city) }}
-	{{ form_widget(form.city) }}
-	{{ form_errors(form.city) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.dateBirth) }}
+		{{ form_widget(form.dateBirth, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.dateBirth) }}
+	</div>
 
-<div>
-	{{ form_label(form.dateBirth) }}
-	{{ form_widget(form.dateBirth) }}
-	{{ form_errors(form.dateBirth) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.phoneNumber) }}
+		{{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.phoneNumber) }}
+	</div>
 
-<div>
-	{{ form_label(form.phoneNumber) }}
-	{{ form_widget(form.phoneNumber) }}
-	{{ form_errors(form.phoneNumber) }}
-</div>
-
-<div>
-	{{ form_label(form.gender) }}
-	{{ form_widget(form.gender) }}
-	{{ form_errors(form.gender) }}
-</div>
+	<div class="form-group">
+		{{ form_label(form.gender) }}
+		{{ form_widget(form.gender, { 'attr': {'class': 'form-control'} }) }}
+		{{ form_errors(form.gender) }}
+	</div>
 
 	<div class="profile-image-container">
-	{{ form_label(form.image) }}
-	{{ form_widget(form.image) }}
-	{{ form_errors(form.image) }}
+		{{ form_label(form.image) }}
+		{{ form_widget(form.image, { 'attr': {'class': 'form-control-file'} }) }}
+		{{ form_errors(form.image) }}
 	</div>
-	<button id="save-cropped-image">Enregistrer l'image recadrée</button>
-<button type="submit">Enregistrer</button>
-{{ form_end(form) }}
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary">Enregistrer</button>
+	</div>
+
+	{{ form_end(form) }}
 </div>

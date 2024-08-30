@@ -1,61 +1,98 @@
 .search-section {
-    padding: 20px;
-    background-color: #ffffff;
+    padding: 40px 20px;
+    background-color: #f8f8f8;
     text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 40px;
 }
 
 .search-section form {
     display: flex;
-    flex-direction: column; /* Aligne les éléments du formulaire verticalement */
-    align-items: center; /* Centre le formulaire */
-    gap: 10px; /* Espacement entre les éléments du formulaire */
-    max-width: 400px; /* Largeur maximale du formulaire */
-    margin: 0 auto; /* Centre le formulaire horizontalement */
+    flex-direction: column; /* Les éléments du formulaire sont empilés verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+    gap: 20px; /* Espace entre les éléments du formulaire */
+    max-width: 600px; /* Largeur maximale du formulaire */
+    margin: 0 auto; /* Centre le formulaire */
 }
 
 .form-group {
-    width: 100%;
+    width: 100%; /* Assure que les groupes de champs prennent toute la largeur */
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Les labels et champs sont empilés verticalement */
+    align-items: stretch; /* Étire les champs à 100% de la largeur disponible */
     gap: 8px;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Aligne l'input et le symbole "€" sur une seule ligne */
+.search-section .input-symbol {
+    display: flex; /* Aligne l'input et le symbole sur la même ligne */
+    align-items: center; /* Aligne verticalement le symbole avec l'input */
+    gap: 10px; /* Espace entre l'input et le symbole */
+    width: 100%; /* Assure que le conteneur prend toute la largeur */
 }
 
 .search-section input,
 .search-section select {
-    padding: 8px 12px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
-    width: 100%; /* S'assure que les champs prennent toute la largeur disponible */
+    font-size: 16px;
+    width: 100%; /* Assure que les champs prennent toute la largeur disponible */
+    box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
+    transition: border-color 0.3s ease;
+}
+
+.search-section input:focus,
+.search-section select:focus {
+    border-color: #72B01D;
+    outline: none;
 }
 
 .search-section input[type="text"],
 .search-section input[type="number"] {
-    max-width: 180px; /* Largeur maximale des champs de texte */
+    max-width: none; /* Permet une largeur flexible des champs */
 }
 
-.search-section select {
-    max-width: 150px; /* Largeur maximale des listes déroulantes */
+.currency-symbol {
+    font-size: 16px;
+    color: #333;
 }
 
+/* Bouton de soumission */
 .btn-submit {
     background-color: #72B01D;
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 8px 16px;
+    padding: 12px 24px;
     cursor: pointer;
-    font-size: 14px;
-    margin-top: 10px; /* Espacement au-dessus du bouton */
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
 .btn-submit:hover {
     background-color: #3F7D20;
 }
 
-/* Styles pour la grille de produits */
+/* Section des produits */
 .products-section {
     padding: 20px;
+}
+
+.products-section h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .grid-container {
@@ -65,20 +102,19 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colonnes par défaut */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Colonnes flexibles */
     gap: 20px;
+    width: 100%;
+    max-width: 1200px; /* Largeur maximale de la grille */
 }
 
-/* Pour les tablettes, 2 colonnes */
-@media (max-width: 1024px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Pour les mobiles, 1 colonne */
+/* Media Queries pour ajustements */
 @media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
+    .form-group {
+        width: 100%; /* Les groupes de champs prennent toute la largeur sur mobile */
+    }
+
+    .btn-submit {
+        width: 100%; /* Le bouton prend toute la largeur sur mobile */
     }
 }

@@ -136,6 +136,7 @@ a:hover {
 }
 
 #message-button,
+#cart-button,
 #favorite-button,
 #connexion-button {
     height: 30px;
@@ -151,6 +152,7 @@ a:hover {
 }
 
 #message-button:hover,
+#cart-button:hover,
 #favorite-button:hover {
     color: #fff;
     background-color: #72B01D;

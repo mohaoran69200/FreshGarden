@@ -3,30 +3,29 @@
 {% block title %}Modifier Profil{% endblock %}
 
 {% block body %}
-    <h1>Modifier les informations de l'utilisateur</h1>
-
     <div class="form-container">
+        <h1>Modifier les informations de l'utilisateur</h1>
+
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit">Mettre à jour</button>
-        {{ form_end(form) }}
+
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.email) }}
+        </div>
 
         <div class="profile-image-container">
             <img id="profile-image" class="profile-image" src="{{ vich_uploader_asset(app.user.userProfile, 'imageFile') }}" alt="Photo de profil">
         </div>
 
-        <!-- Champ de fichier pour sélectionner une image -->
-        <input type="file" id="input-image" accept="image/*">
+        <button type="submit" class="btn">Mettre à jour</button>
+        {{ form_end(form) }}
 
-        <!-- Modal pour recadrer l'image -->
-        <div id="cropper-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <img id="image-to-crop" src="" alt="Recadrer l'image">
-                <button id="crop-image">Recadrer</button>
-            </div>
+        <button id="delete-image" class="btn btn-danger">Supprimer l'image</button>
+
+        <!-- Bouton pour modifier le mot de passe -->
+        <div class="form-footer">
+            <a href="{{ path('app_user_edit_user_password', {'id': app.user.id}) }}" class="btn btn-primary">Modifier mon mot de passe</a>
         </div>
-
-        <button id="delete-image" class="btn-delete-image">Supprimer l'image</button>
     </div>
 {% endblock %}

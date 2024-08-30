@@ -97,8 +97,8 @@
 <div class="user-card">
 	<div>
 		{# Affichage de la photo de profil si elle est définie #}
-		{% if user.userProfile and user.userProfile.imageFile %}
-			<img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil">
+		{% if user.userProfile and user.userProfile.imageName %}
+			<img src="{{ vich_uploader_asset(user.userProfile) }}" alt="Photo de profil">
 		{% endif %}
 	</div>
 

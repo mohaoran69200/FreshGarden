@@ -20,11 +20,6 @@ class EditUserType extends AbstractType
                 'label' => 'Email',
                 'required' => true,
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
-                'required' => false,
-                'mapped' => false, 
-            ])
             ->add('userProfile', EditUserProfileType::class, [
                 'label' => false,
             ])

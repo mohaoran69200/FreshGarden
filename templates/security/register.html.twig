@@ -5,100 +5,40 @@
 {% endblock %}
 
 {% block body %}
-	<style>
-		.form-container {
-			max-width: 700px;
-			margin: 0 auto;
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 1px 6px 1px #454955;
-		}
-
-		.form-container h1 {
-			text-align: center;
-			margin-bottom: 20px;
-		}
-
-		.form-container label {
-			display: block;
-			margin-bottom: 8px;
-			font-weight: bold;
-		}
-
-		.form-container input {
-			width: 100%;
-			padding: 10px;
-			margin-bottom: 20px;
-			border: 1px solid #ddd;
-			border-radius: 4px;
-		}
-
-		.form-container .btn {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			padding: 10px;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 16px;
-			background-color: #72B01D;
-			color: white;
-			margin-bottom: 20px;
-		}
-
-		.form-container .alert {
-			color: red;
-			margin-bottom: 20px;
-			text-align: center;
-		}
-
-		.btn:hover {
-			background-color: #3F7D20;
-		}
-
-		.terms__container {
-			display: flex;
-		}
-
-		.terms__container .terms {
-			margin-left: 20px;
-		}
-
-		.terms__container .checkbox {
-			width: 18px;
-			height: 18px;
-		}
-
-		@media(max-width: 1024px) and(min-width: 768px) {
-			.form-container {
-				width: 80%;
-			}
-		}
-		@media(max-width: 768px) {
-			.form-container {
-				width: 90%;
-			}
-		}
-	</style>
-
 	<div class="form-container">
 		<h1>Rejoignez-nous</h1>
 
 		{{ form_errors(registrationForm) }}
 
 		{{ form_start(registrationForm) }}
-		{{ form_row(registrationForm.email) }}
-		{{ form_row(registrationForm.plainPassword) }}
-		<div class="terms__container">
-			{{ form_widget(registrationForm.agreeTerms, {'attr':{'class':'checkbox'}}) }}
-			{{ form_label(registrationForm.agreeTerms,  null, {'label_attr':{'class':'terms'}}) }}
 
+		<div class="form-group">
+			{{ form_label(registrationForm.email) }}
+			{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(registrationForm.email) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label(registrationForm.plainPassword.first) }}
+			{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(registrationForm.plainPassword.first) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label(registrationForm.plainPassword.second) }}
+			{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(registrationForm.plainPassword.second) }}
+		</div>
+
+		<div class="terms__container">
+			{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'checkbox'}}) }}
+			{{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'terms'}}) }}
+			{{ form_errors(registrationForm.agreeTerms) }}
 		</div>
 
 		<button type="submit" class="btn">S'inscrire</button>
-		<p>Vous êtes déja inscris? <a href="{{ path('login') }}">Connectez-vous</a></p>
+		<p>Vous êtes déjà inscrit? <a href="{{ path('login') }}" class="link-button">Connectez-vous</a></p>
+
 		{{ form_end(registrationForm) }}
 	</div>
 {% endblock %}

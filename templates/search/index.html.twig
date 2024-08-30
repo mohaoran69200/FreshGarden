@@ -5,27 +5,39 @@
 {% block body %}
     <main>
         <section class="search-section">
-            {{ form_start(form) }}
+            {{ form_start(form, {'action': path('app_search'), 'method': 'GET'}) }}
+
             <div class="form-group">
                 {{ form_label(form.search) }}
-                {{ form_widget(form.search) }}
+                {{ form_widget(form.search, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.search) }}
             </div>
+
             <div class="form-group">
                 {{ form_label(form.categorie) }}
-                {{ form_widget(form.categorie) }}
+                {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.categorie) }}
             </div>
+
             <div class="form-group">
-                <label>Prix</label>
-                {{ form_widget(form.minPrice) }}
+                <label for="{{ form.minPrice.vars.id }}">Prix minimum</label>
+                <div class="input-symbol">
+                    {{ form_widget(form.minPrice, {'attr': {'class': 'form-control'}}) }}
+                    <span class="currency-symbol">€</span>
+                </div>
                 {{ form_errors(form.minPrice) }}
             </div>
+
             <div class="form-group">
-                {{ form_widget(form.maxPrice) }}
+                <label for="{{ form.maxPrice.vars.id }}">Prix maximum</label>
+                <div class="input-symbol">
+                    {{ form_widget(form.maxPrice, {'attr': {'class': 'form-control'}}) }}
+                    <span class="currency-symbol">€</span>
+                </div>
                 {{ form_errors(form.maxPrice) }}
             </div>
-            <button type="submit" class="btn-submit">Recherchez</button>
+
+            <button type="submit" class="btn">Recherchez</button>
             {{ form_end(form) }}
         </section>
 
