@@ -167,7 +167,7 @@
         <!-- Actions : Ajouter au panier et Favoris -->
         <div class="actions">
             <button id="add-to-cart" onclick="window.location.href='{{ path('cart_add', {id: product.id}) }}'">Ajouter au panier</button>
-            <button id="favorite-button-page">Ajouter aux favoris</button>
+            <button id="favorite-button-page" onclick="window.location.href='{{ path('app_favorite_add_product', {id: product.id}) }}'">Ajouter aux favoris</button>
         </div>
     </div>
 

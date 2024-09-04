@@ -1,20 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FavoriteController!{% endblock %}
+{% block title %}Mes Favoris{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Mes favoris</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="favorites-container">
+        <h2>Produits Favoris</h2>
+        <div class="favorites-list">
+            {% set hasProductFavorites = false %}
+            {% for favorite in favorites %}
+                {% if favorite.favoriteType == 'product' and favorite.productFavorite is not null %}
+                    {% set hasProductFavorites = true %}
+                    {% include '_partials/product/_cardProduct.html.twig' with {'product': favorite.productFavorite} %}
+                {% endif %}
+            {% endfor %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/VAI-CM08-SG28-ADMIN/Documents/devweb_mohamed/Projet/FreshGarden/src/Controller/FavoriteController.php</code></li>
-        <li>Your template at <code>C:/Users/VAI-CM08-SG28-ADMIN/Documents/devweb_mohamed/Projet/FreshGarden/templates/favorite/index.html.twig</code></li>
-    </ul>
-</div>
+            {% if not hasProductFavorites %}
+                <div class="card">Vous n'avez pas encore de produits favoris.</div>
+            {% endif %}
+        </div>
+
+        <h2>Utilisateurs Favoris</h2>
+        <div class="favorites-list">
+            {% set hasUserFavorites = false %}
+            {% for favorite in favorites %}
+                {% if favorite.favoriteType == 'user' and favorite.userFavorite is not null %}
+                    {% set hasUserFavorites = true %}
+                    {% include '_partials/user/_card.html.twig' with {'user': favorite.userFavorite} %}
+                {% endif %}
+            {% endfor %}
+
+            {% if not hasUserFavorites %}
+                <div class="card">Vous n'avez pas encore d'utilisateurs favoris.</div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
