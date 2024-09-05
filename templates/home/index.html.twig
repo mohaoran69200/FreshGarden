@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Acceuil - Fresh Garden
-{% endblock %}
+{% block title %}Accueil - Fresh Garden{% endblock %}
 
 {% block body %}
 	<section class="home-presentation">
@@ -14,7 +13,7 @@
 			</div>
 		</div>
 		<div class="img-home-container">
-			<img src="{{asset('images/img_header.png')}}" alt="image d'acceuil" class="img-home">
+			<img src="{{ asset('images/img_header.png') }}" alt="image d'acceuil" class="img-home">
 		</div>
 	</section>
 
@@ -27,7 +26,7 @@
 					<div class="grid">
 						{% for product in products %}
 							{% if product.categorie.name == 'Fruits' %}
-								{% include '_partials/product/_cardProduct.html.twig' %}
+								{% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
 							{% endif %}
 						{% endfor %}
 					</div>
@@ -38,7 +37,7 @@
 					<div class="grid">
 						{% for product in products %}
 							{% if product.categorie.name == 'Legumes' %}
-								{% include '_partials/product/_cardProduct.html.twig' %}
+								{% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
 							{% endif %}
 						{% endfor %}
 					</div>
@@ -49,7 +48,7 @@
 					<div class="grid">
 						{% for product in products %}
 							{% if product.categorie.name == 'Autre' %}
-								{% include '_partials/product/_cardProduct.html.twig' %}
+								{% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
 							{% endif %}
 						{% endfor %}
 					</div>
@@ -57,7 +56,4 @@
 			</div>
 		</section>
 	</main>
-
-
-
 {% endblock %}

@@ -1,0 +1,155 @@
+.message-section {
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.message-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.message-table th, .message-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.message-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.message-table tr.read td {
+    font-weight: normal;
+}
+
+.message-table tr.unread td {
+    font-weight: bold;
+}
+
+.view-btn, .delete-btn, .send-btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.view-btn {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.view-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.send-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.send-btn:hover {
+    background-color: #218838;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.message-section {
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.message-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.message-table th, .message-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.message-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.message-table tr.read td {
+    font-weight: normal;
+}
+
+.message-table tr.unread td {
+    font-weight: bold;
+}
+
+.view-btn, .delete-btn, .send-btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.view-btn {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.view-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.send-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.send-btn:hover {
+    background-color: #218838;
+}
+
+.delete-form {
+    display: inline;
+}

@@ -80,8 +80,12 @@ body {
 .grid-container {
     display: flex;
     flex-direction: column;
-    gap: 40px; /* Espace entre les catégories */
+    gap: 40px;
     padding: 20px;
+}
+
+.category {
+    margin-bottom: 40px; /* Add space between categories */
 }
 
 .category h3 {
@@ -90,9 +94,10 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales */
-    gap: 20px; /* Espace entre les cartes */
+    grid-template-columns: repeat(4, 1fr); /* 4 columns by default */
+    gap: 20px; /* Space between items */
 }
+
 
 /* Media Queries for Tablets (min-width: 768px and max-width: 1024px) */
 @media (max-width: 1024px) and (min-width: 768px) {
