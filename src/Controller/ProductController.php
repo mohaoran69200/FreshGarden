@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\FavoriteRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -79,12 +81,26 @@ class ProductController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'show')]
-    public function show(Product $product): Response {
-        // Tout le monde peut voir les produits
+    public function show(Product $product, FavoriteRepository $favoriteRepository): Response
+    {
+        $user = $this->getUser();
+        $isFavorite = false;
+
+        if ($user) {
+            $favorite = $favoriteRepository->findOneBy([
+                'user' => $user,
+                'productFavorite' => $product,
+            ]);
+
+            $isFavorite = $favorite !== null;
+        }
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'isFavorite' => $isFavorite,  // Assurez-vous que cette ligne est incluse
         ]);
     }
+
 
     #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted('ROLE_USER')]

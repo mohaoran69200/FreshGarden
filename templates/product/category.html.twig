@@ -9,7 +9,7 @@
             <div class="grid-container">
                 <div class="grid">
                     {% for product in products %}
-                        {% include '_partials/product/_cardProduct.html.twig' %}
+                        {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': isFavorite }%}
                     {% else %}
                         <p>Aucun produit disponible dans cette catégorie.</p>
                     {% endfor %}

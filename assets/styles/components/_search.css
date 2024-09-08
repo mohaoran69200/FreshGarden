@@ -1,9 +1,12 @@
+/* search.css */
+
+/* Section de recherche */
 .search-section {
     padding: 40px 20px;
-    background-color: #f8f8f8;
+    background-color: var(--card-background-color); /* Utilisation de la couleur de fond des cartes */
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
     margin-bottom: 40px;
 }
 
@@ -26,8 +29,8 @@
 
 .form-group label {
     font-weight: bold;
-    font-size: 14px;
-    color: #333;
+    font-size: var(--font-size-small); /* Utilisation de la taille de police définie dans app.css */
+    color: var(--dark-gray); /* Utilisation de la couleur sombre définie dans app.css */
 }
 
 /* Aligne l'input et le symbole "€" sur une seule ligne */
@@ -41,9 +44,9 @@
 .search-section input,
 .search-section select {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    border: 1px solid var(--dark-gray); /* Utilisation de la couleur sombre pour les bordures */
+    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
+    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
     width: 100%; /* Assure que les champs prennent toute la largeur disponible */
     box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
     transition: border-color 0.3s ease;
@@ -51,7 +54,7 @@
 
 .search-section input:focus,
 .search-section select:focus {
-    border-color: #72B01D;
+    border-color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
     outline: none;
 }
 
@@ -61,25 +64,25 @@
 }
 
 .currency-symbol {
-    font-size: 16px;
-    color: #333;
+    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
+    color: var(--dark-gray); /* Utilisation de la couleur sombre définie dans app.css */
 }
 
 /* Bouton de soumission */
 .btn-submit {
-    background-color: #72B01D;
+    background-color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
     padding: 12px 24px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
     transition: background-color 0.3s ease;
     margin-top: 20px;
 }
 
 .btn-submit:hover {
-    background-color: #3F7D20;
+    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
 }
 
 /* Section des produits */
@@ -88,25 +91,12 @@
 }
 
 .products-section h2 {
-    font-size: 28px;
+    font-size: var(--font-size-large); /* Utilisation de la taille de police définie dans app.css */
     font-weight: bold;
-    color: #333;
+    color: var(--text-color); /* Utilisation de la couleur de texte définie dans app.css */
     margin-bottom: 30px;
     text-align: center;
 }
-
-/*.grid-container {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*}*/
-
-/*.grid {*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); !* Colonnes flexibles *!*/
-/*    gap: 20px;*/
-/*    width: 100%;*/
-/*    max-width: 1200px; !* Largeur maximale de la grille *!*/
-/*}*/
 
 /* Media Queries pour ajustements */
 @media (max-width: 768px) {

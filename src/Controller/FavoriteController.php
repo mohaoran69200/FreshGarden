@@ -20,15 +20,17 @@ class FavoriteController extends AbstractController
         $user = $this->getUser();
 
         if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour voir vos favoris.');
+            // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
             return $this->redirectToRoute('login');
         }
 
+        // Récupérer uniquement les favoris de l'utilisateur
         $favorites = $favoriteRepository->findBy(['user' => $user]);
 
         $productFavorites = [];
         $userFavorites = [];
 
+        // Récupérer les produits et utilisateurs ajoutés en favoris
         foreach ($favorites as $favorite) {
             if ($favorite->getProductFavorite()) {
                 $productFavorites[] = $favorite->getProductFavorite();
@@ -37,19 +39,21 @@ class FavoriteController extends AbstractController
             }
         }
 
+        // Passer les favoris au template
         return $this->render('favorite/index.html.twig', [
             'productFavorites' => $productFavorites,
-            'userFavorites' => $userFavorites,
+            'userFavorites' => $userFavorites
         ]);
     }
 
-    #[Route('/add/product/{id}', name: 'add_product')]
-    public function addProductToFavorite(int $id, ProductRepository $productRepository, EntityManagerInterface $entityManager): Response
+
+    #[Route('/toggle/product/{id}', name: 'toggle_product')]
+    public function toggleProductFavorite(int $id, ProductRepository $productRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
 
         if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour ajouter un favori.');
+            $this->addFlash('error', 'Vous devez être connecté pour gérer vos favoris.');
             return $this->redirectToRoute('login');
         }
 
@@ -59,34 +63,38 @@ class FavoriteController extends AbstractController
             throw $this->createNotFoundException('Produit non trouvé.');
         }
 
-        $existingFavorite = $entityManager->getRepository(Favorite::class)->findOneBy([
+        $favoriteRepository = $entityManager->getRepository(Favorite::class);
+        $existingFavorite = $favoriteRepository->findOneBy([
             'user' => $user,
             'productFavorite' => $product,
         ]);
 
         if ($existingFavorite) {
-            $this->addFlash('info', 'Ce produit est déjà dans vos favoris.');
+            // Si le produit est déjà dans les favoris, le supprimer
+            $entityManager->remove($existingFavorite);
+            $entityManager->flush();
+            $this->addFlash('success', 'Produit retiré des favoris.');
         } else {
+            // Sinon, ajouter le produit aux favoris
             $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setProductFavorite($product);
 
             $entityManager->persist($favorite);
             $entityManager->flush();
-
             $this->addFlash('success', 'Produit ajouté aux favoris.');
         }
 
         return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
     }
 
-    #[Route('/add/user/{id}', name: 'add_user')]
-    public function addUserToFavorite(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    #[Route('/toggle/user/{id}', name: 'toggle_user')]
+    public function toggleUserFavorite(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
 
         if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour ajouter un favori.');
+            $this->addFlash('error', 'Vous devez être connecté pour gérer vos favoris.');
             return $this->redirectToRoute('login');
         }
 
@@ -96,76 +104,28 @@ class FavoriteController extends AbstractController
             throw $this->createNotFoundException('Utilisateur non trouvé.');
         }
 
-        $existingFavorite = $entityManager->getRepository(Favorite::class)->findOneBy([
+        $favoriteRepository = $entityManager->getRepository(Favorite::class);
+        $existingFavorite = $favoriteRepository->findOneBy([
             'user' => $user,
             'userFavorite' => $favoriteUser,
         ]);
 
         if ($existingFavorite) {
-            $this->addFlash('info', 'Cet utilisateur est déjà dans vos favoris.');
+            // Si l'utilisateur est déjà dans les favoris, le supprimer
+            $entityManager->remove($existingFavorite);
+            $entityManager->flush();
+            $this->addFlash('success', 'Utilisateur retiré des favoris.');
         } else {
+            // Sinon, ajouter l'utilisateur aux favoris
             $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setUserFavorite($favoriteUser);
 
             $entityManager->persist($favorite);
             $entityManager->flush();
-
             $this->addFlash('success', 'Utilisateur ajouté aux favoris.');
         }
 
         return $this->redirectToRoute('app_user_show', ['id' => $favoriteUser->getId()]);
-    }
-
-    #[Route('/remove/product/{id}', name: 'remove_product')]
-    public function removeProductFromFavorite(int $id, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour supprimer un favori.');
-            return $this->redirectToRoute('login');
-        }
-
-        $favorite = $favoriteRepository->findOneBy([
-            'user' => $user,
-            'productFavorite' => $id,
-        ]);
-
-        if (!$favorite) {
-            $this->addFlash('error', 'Produit non trouvé dans vos favoris.');
-        } else {
-            $entityManager->remove($favorite);
-            $entityManager->flush();
-            $this->addFlash('success', 'Produit retiré des favoris.');
-        }
-
-        return $this->redirectToRoute('app_favorite_index');
-    }
-
-    #[Route('/remove/user/{id}', name: 'remove_user')]
-    public function removeUserFromFavorite(int $id, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour supprimer un favori.');
-            return $this->redirectToRoute('login');
-        }
-
-        $favorite = $favoriteRepository->findOneBy([
-            'user' => $user,
-            'userFavorite' => $id,
-        ]);
-
-        if (!$favorite) {
-            $this->addFlash('error', 'Utilisateur non trouvé dans vos favoris.');
-        } else {
-            $entityManager->remove($favorite);
-            $entityManager->flush();
-            $this->addFlash('success', 'Utilisateur retiré des favoris.');
-        }
-
-        return $this->redirectToRoute('app_favorite_index');
     }
 }

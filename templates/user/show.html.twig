@@ -3,5 +3,5 @@
 {% block title %}Utilisateur{% endblock %}
 
 {% block body %}
-{% include '_partials/user/_card.html.twig' %}
+{% include '_partials/user/_cardUserBig.html.twig' with { 'user': user, 'isFavorite': isFavorite } %}
 {% endblock %}

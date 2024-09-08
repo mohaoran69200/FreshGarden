@@ -3,8 +3,8 @@
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background-color: var(--card-background-color);
+    border-radius: var(--border-radius);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -18,7 +18,7 @@
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
-    color: #333;
+    color: var(--text-color);
 }
 
 /* Style des champs de texte, email, date, etc. */
@@ -32,9 +32,10 @@
 .form-group textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--dark-gray);
     border-radius: 4px;
-    font-size: 16px;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-small);
     box-sizing: border-box;
     transition: border-color 0.3s ease-in-out;
 }
@@ -43,7 +44,7 @@
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #4CAF50;
+    border-color: var(--light-green);
     outline: none;
 }
 
@@ -51,13 +52,14 @@
 .form-group button[type="submit"],
 .form-group button[type="button"],
 .btn {
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--light-green);
+    color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-small);
     transition: background-color 0.3s ease-in-out;
 }
 
@@ -65,7 +67,7 @@
 .form-group button[type="submit"]:hover,
 .form-group button[type="button"]:hover,
 .btn:hover {
-    background-color: #45a049;
+    background-color: var(--dark-green);
 }
 
 /* Styles spécifiques pour les boutons */
@@ -86,7 +88,7 @@
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: var(--font-size-small);
 }
 
 .btn-danger:hover {
@@ -97,7 +99,7 @@
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--dark-gray);
     border-radius: 4px;
 }
 
@@ -107,6 +109,7 @@
     border: none;
 }
 
+/* Images de profil */
 .profile-image-container {
     margin-bottom: 20px;
     text-align: center;
@@ -115,21 +118,21 @@
 .profile-image {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--dark-gray);
 }
 
 /* Texte d'erreur et feedback */
 .error-message {
-    color: red;
-    font-size: 14px;
+    color: #ff4d4d;
+    font-size: var(--font-size-small);
     margin: 5px 0;
     text-align: center;
 }
 
 .success-message {
-    color: green;
-    font-size: 14px;
+    color: var(--light-green);
+    font-size: var(--font-size-small);
     margin: 5px 0;
 }
 
@@ -150,16 +153,16 @@
 /* Style des boutons de lien ou de navigation */
 .link-button {
     background: none;
-    color: #4CAF50;
+    color: var(--light-green);
     border: none;
     cursor: pointer;
     text-decoration: underline;
-    font-size: 16px;
+    font-size: var(--font-size-small);
     padding: 0;
 }
 
 .link-button:hover {
-    color: #45a049;
+    color: var(--dark-green);
 }
 
 /* Alignement des champs de radio et checkbox */
@@ -184,5 +187,5 @@
 
 .terms__container .terms {
     margin: 0;
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }

@@ -1,0 +1,90 @@
+/* message.css */
+
+/* Section de messagerie générale */
+.message-section {
+    margin: 20px;
+    font-family: var(--font-family-primary); /* Utilisation de la police définie dans app.css */
+    color: var(--text-color); /* Utilisation de la couleur de texte définie dans app.css */
+}
+
+/* Titres */
+h1, h2 {
+    color: var(--dark-gray); /* Utilisation de la couleur sombre définie dans app.css */
+}
+
+/* Tableau des messages */
+.message-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: var(--font-family-primary); /* Utilisation de la police définie dans app.css */
+}
+
+.message-table th,
+.message-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.message-table th {
+    background-color: var(--card-background-color); /* Utilisation de la couleur de fond des cartes définie dans app.css */
+    font-weight: bold;
+}
+
+.message-table tr.read td {
+    font-weight: normal;
+}
+
+.message-table tr.unread td {
+    font-weight: bold;
+}
+
+/* Boutons */
+.view-btn,
+.delete-btn,
+.send-btn {
+    padding: 8px 12px;
+    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+    font-family: var(--font-family-secondary); /* Utilisation de la police secondaire définie dans app.css */
+}
+
+/* Bouton Voir */
+.view-btn {
+    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+    color: #fff;
+}
+
+.view-btn:hover {
+    background-color: #3F7D20; /* Couleur de survol personnalisée pour cohérence */
+}
+
+/* Bouton Supprimer */
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Bouton Envoyer */
+.send-btn {
+    background-color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
+    color: white;
+    padding: 10px 20px;
+}
+
+.send-btn:hover {
+    background-color: #218838;
+}
+
+/* Formulaire de suppression */
+.delete-form {
+    display: inline;
+}

@@ -1,0 +1,7 @@
+{% block body %}
+    <div class="page-container">
+        {% include '_partials/product/_cardProductBig.html.twig' with { 'product': product, 'isFavorite': isFavorite } %}
+
+        {% include '_partials/user/_cardUserSmall.html.twig' with { 'user': product.user, 'isFavorite': isFavorite } %}
+    </div>
+{% endblock %}

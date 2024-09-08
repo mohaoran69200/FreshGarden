@@ -1,0 +1,218 @@
+.product-card {
+    width: 300px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white2);
+    margin: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image uniforme */
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Conteneur des détails du produit */
+.product-details-container {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Nom du produit */
+.product-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--dark-green);
+}
+
+/* Prix et stock */
+.product-info span {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--black);
+}
+
+/* Conteneur des détails de l'utilisateur */
+.user-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centrer verticalement */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: var(--black);
+}
+
+.user-details-container a {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: underline;
+    color: var(--dark-green); /* Conserver la couleur du texte */
+}
+
+.user-details-container span {
+    display: flex; /* Utiliser flexbox pour aligner le texte et les SVG */
+    align-items: center; /* Centrer verticalement le texte et les SVG */
+    margin: 0;
+    padding: 0 10px; /* Ajouter un peu d'espace horizontal */
+    text-align: center; /* Centrer le texte dans chaque span */
+}
+
+.user-details-container svg {
+    width: 16px; /* Ajuster la taille du SVG */
+    height: 16px; /* Ajuster la taille du SVG */
+    margin-right: 5px; /* Ajouter un espace entre le SVG et le texte */
+    vertical-align: middle; /* Aligner le SVG au milieu du texte */
+}
+
+
+
+/* Conteneur des actions (boutons) */
+.actions {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions form,
+.actions a {
+    display: inline-block;
+    margin: 0;
+}
+
+.actions button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.actions .favorite-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.actions .favorite-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Style pour le bouton Modifier et Supprimer */
+.actions button.modify,
+.actions button.delete {
+    margin-left: 5px;
+}
+
+
+/* Carte utilisateur (style rectangulaire horizontal) */
+.user-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.user-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.user-card h3 {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-medium);
+    margin: 10px 0;
+    text-align: left;
+    color: var(--text-color);
+}
+
+.user-card div,
+.user-card h3,
+.user-card span {
+    text-align: left;
+    margin-left: 20px;
+}
+
+/* Boutons */
+.actions {
+    margin-top: 10px;
+}
+
+.actions button {
+    background-color: var(--light-green);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 0 5px;
+    transition: background-color 0.2s;
+}
+
+.actions button:hover {
+    background-color: var(--dark-green);
+}
+
+button.favorite-button {
+    background-color: transparent; /* Rendre le fond du bouton transparent */
+    border: none; /* Supprimer la bordure du bouton */
+    cursor: pointer; /* Assurer que le curseur indique que l'élément est cliquable */
+    padding: 0; /* Enlever tout padding pour ne montrer que le SVG */
+    display: flex; /* Utiliser flexbox pour centrer le SVG */
+    justify-content: center; /* Centrer horizontalement le SVG */
+    align-items: center; /* Centrer verticalement le SVG */
+}
+
+button.favorite-button svg {
+    width: 24px; /* Ajuster la taille du SVG */
+    height: 24px; /* Ajuster la taille du SVG */
+}
+
+
+/* Ads list for user card */
+.ads-list {
+    text-align: left;
+    margin-left: 20px;
+}
+
+.ads-list h4 {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-medium);
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.ads-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ads-list li {
+    margin-bottom: 10px;
+}

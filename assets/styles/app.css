@@ -1,14 +1,13 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-small);
     line-height: 1.6;
-    color: #333;
-    background-color: #ffffff;
+    color: var(--text-color);
+    background-color: var(--background-color);
     box-sizing: border-box;
 }
-
 
 *,
 *::before,
@@ -23,39 +22,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    margin: 0 0 1em;
+    margin: 0 0 1.5em; /* Ajout d'un peu plus d'espace pour les paragraphes */
 }
 
 a {
-    color: #3F7D20;
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
 h1 {
-    font-family: 'Pacifico', cursive;
-    font-size: 3em;
+    font-family: var(--font-family-heading);
+    font-size: 2.5em; /* Ajustement de la taille pour plus de cohérence */
     font-weight: 400;
 }
 
 h2, h3, h4, h5, h6 {
-    font-family: 'Lato', sans-serif;
+    font-family: var(--font-family-secondary);
     font-weight: 700;
-}
-
-body, p {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1em;
-    font-weight: 400;
+    margin-bottom: 0.5em; /* Espacement sous les titres */
 }
 
 .flash-message {
     padding: 15px;
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium); /* Ajustement de la taille du texte pour les messages */
 }
 
 .flash-success {
@@ -73,3 +63,17 @@ body, p {
     color: #004085;
 }
 
+/* Media Queries pour Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: var(--font-size-small);
+    }
+
+    .flash-message {
+        font-size: var(--font-size-small);
+    }
+}

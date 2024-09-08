@@ -10,7 +10,7 @@
         <div class="favorites-list">
             {% if productFavorites is not empty %}
                 {% for product in productFavorites %}
-                    {% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
+                    {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': true } %}
                 {% endfor %}
             {% else %}
                 <div class="card">Vous n'avez pas encore de produits favoris.</div>
@@ -21,7 +21,7 @@
         <div class="favorites-list">
             {% if userFavorites is not empty %}
                 {% for user in userFavorites %}
-                    {% include '_partials/user/_card.html.twig' with {'user': user} %}
+                    {% include '_partials/user/_cardUserSmall.html.twig' with { 'user': user, 'isFavorite': true } %}
                 {% endfor %}
             {% else %}
                 <div class="card">Vous n'avez pas encore d'utilisateurs favoris.</div>

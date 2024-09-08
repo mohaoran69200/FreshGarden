@@ -3,5 +3,5 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-{% include '_partials/product/_show.html.twig' %}
+    {% include '_partials/_show.html.twig' with { 'product': product, 'isFavorite': isFavorite } %}
 {% endblock %}

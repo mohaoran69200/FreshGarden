@@ -1,0 +1,15 @@
+:root {
+    --white: #FFFFFF; /* Couleur de fond du site */
+    --white2: #F6F6F6; /* Nuance de blanc pour les cartes */
+    --light-green: #72B01D; /* Couleur verte claire */
+    --dark-green: #3F7D20; /* Vert un peu plus foncé */
+    --black: #0D0A0B; /* Couleur noire pour les textes */
+    --dark-gray: #454955; /* Nuance sombre */
+    --font-size-large: 1.5rem;
+    --font-size-medium: 1.25rem;
+    --font-size-small: 1rem;
+    --border-radius: 12px;
+    --font-family-heading: 'Pacifico', cursive, sans-serif;
+    --font-family-primary: 'Merriweather', serif, sans-serif;
+    --font-family-secondary: 'Poppins', sans-serif, serif;
+}

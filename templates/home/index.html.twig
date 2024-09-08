@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil - Fresh Garden{% endblock %}
@@ -9,7 +10,7 @@
 			<p>Vendez vos récoltes et achetez les produits frais de vos voisins.</p>
 			<div class="btn-container">
 				<a href="{{ path('app_product_new') }}" class="btn-vente">Vendez</a>
-				<a href="{{ path('app_product_new') }}" class="btn-achat">Achetez</a>
+				<a href="{{ path('app_search') }}" class="btn-achat">Achetez</a>
 			</div>
 		</div>
 		<div class="img-home-container">
@@ -26,7 +27,8 @@
 					<div class="grid">
 						{% for product in products %}
 							{% if product.categorie.name == 'Fruits' %}
-								{% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
+								{% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
+								{% include '_partials/product/_cardProductSmall.html.twig' with {'product': product, 'isFavorite': isFavorite} %}
 							{% endif %}
 						{% endfor %}
 					</div>
@@ -37,7 +39,8 @@
 					<div class="grid">
 						{% for product in products %}
 							{% if product.categorie.name == 'Legumes' %}
-								{% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
+								{% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
+								{% include '_partials/product/_cardProductSmall.html.twig' with {'product': product, 'isFavorite': isFavorite} %}
 							{% endif %}
 						{% endfor %}
 					</div>
@@ -48,7 +51,8 @@
 					<div class="grid">
 						{% for product in products %}
 							{% if product.categorie.name == 'Autre' %}
-								{% include '_partials/product/_cardProduct.html.twig' with {'product': product} %}
+								{% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
+								{% include '_partials/product/_cardProductSmall.html.twig' with {'product': product, 'isFavorite': isFavorite} %}
 							{% endif %}
 						{% endfor %}
 					</div>
