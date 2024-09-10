@@ -1,3 +1,4 @@
+/*style pour cardProduct small*/
 .product-card {
     width: 300px;
     border: 1px solid #e0e0e0;
@@ -216,3 +217,101 @@ button.favorite-button svg {
 .ads-list li {
     margin-bottom: 10px;
 }
+
+/* style pour cardProductBig*/
+
+.product-card-large {
+    width: 100%;
+    max-width: 900px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white2);
+    margin: 20px auto;
+    padding: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-card-large:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-details-container-large {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.product-details-container-large img {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.product-info-large {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.product-info-large h2 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--dark-green);
+}
+
+.product-info-large p {
+    margin: 10px 0;
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.price-stock {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-details-container-large {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.user-details-container-large svg {
+    width: 18px;
+    height: 18px;
+}
+
+.actions-large {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+}
+
+.actions-large button {
+    background-color: var(--light-green);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.actions-large button:hover {
+    background-color: var(--dark-green);
+}
+

@@ -10,15 +10,21 @@
     </h2>
 
     <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div class="form-group">
         {{ form_label(form.categorie) }}
         {{ form_widget(form.categorie, { 'attr': {'class': 'form-control'} }) }}
         {{ form_errors(form.categorie) }}
     </div>
 
     <div class="form-group">
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
-        {{ form_errors(form.name) }}
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.description) }}
     </div>
 
     <div class="form-group">
