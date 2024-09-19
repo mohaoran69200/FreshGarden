@@ -4,24 +4,37 @@
     justify-content: space-between;
     align-items: flex-start; /* Aligne les cartes en haut */
     margin: 20px auto;
-    max-width: 1200px; /* Limite la largeur maximale du conteneur */
+    max-width: 100%; /* Limite la largeur maximale du conteneur */
+}
+
+/* Conteneur principal qui contient le grid des cartes produits */
+.grid-container {
+    margin: 0 auto; /* Centre le conteneur */
+    padding: 0 20px; /* Ajoute une marge sur les côtés */
+    max-width: 1200px; /* Définit une largeur maximale pour éviter que le contenu ne s'étale trop */
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 éléments par ligne */
+    gap: 15px; /* Espace entre les cartes */
+    justify-items: center; /* Centre les éléments horizontalement */
+    align-items: flex-start; /* Aligne les éléments au début verticalement */
 }
 
 /*style pour cardProduct small*/
 .product-card {
-    width: 300px;
+    width: 100%;
+    max-width: 280px; /* Ajuste la largeur maximale pour chaque carte produit */
+    height: 450px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
     background-color: var(--white2);
-    margin: 20px;
     transition: box-shadow 0.3s ease-in-out;
-    flex-grow: 1; /* Permet à la carte produit de prendre plus d'espace */
-    max-width: 65%; /* Limite éventuellement la largeur */
 }
+
 
 .product-card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -31,6 +44,7 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .product-details-container {
@@ -229,7 +243,7 @@
 
 
 
-/* Carte utilisateur */
+/* Carte utilisateur small */
 .user-card {
     background-color: var(--white2);
     border: 1px solid #e0e0e0;
@@ -335,6 +349,135 @@
     text-decoration: underline;
 }
 
+
+/* Style pour la grande carte utilisateur (userBig) */
+.user-card-large {
+    background-color: var(--white2);
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 700px; /* Ajuster selon la taille que tu veux */
+    margin: 30px auto;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.user-card-large:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.user-profile-pic-large {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 20px auto;
+    border: 4px solid var(--light-green);
+}
+
+.user-card-content-large {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.user-name-large {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dark-green);
+    margin-bottom: 10px;
+}
+
+.user-city-large {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.actions-large {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.contact-button-large {
+    background-color: var(--light-green);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.contact-button-large:hover {
+    background-color: var(--dark-green);
+}
+
+.favorite-button-large {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.favorite-button-large svg {
+    width: 30px;
+    height: 30px;
+    color: var(--dark-green);
+}
+
+.ads-list-large {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.ads-list-large h4 {
+    font-size: 1.3rem;
+    color: var(--dark-green);
+    margin-bottom: 15px;
+}
+
+.ads-list-large ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ads-list-large li {
+    margin-bottom: 15px;
+}
+
+.ads-list-large a {
+    text-decoration: none;
+    color: var(--light-green);
+}
+
+.ads-list-large a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive adjustments for mobile */
+@media screen and (max-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 éléments par ligne en écran plus petit */
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 éléments par ligne pour les écrans encore plus petits */
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr; /* 1 élément par ligne sur mobile */
+    }
+}
 
 
 

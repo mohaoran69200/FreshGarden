@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditUserType;
 use App\Form\EditPasswordType;
+use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,10 +96,28 @@ class UserController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'show')]
-    public function show(User $user): Response
+    public function show(User $user, FavoriteRepository $favoriteRepository): Response
     {
+        // Récupérer l'utilisateur actuellement connecté
+        $currentUser = $this->getUser();
+
+        // Initialiser la variable $isFavorite à false par défaut
+        $isFavorite = false;
+
+        // Si l'utilisateur est connecté, vérifier s'il a ajouté cet utilisateur (le profil affiché) à ses favoris
+        if ($currentUser) {
+            $favorite = $favoriteRepository->findOneBy([
+                'user' => $currentUser,  // Utilisateur connecté (celui qui peut avoir des favoris)
+                'userFavorite' => $user  // Utilisateur dont on consulte le profil
+            ]);
+
+            // Si un favori existe, $isFavorite devient true
+            $isFavorite = $favorite !== null;
+        }
+
         return $this->render('user/show.html.twig', [
-            'user' => $user,
+            'user' => $user,              // Utilisateur dont on consulte le profil
+            'isFavorite' => $isFavorite,  // Est-il dans les favoris de l'utilisateur connecté ?
         ]);
     }
 

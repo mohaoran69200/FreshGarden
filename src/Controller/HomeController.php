@@ -21,11 +21,17 @@ class HomeController extends AbstractController
             $favorites = $favoriteRepository->findBy(['user' => $user]);
         }
 
-        // Créez un tableau associatif pour vérifier si un produit est favori
         $favoritesMap = [];
         foreach ($favorites as $favorite) {
-            $favoritesMap[$favorite->getProductFavorite()->getId()] = true;
+            $productFavorite = $favorite->getProductFavorite();
+            $userFavorite = $favorite->getUserFavorite();
+
+            // Vérifie si le favori a un produit et un utilisateur associés
+            if ($productFavorite !== null && $userFavorite !== null) {
+                $favoritesMap[$productFavorite->getId()] = true;
+            }
         }
+
 
         return $this->render('home/index.html.twig', [
             'products' => $products,
