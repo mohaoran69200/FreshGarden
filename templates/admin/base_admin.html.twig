@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Fresh Garden
+        {% endblock %}
+    </title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/base/_variable.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/components/_header.css') }}">
+{#        <link rel="stylesheet" href="{{ asset('styles/components/_footer.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/pages/_home.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/base/_form.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/components/_search.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/pages/_edit-profile.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/components/_card.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/pages/_cart.css') }}">#}
+{#        <link rel="stylesheet" href="{{ asset('styles/pages/_message.css') }}">#}
+    {% endblock %}
+
+</head>
+<body>
+{% block header %}
+    {% include 'admin/_header_admin.html.twig' %}
+{% endblock %}
+{% block body %}
+{#    {% for type, messages in app.flashes %}#}
+{#        <div class="flash-message flash-{{ type }}">#}
+{#            {% for message in messages %}#}
+{#                <p>{{ message }}</p>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% endfor %}#}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/header.js') }}"></script>
+    {% block importmap %}
+        {{ importmap('app') }}
+    {% endblock %}
+{% endblock %}
+</body>
+</html>

@@ -81,7 +81,8 @@ class ProductController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'show')]
-    public function show(Product $product, FavoriteRepository $favoriteRepository): Response
+    public function show(Product $product,
+                         FavoriteRepository $favoriteRepository): Response
     {
         $user = $this->getUser();
         $isFavorite = false;
@@ -104,7 +105,8 @@ class ProductController extends AbstractController
 
     #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted('ROLE_USER')]
-    public function remove(Product $product, EntityManagerInterface $entityManager): Response {
+    public function remove(Product $product,
+                           EntityManagerInterface $entityManager): Response {
         $this->denyAccessUnlessGranted('delete', $product);  // Vérifiez si l'utilisateur peut supprimer le produit
 
         $entityManager->remove($product);
@@ -115,35 +117,89 @@ class ProductController extends AbstractController
     }
 
     #[Route('/fruits', name: 'fruits')]
-    public function fruits(ProductRepository $productRepository, CategorieRepository $categorieRepository): Response {
+    public function fruits(ProductRepository $productRepository,
+                           CategorieRepository $categorieRepository,
+                            FavoriteRepository $favoriteRepository): Response
+    {
+
         $categorie = $categorieRepository->findOneBy(['name' => 'Fruits']);
         $products = $productRepository->findBy(['categorie' => $categorie]);
+
+        $user = $this->getUser();
+        $isFavorite = false;
+
+        if ($user) {
+            foreach ($products as $product) {
+                $favorite = $favoriteRepository->findOneBy([
+                    'user' => $user,
+                    'productFavorite' => $product,
+                ]);
+                $isFavorite = $favorite !== null;
+            }
+        }
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
             'categorie' => 'Fruits',
+            'isFavorite' => $isFavorite,
         ]);
     }
 
     #[Route('/legumes', name: 'legumes')]
-    public function legumes(ProductRepository $productRepository, CategorieRepository $categorieRepository): Response {
-        $categorie = $categorieRepository->findOneBy(['name' => 'Legumes']);
+    public function legumes(ProductRepository $productRepository,
+                           CategorieRepository $categorieRepository,
+                           FavoriteRepository $favoriteRepository): Response
+    {
+
+        $categorie = $categorieRepository->findOneBy(['name' => 'Légumes']);
         $products = $productRepository->findBy(['categorie' => $categorie]);
+
+        $user = $this->getUser();
+        $isFavorite = false;
+
+        if ($user) {
+            foreach ($products as $product) {
+                $favorite = $favoriteRepository->findOneBy([
+                    'user' => $user,
+                    'productFavorite' => $product,
+                ]);
+                $isFavorite = $favorite !== null;
+            }
+        }
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
             'categorie' => 'Légumes',
+            'isFavorite' => $isFavorite,
         ]);
     }
 
     #[Route('/autres', name: 'autres')]
-    public function autre(ProductRepository $productRepository, CategorieRepository $categorieRepository): Response {
+    public function autres(ProductRepository $productRepository,
+                           CategorieRepository $categorieRepository,
+                           FavoriteRepository $favoriteRepository): Response
+    {
+
         $categorie = $categorieRepository->findOneBy(['name' => 'Autre']);
         $products = $productRepository->findBy(['categorie' => $categorie]);
+
+        $user = $this->getUser();
+        $isFavorite = false;
+
+        if ($user) {
+            foreach ($products as $product) {
+                $favorite = $favoriteRepository->findOneBy([
+                    'user' => $user,
+                    'productFavorite' => $product,
+                ]);
+                $isFavorite = $favorite !== null;
+            }
+        }
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
             'categorie' => 'Autre',
+            'isFavorite' => $isFavorite,
         ]);
     }
 }
