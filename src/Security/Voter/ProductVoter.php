@@ -45,7 +45,6 @@ class ProductVoter extends Voter
                 // Seul le propriétaire du produit peut le supprimer
                 return $user === $product->getUser();
         }
-
         return false;
     }
 }

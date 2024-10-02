@@ -23,7 +23,8 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request,
+                        EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(User1Type::class, $user);
@@ -51,7 +52,9 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request,
+                         User $user,
+                         EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
@@ -69,7 +72,9 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request,
+                           User $user,
+                           EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);

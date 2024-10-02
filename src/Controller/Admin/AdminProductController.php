@@ -23,7 +23,8 @@ class AdminProductController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request,
+                        EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
         $form = $this->createForm(Product1Type::class, $product);
@@ -51,7 +52,9 @@ class AdminProductController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request,
+                         Product $product,
+                         EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(Product1Type::class, $product);
         $form->handleRequest($request);

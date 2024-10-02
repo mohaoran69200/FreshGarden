@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'admin_dashboard')]
+    #[isGranted('ROLE_ADMIN')]
     public function dashboard(UserRepository $userRepository, ProductRepository $productRepository): Response
     {
         //Je récupére le nombre total d'utilisateur

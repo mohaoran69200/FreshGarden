@@ -2,7 +2,52 @@
 {% block title %}Acceuil administrateur{% endblock %}
 
 {% block body %}
+    <div class="dashboard">
+        <h1>Bienvenue sur le tableau de bord de l'administration</h1>
 
+        <div class="stats">
+            <div class="stat-item">
+                <h2>Total Utilisateurs</h2>
+                <p>{{ totalUsers }}</p>
+            </div>
+
+            <div class="stat-item">
+                <h2>Total Produits / Annonces</h2>
+                <p>{{ totalProducts }}</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background-color: #f7f7f7;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-item h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .stat-item p {
+            font-size: 2em;
+            font-weight: bold;
+        }
+    </style>
 {% endblock %}
 
 
