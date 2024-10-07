@@ -2,26 +2,30 @@
 
 namespace App\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'login')]
+    #[Route('/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-            // Redirect to homepage if user is already authenticated
-            if ($this->getUser()) {
-                return $this->redirectToRoute('home'); // Replace with your route name
+        // Redirige l'utilisateur s'il est déjà connecté
+        $user = $this->getUser();
+        if ($user) {
+            // Vérification directe des rôles
+            if (in_array('ROLE_ADMIN', $user->getRoles())) {
+                return $this->redirectToRoute('app_admin_dashboard'); // Redirection vers le dashboard admin
+            } elseif (in_array('ROLE_USER', $user->getRoles())) {
+                return $this->redirectToRoute('profile'); // Redirection vers le profil de l'utilisateur
             }
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+            return $this->redirectToRoute('home'); // Redirection vers la page d'accueil par défaut
+        }
 
-        // last username entered by the user
+        // Récupère les erreurs d'authentification et le dernier nom d'utilisateur
+        $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
@@ -33,6 +37,7 @@ class SecurityController extends AbstractController
     #[Route('/logout', name: 'logout')]
     public function logout(): void
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        // Cette méthode peut rester vide - elle est interceptée par le système de sécurité de Symfony.
+        throw new \LogicException('Cette méthode peut rester vide - elle est interceptée par le système de sécurité de Symfony.');
     }
 }

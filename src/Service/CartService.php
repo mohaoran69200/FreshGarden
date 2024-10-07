@@ -20,11 +20,9 @@ class CartService
     public function addToCart(int $id): void
     {
         $cart = $this->requestStack->getSession()->get('cart', []);
-        if(!empty($cart[$id]))
-        {
+        if(!empty($cart[$id])) {
             $cart[$id]++;
-        }else
-        {
+        }else {
             $cart[$id] = 1;
         }
         $this->getSession()->set('cart', $cart);
@@ -46,8 +44,7 @@ class CartService
     {
         $cart = $this->getSession()->get('cart');
         $cartData = [];
-        if($cart)
-        {
+        if($cart) {
             foreach ($cart as $id => $quantity)
             {
                 $product = $this->entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);

@@ -14,41 +14,43 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/favorite', name: 'app_favorite_')]
 class FavoriteController extends AbstractController
 {
+    // Je récupère les favoris de l'utilisateur connecté et les affiche.
     #[Route('/', name: 'index')]
     public function index(FavoriteRepository $favoriteRepository): Response
     {
         $user = $this->getUser();
 
         if (!$user) {
-            // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
             return $this->redirectToRoute('login');
         }
 
-        // Récupérer uniquement les favoris de l'utilisateur
+        // Je récupère tous les favoris de l'utilisateur actuel.
         $favorites = $favoriteRepository->findBy(['user' => $user]);
 
         $productFavorites = [];
         $userFavorites = [];
 
-        // Récupérer les produits et utilisateurs ajoutés en favoris
+        // Je parcours tous les favoris récupérés de l'utilisateur.
         foreach ($favorites as $favorite) {
+            // Si le favori est un produit, je l'ajoute dans la liste des produits favoris.
             if ($favorite->getProductFavorite()) {
                 $productFavorites[] = $favorite->getProductFavorite();
+                // Sinon, si le favori est un utilisateur, je l'ajoute dans la liste des utilisateurs favoris.
             } elseif ($favorite->getUserFavorite()) {
                 $userFavorites[] = $favorite->getUserFavorite();
             }
         }
 
-        // Passer les favoris au template
         return $this->render('favorite/index.html.twig', [
             'productFavorites' => $productFavorites,
-            'userFavorites' => $userFavorites
-        ]);
+            'userFavorites' => $userFavorites]);
     }
 
-
+    // Je gère l'ajout/retrait d'un produit aux favoris de l'utilisateur connecté.
     #[Route('/toggle/product/{id}', name: 'toggle_product')]
-    public function toggleProductFavorite(int $id, ProductRepository $productRepository, EntityManagerInterface $entityManager): Response
+    public function toggleProductFavorite(int $id,
+                                          ProductRepository $productRepository,
+                                          EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
 
@@ -69,13 +71,13 @@ class FavoriteController extends AbstractController
             'productFavorite' => $product,
         ]);
 
+        // Si le produit est déjà dans les favoris, je le supprime.
         if ($existingFavorite) {
-            // Si le produit est déjà dans les favoris, le supprimer
             $entityManager->remove($existingFavorite);
             $entityManager->flush();
             $this->addFlash('success', 'Produit retiré des favoris.');
         } else {
-            // Sinon, ajouter le produit aux favoris
+            // Sinon, je l'ajoute aux favoris de l'utilisateur.
             $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setProductFavorite($product);
@@ -88,8 +90,11 @@ class FavoriteController extends AbstractController
         return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
     }
 
+    // Je gère l'ajout/retrait d'un utilisateur aux favoris de l'utilisateur connecté.
     #[Route('/toggle/user/{id}', name: 'toggle_user')]
-    public function toggleUserFavorite(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function toggleUserFavorite(int $id,
+                                       UserRepository $userRepository,
+                                       EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
 
@@ -110,13 +115,13 @@ class FavoriteController extends AbstractController
             'userFavorite' => $favoriteUser,
         ]);
 
+        // Si l'utilisateur est déjà dans les favoris, je le supprime.
         if ($existingFavorite) {
-            // Si l'utilisateur est déjà dans les favoris, le supprimer
             $entityManager->remove($existingFavorite);
             $entityManager->flush();
             $this->addFlash('success', 'Utilisateur retiré des favoris.');
         } else {
-            // Sinon, ajouter l'utilisateur aux favoris
+            // Sinon, je l'ajoute aux favoris de l'utilisateur.
             $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setUserFavorite($favoriteUser);

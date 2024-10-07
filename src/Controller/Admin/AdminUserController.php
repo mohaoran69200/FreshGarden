@@ -17,13 +17,21 @@ class AdminUserController extends AbstractController
     #[Route('/', name: 'app_admin_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('admin_user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+        // Je récupere tous les users
+        $users = $userRepository->findAll();
+
+        // Je récupere tous les users bannis
+        $bannedUsers = $userRepository->findBy(['isBanned' => true]);
+
+        return $this->render('admin/admin_user/index.html.twig', [
+            'users' => $users,
+            'bannedUsers' => $bannedUsers,
         ]);
     }
 
+
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,
+    public function new(Request                $request,
                         EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -52,8 +60,8 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,
-                         User $user,
+    public function edit(Request                $request,
+                         User                   $user,
                          EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(User1Type::class, $user);
@@ -71,12 +79,22 @@ class AdminUserController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/ban', name: 'app_admin_user_ban', methods: ['POST'])]
+    public function ban(User $user, EntityManagerInterface $entityManager): Response
+    {
+        // Bascule le statut de bannissement
+        $user->setIsBanned(!$user->isBanned());
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_user_index');
+    }
+
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
-    public function delete(Request $request,
-                           User $user,
+    public function delete(Request                $request,
+                           User                   $user,
                            EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
@@ -84,3 +102,6 @@ class AdminUserController extends AbstractController
         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+
+
+

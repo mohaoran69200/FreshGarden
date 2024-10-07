@@ -13,113 +13,122 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted("ROLE_USER")] // Assure que seul un utilisateur connecté peut accéder à ce contrôleur
-#[Route('/message', name: 'message_')] // Route de base pour les actions liées aux messages
+#[IsGranted("ROLE_USER")]
+#[Route('/message', name: 'message_')]
 class MessageController extends AbstractController
 {
     private AuthorizationCheckerInterface $authChecker;
 
-    // Injection du service d'autorisation dans le constructeur
+    // Je crée un constructeur pour initialiser l'AuthorizationChecker
     public function __construct(AuthorizationCheckerInterface $authChecker)
     {
         $this->authChecker = $authChecker;
     }
 
+    // J'affiche la page principale des messages
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+        // Je redirige l'utilisateur vers la page de connexion s'il n'est pas connecté
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
         }
 
-        // Affiche la vue des messages (liste, etc.)
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
         ]);
     }
 
+    // Je gère l'envoi d'un message à un utilisateur spécifique
     #[Route('/send/{id}', name: 'send')]
     public function send(
         int $id,
         Request $request,
-        EntityManagerInterface $entityManager
-    ): Response {
+        EntityManagerInterface $entityManager): Response
+    {
+        // Je récupère le destinataire à partir de son ID
         $recipient = $entityManager->getRepository(User::class)->find($id);
         if (!$recipient) {
             throw $this->createNotFoundException('Destinataire non trouvé.');
         }
 
+        // Je crée un nouveau message et l'associe au destinataire
         $message = new Message();
         $message->setRecipient($recipient);
+        // Je crée le formulaire pour envoyer un message
         $form = $this->createForm(MessageType::class, $message);
 
+        // Je gère la soumission du formulaire
         $form->handleRequest($request);
 
+        // Si le formulaire est soumis et valide, j'enregistre le message
         if ($form->isSubmitted() && $form->isValid()) {
-            // Définit l'expéditeur comme l'utilisateur actuellement connecté
             $message->setSender($this->getUser());
 
             $entityManager->persist($message);
             $entityManager->flush();
 
+            // Je notifie l'utilisateur que le message a été envoyé
             $this->addFlash("message", "Votre message a bien été envoyé.");
             return $this->redirectToRoute('message_index');
         }
 
+        // Si le formulaire n'est pas soumis ou est invalide, je renvoie le formulaire avec la vue
         return $this->render('message/send.html.twig', [
             "form" => $form->createView(),
             'recipient' => $recipient,
         ]);
     }
 
-
-
+    // J'affiche les messages reçus par l'utilisateur connecté
     #[Route('/received', name: 'received')]
     public function received(): Response
     {
+        // Je récupère l'utilisateur connecté
         $user = $this->getUser();
-        // Récupère les messages reçus par l'utilisateur
-        $messages = $user->getReceived(); // Utilise la méthode appropriée pour obtenir les messages reçus
 
-        // Affiche les messages reçus dans la vue
+        // Je récupère les messages reçus par cet utilisateur
+        $messages = $user->getReceived();
+
         return $this->render('message/received.html.twig', [
             'messages' => $messages,
         ]);
     }
 
+    // Je marque un message comme lu et affiche son contenu
     #[Route('/read/{id}', name: 'read')]
     public function read(
         EntityManagerInterface $entityManager,
-        Message $message
-    ): Response
+        Message $message): Response
     {
-        // Vérifie si l'utilisateur a le droit de voir ce message
+        // Je vérifie que l'utilisateur a bien les droits pour lire ce message
         $this->denyAccessUnlessGranted('view', $message);
 
-        // Marque le message comme lu
+        // Je marque le message comme lu
         $message->setRead(true);
 
-        $entityManager->persist($message); // Prépare la mise à jour du message
-        $entityManager->flush(); // Effectue la mise à jour en base de données
+        // J'enregistre cette modification en base de données
+        $entityManager->persist($message);
+        $entityManager->flush();
 
-        // Affiche le contenu du message dans la vue
+        // J'affiche la page du message avec son contenu
         return $this->render('message/read.html.twig', ['message' => $message]);
     }
 
+    // Je supprime un message
     #[Route('/delete/{id}', name: 'delete')]
     public function delete(
         EntityManagerInterface $entityManager,
-        Message $message
-    ): Response
+        Message $message): Response
     {
-        // Vérifie si l'utilisateur a le droit de supprimer ce message
+        // Je m'assure que l'utilisateur a les droits pour supprimer ce message
         $this->denyAccessUnlessGranted('delete', $message);
 
-        $entityManager->remove($message); // Prépare la suppression du message
-        $entityManager->flush(); // Effectue la suppression en base de données
+        // Je supprime le message de la base de données
+        $entityManager->remove($message);
+        $entityManager->flush();
 
-        // Redirection vers la liste des messages après suppression
+        // Je redirige vers la page principale des messages après suppression
         return $this->redirectToRoute('message_index');
     }
 }

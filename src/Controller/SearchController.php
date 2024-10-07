@@ -13,28 +13,34 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/search', name: 'app_')]
 class SearchController extends AbstractController
 {
+    // Gestion de l'affichage de la page de recherche
     #[Route('', name: 'search')]
     public function index(Request $request, ProductRepository $productRepository): Response
     {
+        // Je crée un nouvel objet SearchDto pour stocker les critères de recherche
         $search = new SearchDto();
+        // Je génère le formulaire de recherche à partir du SearchDto
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
 
-// Initialisation des résultats
+        // J'initialise les résultats avec tous les produits au départ
         $results = $productRepository->findAll();
 
-// Vérifie si le formulaire est soumis et valide
+        // Si le formulaire est soumis et valide, je recherche selon les critères entrés
         if ($form->isSubmitted() && $form->isValid()) {
             $results = $productRepository->search($search);
         } else {
-// Vérifie si une recherche via la barre de recherche du header est envoyée
+            // Sinon, je récupère le terme de recherche depuis les paramètres de requête
             $searchTerm = $request->query->get('search');
             if ($searchTerm) {
+                // Je mets à jour l'objet SearchDto avec ce terme
                 $search->setSearch($searchTerm);
+                // Je recherche avec ce terme via le repository
                 $results = $productRepository->search($search);
             }
         }
 
+        // Je retourne la vue avec le formulaire et les résultats
         return $this->render('search/index.html.twig', [
             'form' => $form,
             'results' => $results
