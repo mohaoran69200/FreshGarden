@@ -17,8 +17,15 @@ class AdminUserController extends AbstractController
     #[Route('/', name: 'app_admin_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('admin_user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+        // Récupérer tous les utilisateurs
+        $users = $userRepository->findAll();
+
+        // Récupérer les utilisateurs bannis (isBanned = true)
+        $bannedUsers = $userRepository->findBy(['isBanned' => true]);
+
+        return $this->render('admin/admin_user/index.html.twig', [
+            'users' => $users,
+            'bannedUsers' => $bannedUsers,
         ]);
     }
 
@@ -37,7 +44,7 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('admin_user/new.html.twig', [
+        return $this->render('admin/admin_user/new.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
@@ -46,7 +53,7 @@ class AdminUserController extends AbstractController
     #[Route('/{id}', name: 'app_admin_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('admin_user/show.html.twig', [
+        return $this->render('admin/admin_user/show.html.twig', [
             'user' => $user,
         ]);
     }
@@ -65,11 +72,32 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('admin_user/edit.html.twig', [
+        return $this->render('admin/admin_user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
+
+// Pour bannir un utilisateur
+    #[Route('/admin/user/{id}/ban', name: 'app_admin_user_ban')]
+    public function ban(User $user, EntityManagerInterface $entityManager): Response
+    {
+        $user->setIsBanned(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_user_index');
+    }
+
+// Pour débannir un utilisateur
+    #[Route('/admin/user/{id}/unban', name: 'app_admin_user_unban')]
+    public function unban(User $user, EntityManagerInterface $entityManager): Response
+    {
+        $user->setIsBanned(false);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_user_index');
+    }
+
 
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
     public function delete(Request $request,
