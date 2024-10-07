@@ -6,7 +6,6 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Self_;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $isBanned = false;
+    private bool $isBanned = false;  // Déclaration unique de isBanned
 
     public function isBanned(): bool
     {
@@ -77,20 +76,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user')]
     private Collection $favorites;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isBanned = false;
-
-    public function isBanned(): bool
-    {
-        return $this->isBanned;
-    }
-
-    public function setIsBanned(bool $isBanned): self
-    {
-        $this->isBanned = $isBanned;
-        return $this;
-    }
-
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -138,10 +123,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return list<string>
      */
-
     public function getRoles(): array
     {
-        // Assurez-vous de ne pas ajouter ROLE_USER si l'utilisateur a déjà un autre rôle
         return array_unique($this->roles);
     }
 
@@ -175,7 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // Si vous stockez des données temporaires sensibles sur l'utilisateur, effacez-les ici
         // $this->plainPassword = null;
     }
 
@@ -216,7 +199,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUserProfile(UserProfile $userProfile): static
     {
-        // set the owning side of the relation if necessary
         if ($userProfile->getUser() !== $this) {
             $userProfile->setUser($this);
         }
@@ -307,7 +289,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeFavorite(Favorite $favorite): static
     {
         if ($this->favorites->removeElement($favorite)) {
-            // set the owning side to null (unless already changed)
             if ($favorite->getUser() === $this) {
                 $favorite->setUser(null);
             }
@@ -316,6 +297,3 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 }
-
-
-
