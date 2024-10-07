@@ -2,30 +2,24 @@
 
 namespace App\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route('/login', name: 'login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    #[Route(path: '/login', name: 'login')]
+    public function login(AuthenticationUtils $authenticationUtils, SessionInterface $session): Response
     {
-        // Redirige l'utilisateur s'il est déjà connecté
-        $user = $this->getUser();
-        if ($user) {
-            // Vérification directe des rôles
-            if (in_array('ROLE_ADMIN', $user->getRoles())) {
-                return $this->redirectToRoute('app_admin_dashboard'); // Redirection vers le dashboard admin
-            } elseif (in_array('ROLE_USER', $user->getRoles())) {
-                return $this->redirectToRoute('profile'); // Redirection vers le profil de l'utilisateur
+        $session->set('login_origin', true);
+            if ($this->getUser()) {
+                return $this->redirectToRoute('home');
             }
-            return $this->redirectToRoute('home'); // Redirection vers la page d'accueil par défaut
-        }
-
-        // Récupère les erreurs d'authentification et le dernier nom d'utilisateur
         $error = $authenticationUtils->getLastAuthenticationError();
+
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
@@ -37,7 +31,6 @@ class SecurityController extends AbstractController
     #[Route('/logout', name: 'logout')]
     public function logout(): void
     {
-        // Cette méthode peut rester vide - elle est interceptée par le système de sécurité de Symfony.
-        throw new \LogicException('Cette méthode peut rester vide - elle est interceptée par le système de sécurité de Symfony.');
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

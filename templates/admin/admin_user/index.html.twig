@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Liste des utilisateurs</h1>
 
+    <!-- Utilisateurs actifs -->
     <h2>Utilisateurs actifs</h2>
     <table>
         <thead>
@@ -23,6 +24,7 @@
                     <td>
                         <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">Voir</a>
                         <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">Éditer</a>
+                        <!-- Bouton Bannir -->
                         <a href="{{ path('app_admin_user_ban', {'id': user.id}) }}">
                             Bannir
                         </a>
@@ -33,6 +35,7 @@
         </tbody>
     </table>
 
+    <!-- Utilisateurs bannis -->
     <h2>Utilisateurs bannis</h2>
     <table>
         <thead>
@@ -50,7 +53,8 @@
                 <td>
                     <a href="{{ path('app_admin_user_show', {'id': bannedUser.id}) }}">Voir</a>
                     <a href="{{ path('app_admin_user_edit', {'id': bannedUser.id}) }}">Éditer</a>
-                    <a href="{{ path('app_admin_user_ban', {'id': bannedUser.id}) }}">
+                    <!-- Bouton Débannir -->
+                    <a href="{{ path('app_admin_user_unban', {'id': bannedUser.id}) }}">
                         Débannir
                     </a>
                 </td>
@@ -58,4 +62,5 @@
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}

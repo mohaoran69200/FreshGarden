@@ -7,7 +7,7 @@
 
         <ul class="desktop-menu">
             <li>
-                <a href="{{ path('home') }}">Acceuil</a>
+                <a href="{{ path('home') }}">Accueil</a>
             </li>
             <li>
                 <a href="{{ path('app_product_fruits') }}">Fruits</a>
@@ -18,7 +18,13 @@
             <li>
                 <a href="{{ path('app_product_autres') }}">Autres</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="{{ path('app_admin_dashboard') }}">Acceuil Administrateur</a>
+                </li>
+            {% endif %}
         </ul>
+
 
         <div id="search">
             <form action="{{ path('app_search') }}" method="get">

@@ -1,36 +1,47 @@
 security:
-    # Configuration pour le hachage des mots de passe
+    # Hashage des mots de passe
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
-    # Configuration du fournisseur d'utilisateurs
+    # Gestion des providers d'utilisateurs
     providers:
+        # Utilisateur principal
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
 
+    # Configuration des firewalls
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
             provider: app_user_provider
+
+            # Configuration de la connexion par formulaire
             form_login:
                 login_path: login
                 check_path: login
                 enable_csrf: true
 
+            # Déconnexion
             logout:
                 path: logout
-                target: home # Redirection après déconnexion
+                # Redirection après déconnexion
+                target: home  # Remplace 'app_home' par la route que tu souhaites après déconnexion
 
-    # Configuration de l'accès en fonction des rôles
+            # Utilisation du UserChecker pour vérifier si un utilisateur est banni
+            user_checker: App\Security\UserChecker
+
+    # Contrôle d'accès : restreindre l'accès à certaines routes
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }  # Accès réservé aux admins pour les pages admin
+        - { path: ^/profile, roles: ROLE_USER } # Accès réservé aux utilisateurs authentifiés pour les profils
 
+# Configuration spécifique pour l'environnement de test
 when@test:
     security:
         password_hashers:
