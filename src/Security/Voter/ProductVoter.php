@@ -38,12 +38,12 @@ class ProductVoter extends Voter
                 return true;
 
             case self::EDIT:
-                // Seul le propriétaire du produit peut le modifier
-                return $user === $product->getUser();
+                // Seul le propriétaire du produit ou un admin peut le modifier
+                return $user === $product->getUser() || in_array('ROLE_ADMIN', $user->getRoles());
 
             case self::DELETE:
-                // Seul le propriétaire du produit peut le supprimer
-                return $user === $product->getUser();
+                // Seul le propriétaire du produit ou un admin peut le supprimer
+                return $user === $product->getUser() || in_array('ROLE_ADMIN', $user->getRoles());
         }
         return false;
     }

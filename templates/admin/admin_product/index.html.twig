@@ -1,47 +1,121 @@
-{% extends '../../base.html.twig' %}
+{% extends 'admin/base_admin.html.twig' %}
 
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
+    <div class="product-index-container">
+        <h1>Liste des Annonces</h1>
 
-    <table class="table">
-        <thead>
+        <div class="table-header">
+            <a class="btn btn-create" href="{{ path('app_product_new') }}">Créer un nouveau produit</a>
+        </div>
+
+        <table class="product-table">
+            <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Unit</th>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Unité</th>
                 <th>Stock</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
+                <th>Créé le</th>
+                <th>Mis à jour le</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.unit }}</td>
-                <td>{{ product.stock }}</td>
-                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ product.description }}</td>
-                <td>
-                    <a href="{{ path('app_admin_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ product.unit.value }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                        <a class="btn btn-show" href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
+                        <a class="btn btn-edit" href="{{ path('app_product_update', {'id': product.id}) }}">Éditer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="no-records">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_admin_product_new') }}">Create new</a>
+    <style>
+        .product-index-container {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #ffffff;
+            margin-left: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-create {
+            background-color: #28a745;
+        }
+
+        .btn-show {
+            background-color: #007bff;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .product-table th, .product-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .product-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .no-records {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+        }
+    </style>
 {% endblock %}

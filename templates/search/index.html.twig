@@ -46,6 +46,7 @@
             <div class="grid-container">
                 <div class="grid">
                     {% for product in results %}
+                        {% set isFavorite = favorites[product.id] ?? false %}  {# Vérifie si le produit est un favori #}
                         {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': isFavorite } %}
                     {% else %}
                         <p>Aucun produit trouvé.</p>

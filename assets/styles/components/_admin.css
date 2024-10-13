@@ -1,0 +1,81 @@
+/* Dashboard Container */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: var(--white2);
+}
+
+/* Title Styling */
+.dashboard h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Stats Container */
+.stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Stat Item Styling */
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 40px 30px;
+    transition: transform 0.3s ease;
+    min-width: 250px;
+    max-width: 300px; /* Limit max width for consistency */
+    height: 250px; /* Adjust height */
+    text-align: center;
+    flex-direction: column; /* Ensure content stacks vertically */
+}
+
+.stat-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Stat Icon Styling */
+.stat-icon {
+    font-size: 4em; /* Increase icon size */
+    color: var(--light-green);
+    margin-bottom: 20px;
+}
+
+/* Stat Content */
+.stat-content h2 {
+    font-size: 1.5em;
+    font-weight: 500;
+    color: var(--dark-gray);
+    margin-bottom: 10px;
+}
+
+.stat-content p {
+    font-size: 3em;
+    font-weight: 700;
+    color: var(--dark-gray);
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Optional: Add FontAwesome for Icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
