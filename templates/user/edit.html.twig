@@ -6,26 +6,132 @@
     <div class="form-container">
         <h1>Modifier les informations de l'utilisateur</h1>
 
-        {{ form_start(form) }}
-
-        <div class="form-group">
-            {{ form_label(form.email) }}
-            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.email) }}
-        </div>
-
+        <!-- Photo de profil -->
         <div class="profile-image-container">
-            <img id="profile-image" class="profile-image" src="{{ vich_uploader_asset(app.user.userProfile, 'imageFile') }}" alt="Photo de profil">
+            <img id="profile-image" class="profile-image" src="{{ user.userProfile. }}" alt="Photo de profil">
+
+            <!-- Formulaire pour changer l'image -->
+            {{ form_start(imageForm) }}
+            <div class="form-group">
+                {{ form_label(imageForm.imageFile) }}
+                {{ form_widget(imageForm.imageFile, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(imageForm.imageFile) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Mettre à jour la photo</button>
+            {{ form_end(imageForm) }}
+
+            <!-- Bouton pour supprimer l'image -->
+            <button id="delete-image" class="btn btn-danger">Supprimer l'image</button>
         </div>
 
-        <button type="submit" class="btn">Mettre à jour</button>
-        {{ form_end(form) }}
+        <!-- Toggle des formulaires -->
+        <div class="toggle-forms">
+            <button class="btn btn-secondary" onclick="toggleForm('personal-info')">Modifier mes informations personnelles</button>
+            <button class="btn btn-secondary" onclick="toggleForm('address-info')">Modifier mon adresse de facturation</button>
+        </div>
 
-        <button id="delete-image" class="btn btn-danger">Supprimer l'image</button>
+        <!-- Formulaire informations personnelles (toggle) -->
+        <div id="personal-info" class="form-section" style="display: none;">
+            {{ form_start(personalForm) }}
+            <div class="form-group">
+                {{ form_label(personalForm.userName) }}
+                {{ form_widget(personalForm.userName, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(personalForm.userName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(personalForm.firstName) }}
+                {{ form_widget(personalForm.firstName, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(personalForm.firstName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(personalForm.lastName) }}
+                {{ form_widget(personalForm.lastName, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(personalForm.lastName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(personalForm.dateBirth) }}
+                {{ form_widget(personalForm.dateBirth, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(personalForm.dateBirth) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(personalForm.gender) }}
+                {{ form_widget(personalForm.gender, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(personalForm.gender) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            {{ form_end(personalForm) }}
+        </div>
+
+        <!-- Formulaire adresse de facturation (toggle) -->
+        <div id="address-info" class="form-section" style="display: none;">
+            {{ form_start(addressForm) }}
+            <div class="form-group">
+                {{ form_label(addressForm.address) }}
+                {{ form_widget(addressForm.address, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(addressForm.address) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addressForm.postalCode) }}
+                {{ form_widget(addressForm.postalCode, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(addressForm.postalCode) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addressForm.city) }}
+                {{ form_widget(addressForm.city, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(addressForm.city) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            {{ form_end(addressForm) }}
+        </div>
 
         <!-- Bouton pour modifier le mot de passe -->
-        <div class="form-footer">
-            <a href="{{ path('app_user_edit_user_password', {'id': app.user.id}) }}" class="btn btn-primary">Modifier mon mot de passe</a>
+        <div class="form-footer mt-4">
+            <a href="{{ path('app_user_edit_user_password', {'id': user.id}) }}" class="btn btn-primary">Modifier mon mot de passe</a>
         </div>
     </div>
+
+    <script>
+        function toggleForm(formId) {
+            var form = document.getElementById(formId);
+            form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+        }
+
+        document.getElementById('delete-image').addEventListener('click', function() {
+            if (confirm('Êtes-vous sûr de vouloir supprimer votre photo de profil ?')) {
+                // Logique pour la suppression de l'image (peut nécessiter un appel AJAX ou un formulaire dédié)
+            }
+        });
+    </script>
+
+    <style>
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            width: 50%;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-footer {
+            margin-top: 20px;
+        }
+
+        .toggle-forms button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-section {
+            margin-top: 20px;
+        }
+    </style>
 {% endblock %}

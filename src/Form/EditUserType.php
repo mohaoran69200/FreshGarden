@@ -22,8 +22,7 @@ class EditUserType extends AbstractType
             ])
             ->add('userProfile', EditUserProfileType::class, [
                 'label' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

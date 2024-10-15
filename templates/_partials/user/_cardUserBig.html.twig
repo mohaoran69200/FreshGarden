@@ -7,15 +7,23 @@
         <h3 class="user-name-large">{{ user.userProfile.userName ?: user.userProfile.firstName ?: user.email }}</h3>
         <p class="user-city-large">{{ user.userProfile.city }}</p>
 
-        <!-- Actions (Contacter, Favori) -->
-        <div class="actions-large">
-            <a href="{{ path('message_send', { id: user.id }) }}">
-                <button class="contact-button-large">Contacter</button>
+        <!-- Vérifie si l'utilisateur connecté est celui dont on affiche le profil -->
+        {% if app.user and app.user.id == user.id %}
+            <!-- Si l'utilisateur connecté est celui dont on affiche le profil, on affiche le bouton "Modifier mon profil" -->
+            <a href="{{ path('app_user_edit_user', { id: user.id }) }}">
+                <button class="contact-button-large">Modifier mon profil</button>
             </a>
-            <button class="favorite-button-large" onclick="window.location.href='{{ path('app_favorite_toggle_user', {id: user.id}) }}'">
-               Suivre
-            </button>
-        </div>
+        {% else %}
+            <!-- Sinon, on affiche les boutons "Contacter" et "Suivre" -->
+            <div class="actions-large">
+                <a href="{{ path('message_send', { id: user.id }) }}">
+                    <button class="contact-button-large">Contacter</button>
+                </a>
+                <button class="favorite-button-large" onclick="window.location.href='{{ path('app_favorite_toggle_user', {id: user.id}) }}'">
+                    Suivre
+                </button>
+            </div>
+        {% endif %}
 
         <!-- Liste des annonces -->
         <div class="ads-list-large">

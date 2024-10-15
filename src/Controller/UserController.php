@@ -3,11 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditAdressType;
+use App\Form\EditEmailType;
+use App\Form\EditPersonalInfoType;
+use App\Form\EditPhoneNumberType;
 use App\Form\EditUserType;
 use App\Form\EditPasswordType;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,18 +41,47 @@ class UserController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $form = $this->createForm(EditUserType::class, $user);
-        $form->handleRequest($request);
+        $profile = $user->getUserProfile();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $personalForm = $this->createForm(EditPersonalInfoType::class, $profile);
+        $addressForm = $this->createForm(EditAdressType::class, $profile);
+
+        $personalForm->handleRequest($request);
+        $addressForm->handleRequest($request);
+
+        // Gestion de l'upload d'image
+        $imageForm = $this->createFormBuilder()
+            ->add('imageFile', FileType::class, [
+                'label' => 'Changer la photo de profil',
+                'required' => false,
+            ])
+            ->getForm();
+        $imageForm->handleRequest($request);
+
+        if ($imageForm->isSubmitted() && $imageForm->isValid()) {
+            $imageFile = $imageForm->get('imageFile')->getData();
+            if ($imageFile) {
+                $profile->setImageFile($imageFile);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre photo de profil a été mise à jour.');
+            }
+        }
+
+        if ($personalForm->isSubmitted() && $personalForm->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', 'Les informations de votre compte ont été mises à jour avec succès.');
-            return $this->redirectToRoute('home');
+            $this->addFlash('success', 'Vos informations personnelles ont été mises à jour.');
+        }
+
+        if ($addressForm->isSubmitted() && $addressForm->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', 'Votre adresse a été mise à jour.');
         }
 
         return $this->render('user/edit.html.twig', [
-            'form' => $form->createView(),
             'user' => $user,
+            'personalForm' => $personalForm->createView(),
+            'addressForm' => $addressForm->createView(),
+            'imageForm' => $imageForm->createView(),
         ]);
     }
 
@@ -92,6 +127,58 @@ class UserController extends AbstractController
 
         return $this->render('user/edit_password.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/edit-user/edit-contact/{id}', name: 'edit_user_contact')]
+    #[IsGranted('ROLE_USER')]
+    public function editContact(Request $request,
+                                User $user,
+                                EntityManagerInterface $entityManager): Response {
+        $user = $this->getUser();
+
+        // Formulaire de modification d'email
+        $emailForm = $this->createForm(EditEmailType::class, $user);
+        $emailForm->handleRequest($request);
+
+        if ($emailForm->isSubmitted() && $emailForm->isValid()) {
+            $oldEmail = $emailForm->get('old_email')->getData();
+            $newEmail = $emailForm->get('new_email')->getData();
+
+            // Vérifier si l'ancien email correspond à l'email actuel de l'utilisateur
+            if ($oldEmail !== $user->getEmail()) {
+                $this->addFlash('danger', 'L\'ancien email est incorrect.');
+            } else {
+                $user->setEmail($newEmail);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Votre email a bien été mis à jour.');
+                return $this->redirectToRoute('app_user_edit_user');
+            }
+        }
+
+        // Formulaire de modification du numéro de téléphone
+        $phoneForm = $this->createForm(EditPhoneNumberType::class);
+        $phoneForm->handleRequest($request);
+
+        if ($phoneForm->isSubmitted() && $phoneForm->isValid()) {
+            $oldPhone = $phoneForm->get('old_phone')->getData();
+            $newPhone = $phoneForm->get('new_phone')->getData();
+
+            // Vérifier si l'ancien numéro correspond à celui actuel de l'utilisateur
+            if ($oldPhone !== $user->getUserProfile()->getPhoneNumber()) {
+                $this->addFlash('danger', 'L\'ancien numéro de téléphone est incorrect.');
+            } else {
+                $user->getUserProfile()->setPhoneNumber($newPhone);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Votre numéro de téléphone a bien été mis à jour.');
+                return $this->redirectToRoute('app_user_edit_user');
+            }
+        }
+        return $this->render('user/edit_contact.html.twig', [
+            'emailForm' => $emailForm->createView(),
+            'phoneForm' => $phoneForm->createView(),
         ]);
     }
 
