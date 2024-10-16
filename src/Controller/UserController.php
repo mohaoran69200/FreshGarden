@@ -9,6 +9,8 @@ use App\Form\EditPersonalInfoType;
 use App\Form\EditPhoneNumberType;
 use App\Form\EditUserType;
 use App\Form\EditPasswordType;
+use App\Form\ImageType;
+use App\Form\ImageUserType;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,15 +52,11 @@ class UserController extends AbstractController
         $addressForm->handleRequest($request);
 
         // Gestion de l'upload d'image
-        $imageForm = $this->createFormBuilder()
-            ->add('imageFile', FileType::class, [
-                'label' => 'Changer la photo de profil',
-                'required' => false,
-            ])
-            ->getForm();
-        $imageForm->handleRequest($request);
+        $imageForm = $this->createForm(ImageUserType::class, $profile); // Assurez-vous que $profile est bien un objet UserProfile
 
+        // Gestion de l'upload d'image
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
+            // On obtient l'image de manière sécurisée
             $imageFile = $imageForm->get('imageFile')->getData();
             if ($imageFile) {
                 $profile->setImageFile($imageFile);
@@ -84,6 +82,7 @@ class UserController extends AbstractController
             'imageForm' => $imageForm->createView(),
         ]);
     }
+
 
     #[Route('/edit-user/edit-password/{id}', name: 'edit_user_password')]
     #[IsGranted('ROLE_USER')]
@@ -143,7 +142,7 @@ class UserController extends AbstractController
 
         if ($emailForm->isSubmitted() && $emailForm->isValid()) {
             $oldEmail = $emailForm->get('old_email')->getData();
-            $newEmail = $emailForm->get('new_email')->getData();
+            $newEmail = $emailForm->get('email')->getData();
 
             // Vérifier si l'ancien email correspond à l'email actuel de l'utilisateur
             if ($oldEmail !== $user->getEmail()) {

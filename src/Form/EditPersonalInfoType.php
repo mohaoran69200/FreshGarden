@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\UserProfile;
 use App\Enum\UserGender;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -29,10 +30,15 @@ class EditPersonalInfoType extends AbstractType
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
             ])
-            ->add('gender', EnumType::class, [
-                'label' => 'Genre',
-                'class' => UserGender::class,
-                'required' => false,
+            ->add('gender', ChoiceType::class, [
+                'choices' => [
+                    'Homme' => UserGender::Monsieur,
+                    'Femme' => UserGender::Madame,
+                    'Autre' => UserGender::Autre,
+                ],
+                'expanded' => true, // Affiche des boutons radio
+                'multiple' => false, // Assure que l'utilisateur ne peut sélectionner qu'une seule valeur
+                'label' => 'Genre'
             ]);
     }
 

@@ -25,6 +25,8 @@ class EditPhoneNumberType extends AbstractType
                     new NotBlank(['message' => 'Veuillez entrer votre nouveau numéro de téléphone.']),
                 ],
             ])
-            ->add('save', SubmitType::class, ['label' => 'Mettre à jour le Numéro']);
+            ->add('save', SubmitType::class, [
+                'label' => 'Mettre à jour le Numéro',
+                'attr' => ['class' => 'btn'],]);
     }
 }

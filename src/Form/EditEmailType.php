@@ -15,16 +15,19 @@ class EditEmailType extends AbstractType
         $builder
             ->add('old_email', EmailType::class, [
                 'label' => 'Ancien Email',
+                'mapped' => false,
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez entrer votre ancien email.']),
                 ],
             ])
-            ->add('new_email', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Nouvel Email',
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez entrer votre nouvel email.']),
                 ],
             ])
-            ->add('save', SubmitType::class, ['label' => 'Mettre à jour l\'Email']);
+            ->add('save', SubmitType::class, [
+                'label' => 'Mettre à jour l\'Email',
+                'attr' => ['class' => 'btn'],]);
     }
 }

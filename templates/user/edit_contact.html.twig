@@ -6,22 +6,22 @@
     <h1>Modifier mes informations de contact</h1>
 
     <!-- Formulaire de modification d'email -->
-    <div class="form-section">
+    <div class="form-container">
         <h2>Modifier mon Email</h2>
         {{ form_start(emailForm) }}
         {{ form_row(emailForm.old_email) }}
-        {{ form_row(emailForm.new_email) }}
-        <button type="submit" class="btn">Mettre à jour l'Email</button>
+        {{ form_row(emailForm.email) }}
+{#        <button type="submit" class="btn">Mettre à jour l'Email</button>#}
         {{ form_end(emailForm) }}
     </div>
 
     <!-- Formulaire de modification du numéro de téléphone -->
-    <div class="form-section">
+    <div class="form-container">
         <h2>Modifier mon Numéro de Téléphone</h2>
         {{ form_start(phoneForm) }}
         {{ form_row(phoneForm.old_phone) }}
         {{ form_row(phoneForm.new_phone) }}
-        <button type="submit" class="btn">Mettre à jour le Numéro</button>
+{#        <button type="submit" class="btn">Mettre à jour le Numéro</button>#}
         {{ form_end(phoneForm) }}
     </div>
 {% endblock %}

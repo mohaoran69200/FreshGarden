@@ -30,7 +30,6 @@ class ProductController extends AbstractController
     // Je crée un nouveau produit
     #[Route('/new', name: 'new')]
     #[IsGranted('ROLE_USER')]
-    #[IsGranted('ROLE_ADMIN')]
     public function new(
         Request $request,
         EntityManagerInterface $entityManager): Response
@@ -66,7 +65,6 @@ class ProductController extends AbstractController
     // Je modifie un produit existant
     #[Route('/update/{id}', name: 'update')]
     #[IsGranted('ROLE_USER')]
-    #[IsGranted('ROLE_ADMIN')]
     public function edit(
         Product $product,
         Request $request,
