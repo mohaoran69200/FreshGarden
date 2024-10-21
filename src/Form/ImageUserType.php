@@ -17,8 +17,8 @@ class ImageUserType extends AbstractType
             ->add('imageFile', VichFileType::class, [
                 'label' => 'Changer la photo de profil',
                 'required' => false,
-                'allow_delete' => false, // Permet de supprimer l'image
-                'download_uri' => false, // Pas de lien de téléchargement
+                'allow_delete' => false,
+                'download_uri' => false,
             ]);
     }
 

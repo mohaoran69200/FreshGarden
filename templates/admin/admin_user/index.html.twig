@@ -36,7 +36,7 @@
                             {% endif %}
                             <td>{{ user.email }}</td>
                             <td>
-                                <a class="btn btn-view" href="{{ path('app_admin_user_show', {'id': user.id}) }}">Voir</a>
+                                <a class="btn btn-view" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
                                 <a class="btn btn-edit" href="{{ path('app_admin_user_edit', {'id': user.id}) }}">Éditer</a>
                                 <a class="btn btn-ban" href="{{ path('app_admin_user_ban', {'id': user.id}) }}">Bannir</a>
                             </td>

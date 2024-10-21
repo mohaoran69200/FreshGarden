@@ -34,6 +34,8 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setRoles(['ROLE_USER']);
+
             // J'enregistre le nouvel utilisateur dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();

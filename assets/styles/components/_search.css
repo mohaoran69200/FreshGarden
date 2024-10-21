@@ -1,110 +1,30 @@
-/* search.css */
+/* buttons.css */
 
-/* Section de recherche */
-.search-section {
-    padding: 40px 20px;
-    background-color: var(--card-background-color); /* Utilisation de la couleur de fond des cartes */
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
-    margin-bottom: 40px;
-}
-
-.search-section form {
-    display: flex;
-    flex-direction: column; /* Les éléments du formulaire sont empilés verticalement */
-    align-items: center; /* Centre les éléments horizontalement */
-    gap: 20px; /* Espace entre les éléments du formulaire */
-    max-width: 600px; /* Largeur maximale du formulaire */
-    margin: 0 auto; /* Centre le formulaire */
-}
-
-.form-group {
-    width: 100%; /* Assure que les groupes de champs prennent toute la largeur */
-    display: flex;
-    flex-direction: column; /* Les labels et champs sont empilés verticalement */
-    align-items: stretch; /* Étire les champs à 100% de la largeur disponible */
-    gap: 8px;
-}
-
-.form-group label {
-    font-weight: bold;
-    font-size: var(--font-size-small); /* Utilisation de la taille de police définie dans app.css */
-    color: var(--dark-gray); /* Utilisation de la couleur sombre définie dans app.css */
-}
-
-/* Aligne l'input et le symbole "€" sur une seule ligne */
-.search-section .input-symbol {
-    display: flex; /* Aligne l'input et le symbole sur la même ligne */
-    align-items: center; /* Aligne verticalement le symbole avec l'input */
-    gap: 10px; /* Espace entre l'input et le symbole */
-    width: 100%; /* Assure que le conteneur prend toute la largeur */
-}
-
-.search-section input,
-.search-section select {
-    padding: 10px;
-    border: 1px solid var(--dark-gray); /* Utilisation de la couleur sombre pour les bordures */
-    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
-    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
-    width: 100%; /* Assure que les champs prennent toute la largeur disponible */
-    box-sizing: border-box; /* Assure que le padding et la bordure sont inclus dans la largeur */
-    transition: border-color 0.3s ease;
-}
-
-.search-section input:focus,
-.search-section select:focus {
-    border-color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
-    outline: none;
-}
-
-.search-section input[type="text"],
-.search-section input[type="number"] {
-    max-width: none; /* Permet une largeur flexible des champs */
-}
-
-.currency-symbol {
-    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
-    color: var(--dark-gray); /* Utilisation de la couleur sombre définie dans app.css */
-}
-
-/* Bouton de soumission */
+/* Bouton de soumission (générique) */
 .btn-submit {
-    background-color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
+    background-color: var(--light-green); /* Couleur définie dans app.css */
     color: #fff;
     border: none;
-    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
+    border-radius: var(--border-radius); /* Rayon de bordure défini dans app.css */
     padding: 12px 24px;
     cursor: pointer;
-    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
+    font-size: var(--font-size-medium); /* Taille de police définie dans app.css */
     transition: background-color 0.3s ease;
     margin-top: 20px;
 }
 
 .btn-submit:hover {
-    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+    background-color: var(--dark-green); /* Couleur définie dans app.css */
 }
 
-/* Section des produits */
-.products-section {
-    padding: 20px;
+/* Bouton de recherche spécifique */
+.btn-search {
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius); /* Rayon de bordure défini dans app.css */
+    padding: 10px 20px; /* Ajuste le padding si nécessaire */
+    cursor: pointer;
+    font-size: var(--font-size-medium); /* Taille de police définie dans app.css */
+    transition: background-color 0.3s ease;
 }
 
-.products-section h2 {
-    font-size: var(--font-size-large); /* Utilisation de la taille de police définie dans app.css */
-    font-weight: bold;
-    color: var(--text-color); /* Utilisation de la couleur de texte définie dans app.css */
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-/* Media Queries pour ajustements */
-@media (max-width: 768px) {
-    .form-group {
-        width: 100%; /* Les groupes de champs prennent toute la largeur sur mobile */
-    }
-
-    .btn-submit {
-        width: 100%; /* Le bouton prend toute la largeur sur mobile */
-    }
-}

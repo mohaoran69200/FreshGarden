@@ -3,8 +3,7 @@
 /* Section de messagerie générale */
 .message-section {
     margin: 20px;
-    font-family: var(--font-family-primary); /* Utilisation de la police définie dans app.css */
-    color: var(--text-color); /* Utilisation de la couleur de texte définie dans app.css */
+
 }
 
 /* Titres */
@@ -17,7 +16,6 @@ h1, h2 {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    font-family: var(--font-family-primary); /* Utilisation de la police définie dans app.css */
 }
 
 .message-table th,
@@ -28,7 +26,6 @@ h1, h2 {
 }
 
 .message-table th {
-    background-color: var(--card-background-color); /* Utilisation de la couleur de fond des cartes définie dans app.css */
     font-weight: bold;
 }
 
@@ -50,7 +47,6 @@ h1, h2 {
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
-    font-family: var(--font-family-secondary); /* Utilisation de la police secondaire définie dans app.css */
 }
 
 /* Bouton Voir */

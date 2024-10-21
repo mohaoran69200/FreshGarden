@@ -1,12 +1,12 @@
-/* Styles communs pour le header */
+/* Logo du site */
 header img {
     height: 100px;
 }
 
 /* Liens */
 a {
+    font-family: var(--font-family-primary), sans-serif;
     text-decoration: none;
-    color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
 }
 
 /* Navigation principale */
@@ -15,20 +15,7 @@ a {
     justify-content: space-around;
     align-items: center;
     padding: 10px;
-    background-color: var(--white); /* Utilisation de la couleur de fond définie dans app.css */
-}
-
-/* Actions de navigation */
-.nav-action {
-    display: flex;
-    align-items: center;
-}
-
-/* Icônes */
-.icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+    background-color: var(--white2);
 }
 
 /* Menu desktop */
@@ -44,15 +31,14 @@ a {
 }
 
 .desktop-menu a {
-    color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
-    font-size: var(--font-size-medium); /* Utilisation de la taille de police définie dans app.css */
+    color: var(--dark-green);
+    font-size: var(--font-size-medium);
 }
 
 .desktop-menu a:hover,
 .desktop-menu a:focus {
-    background-color:var(--dark-green);
-    box-shadow: 0 4px 15px rgba(114, 176, 29, 0.5);
-    color: var(--white);
+    color: var(--dark-green);
+    text-decoration: underline;
 }
 
 /* Boutons de navigation */
@@ -78,7 +64,7 @@ a {
 .burger-menu span {
     height: 3px;
     width: 30px;
-    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+    background-color: var(--dark-green);
     margin: 5px 0;
     transition: all 0.3s ease;
 }
@@ -91,7 +77,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--dark-green); /* Utilisation de la couleur de fond définie dans app.css */
+    background-color: var(--dark-green);
     z-index: 2;
     padding: 20px;
     overflow-y: auto;
@@ -109,7 +95,7 @@ a {
 
 .close-menu {
     font-size: 30px;
-    color: var(--white); /* Utilisation de la couleur définie dans app.css */
+    color: var(--white2);
     border: none;
     background: none;
     cursor: pointer;
@@ -121,20 +107,20 @@ a {
 /* Recherche */
 #search {
     position: relative;
-    width: 300px; /* Ajustez la largeur selon vos besoins */
+    width: 300px;
 }
 
 #search-input {
     width: 100%;
     padding: 10px 40px 10px 10px;
     box-sizing: border-box;
-    border: 1px solid var(--dark-green); /* Utilisation de la couleur définie dans app.css */
-    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
+    border: 1px solid var(--dark-green);
+    border-radius: var(--border-radius);
 }
 
 #search-input:focus,
 #search-input:active {
-    border-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+    border-color: var(--dark-green);
     outline: none;
 }
 
@@ -150,7 +136,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+    color: var(--dark-green);
 }
 
 #search-button svg.size-6 {
@@ -165,10 +151,12 @@ a {
 #connexion-button {
     height: 30px;
     width: 30px;
+    padding: 5px;
     border-radius: 50%;
+    color: var(--dark-green);
     outline: none;
     border: none;
-    background-color: #ffffff;
+    background-color: var(--white2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,45 +165,61 @@ a {
 
 #message-button:hover,
 #cart-button:hover,
-#favorite-button:hover {
-    color: #fff;
-    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+#favorite-button:hover,
+#connexion-button:hover{
+    color: var(--white2);
+    background-color: var(--dark-green);
 }
 
 /* Dropdown */
+/* Dropdown Container */
 .nav .dropdown {
     position: relative;
     display: inline-block;
 }
 
+/* Dropdown Content (Menu) */
 .nav .dropdown-content {
-    display: none;
+    display: block; /* Pas de display none, le contrôle se fait avec visibility et opacity */
     position: absolute;
-    background-color: #ffffff;
+    background-color: var(--white2);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     right: 7px;
+    box-shadow: 0px 8px 16px 0px var(--dark-gray);
+
+    /* Transition pour l'apparition/disparition */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px); /* Légère translation vers le bas */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
-.nav .dropdown-content a {
-    color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+/* Active State: When Dropdown is visible */
+.nav .dropdown-content--active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Retour à la position initiale */
+}
+
+/* Dropdown Links */
+.dropdown-content a {
+    color: var(--dark-green);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav .dropdown-content a:hover {
-    background-color: #f1f1f1;
+.dropdown-content a:hover {
+    background-color: var(--white2); /* Légère couleur de fond au survol */
+    color: var(--dark-green); /* Couleur de texte au survol */
+    border-radius: 4px; /* Coins légèrement arrondis */
 }
 
-.nav .dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.nav .dropdown:hover #connexion-button {
-    color: #fff;
-    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+/* Transition fluide lors de l'ouverture/fermeture */
+.nav .dropdown-content {
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }
 
 /* Sticky buttons */
@@ -225,7 +229,7 @@ a {
     list-style-type: none;
 }
 
-/* Media Queries */
+/* Mobile */
 @media (max-width: 768px) {
     .sticky-buttons {
         display: flex;
@@ -234,9 +238,9 @@ a {
         position: fixed;
         bottom: 0;
         width: 100%;
-        background-color: #fff;
+        background-color: var(--white2);
         padding: 10px 0;
-        border-top: 1px solid #fff;
+        border-top: 1px solid var(--white2);
         z-index: 1000;
     }
 
@@ -246,18 +250,17 @@ a {
         list-style-type: none;
     }
 
-    .sticky-buttons li button {
+    .sticky-buttons li a {
         height: 30px;
         width: 30px;
         border-radius: 50%;
         outline: none;
         border: none;
-        background-color: #fff;
+        background-color: var(--white2);
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .desktop-menu {
@@ -279,7 +282,7 @@ a {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: var(--dark-green); /* Utilisation de la couleur de fond définie dans app.css */
+        background-color: var(--dark-green);
         z-index: 2;
         padding: 20px;
         overflow-y: auto;
@@ -307,8 +310,8 @@ a {
 
     .mobile-menu .pages a {
         text-decoration: none;
-        color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
-        font-size: var(--font-size-large); /* Utilisation de la taille de police définie dans app.css */
+        color: var(--white2);
+        font-size: var(--font-size-large);
         font-weight: bold;
     }
 
@@ -318,7 +321,7 @@ a {
 
     .close-menu {
         font-size: 30px;
-        color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
+        color: var(--white2);
         border: none;
         background: none;
         cursor: pointer;
@@ -331,8 +334,41 @@ a {
         list-style-type: none;
     }
 
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: var(--white2);
+        min-width: 160px;
+        z-index: 1;
+        right: 7px;
+        bottom: 40px;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        box-shadow: 0px 8px 16px 0px var(--dark-gray);
+    }
+
+    .dropdown-content--active {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #mobile-connexion-button{
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        outline: none;
+        border: none;
+        background-color: var(--white2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
     #mobile-connexion-button:hover {
-        background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
-        color: #fff;
+        background-color: var(--dark-green);
+        color: var(--white2);
     }
 }

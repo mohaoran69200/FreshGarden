@@ -1,11 +1,30 @@
 <div class="user-card-large">
     <!-- Photo de profil (grande version) -->
-    <img src="{{ vich_uploader_asset(user.userProfile) }}" alt="Photo de profil" class="user-profile-pic-large">
+    {% if user.userProfile and user.userProfile.imageName %}
+        <img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil" class="user-profile-pic-large">
+    {% else %}
+        <img src="{{ asset('images/utilisateur.png') }}" alt="Photo de profil par défaut" class="user-profile-pic-large">
+    {% endif %}
+
+
+
 
     <!-- Contenu de la carte utilisateur (grande version) -->
     <div class="user-card-content-large">
-        <h3 class="user-name-large">{{ user.userProfile.userName ?: user.userProfile.firstName ?: user.email }}</h3>
-        <p class="user-city-large">{{ user.userProfile.city }}</p>
+        <h3 class="user-name-large">
+            {% if user.userProfile is not null %}
+                {{ user.userProfile.userName ?: user.userProfile.firstName ?: user.email }}
+            {% else %}
+                {{ user.email }}
+            {% endif %}
+        </h3>
+
+        {% if user.userProfile is not null %}
+            <p class="user-city-large">{{ user.userProfile.city }}</p>
+        {% else %}
+            <p class="user-city-large"></p>
+        {% endif %}
+
 
         <!-- Vérifie si l'utilisateur connecté est celui dont on affiche le profil -->
         {% if app.user and app.user.id == user.id %}

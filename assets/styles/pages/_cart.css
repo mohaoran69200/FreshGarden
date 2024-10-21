@@ -1,7 +1,6 @@
 .cart-container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: var(--background-color);
     border-radius: var(--border-radius);
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -10,8 +9,6 @@
 /* Titres */
 h1 {
     text-align: center;
-    color: var(--text-color);
-    font-family: var(--font-family-heading);
 }
 
 /* Articles dans le panier */
@@ -27,8 +24,6 @@ h1 {
 .cart-item h3 {
     margin: 0;
     font-size: var(--font-size-medium);
-    color: var(--text-color);
-    font-family: var(--font-family-secondary);
 }
 
 .cart-item p {
@@ -57,8 +52,6 @@ h1 {
 
 .total-container h3 {
     font-size: var(--font-size-large);
-    color: var(--text-color);
-    font-family: var(--font-family-secondary);
 }
 
 .total-container span {

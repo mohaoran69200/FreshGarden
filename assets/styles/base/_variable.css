@@ -1,15 +1,15 @@
 :root {
-    --white: #F6F6F6; /* Couleur de fond du site */
-    --white2: #FFFFFF; /* Nuance de blanc pour les cartes */
-    --light-green: #72B01D; /* Couleur verte claire */
-    --dark-green: #3F7D20; /* Vert un peu plus foncé */
-    --black: #0D0A0B; /* Couleur noire pour les textes */
-    --dark-gray: #454955; /* Nuance sombre */
+    --white: #F6F6F6;
+    --white2: #FFFFFF;
+    --light-green: #72B01D;
+    --dark-green: #3F7D20;
+    --black: #0D0A0B;
+    --dark-gray: #454955;
     --font-size-large: 1.5rem;
     --font-size-medium: 1.25rem;
     --font-size-small: 1rem;
     --border-radius: 12px;
-    --font-family-heading: 'Pacifico', cursive, sans-serif;
-    --font-family-primary: 'Montserrat', sans-serif, serif;
-    --font-family-secondary: 'Lato', sans-serif, serif;
+    --font-family-heading: 'Pacifico', cursive;
+    --font-family-primary: 'Montserrat', sans-serif;
+    --font-family-secondary: 'Lato', sans-serif;
 }

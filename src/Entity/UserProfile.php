@@ -239,16 +239,6 @@ class UserProfile implements Serializable
         return $this;
     }
 
-    public function getImageUrl(): string
-    {
-        if ($this->imageName) {
-            return '/uploads/' . $this->imageName;
-        }
-        // Chemin de l'image par défaut
-        return '/images/profil_photo.jpg';  // Assurez-vous que l'image existe dans public/images/
-    }
-
-
     public function serialize()
     {
         return serialize([

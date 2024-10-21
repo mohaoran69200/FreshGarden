@@ -1,191 +1,158 @@
-/* Conteneur principal du formulaire */
+/* Container principal du formulaire */
 .form-container {
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: var(--card-background-color);
+    background-color: var(--white2);
     border-radius: var(--border-radius);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles généraux pour chaque div à l'intérieur du formulaire */
+/* Groupe de champs dans le formulaire */
 .form-group {
     margin-bottom: 15px;
 }
 
-/* Style des labels */
 .form-group label {
-    font-weight: bold;
     display: block;
     margin-bottom: 5px;
-    color: var(--text-color);
+    font-weight: bold;
+    color: var(--black);
 }
 
-/* Style des champs de texte, email, date, etc. */
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="tel"],
-.form-group input[type="date"],
-.form-group input[type="number"],
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--dark-gray);
-    border-radius: 4px;
-    font-family: var(--font-family-secondary);
-    font-size: var(--font-size-small);
-    box-sizing: border-box;
-    transition: border-color 0.3s ease-in-out;
+/* Pied de page du formulaire (soumission, boutons d'action) */
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
 }
 
-/* Focus sur les inputs */
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: var(--light-green);
-    outline: none;
-}
-
-/* Style spécifique pour les boutons */
-.form-group button[type="submit"],
-.form-group button[type="button"],
-.btn {
-    background-color: var(--light-green);
-    color: #fff;
-    border: none;
+.form-footer .btn {
     padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: var(--font-family-secondary);
-    font-size: var(--font-size-small);
-    transition: background-color 0.3s ease-in-out;
-}
-
-/* Changement de couleur au survol des boutons */
-.form-group button[type="submit"]:hover,
-.form-group button[type="button"]:hover,
-.btn:hover {
     background-color: var(--dark-green);
-}
-
-/* Styles spécifiques pour les boutons */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0069d9;
-    border-color: #0062cc;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    color: var(--white2);
+    border-radius: var(--border-radius);
     cursor: pointer;
-    font-size: var(--font-size-small);
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
-.btn-danger:hover {
-    background-color: #c82333;
+.form-footer .btn:hover { 
+    background-color: var(--white2);
 }
 
-/* Champs de formulaire spécifiques */
+/* Champs de contrôle de formulaire (input, textarea, select) */
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid var(--dark-gray);
-    border-radius: 4px;
-}
-
-.form-control-file {
-    width: 100%;
-    padding: 5px;
-    border: none;
-}
-
-/* Images de profil */
-.profile-image-container {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.profile-image {
-    max-width: 100%;
-    height: auto;
+    border: 1px solid var(--black);
     border-radius: var(--border-radius);
-    border: 1px solid var(--dark-gray);
-}
-
-/* Texte d'erreur et feedback */
-.error-message {
-    color: #ff4d4d;
-    font-size: var(--font-size-small);
-    margin: 5px 0;
-    text-align: center;
-}
-
-.success-message {
-    color: var(--light-green);
-    font-size: var(--font-size-small);
-    margin: 5px 0;
-}
-
-/* Style pour les champs obligatoires */
-.required-field::after {
-    content: " *";
-    color: red;
-}
-
-/* Styles de texte spécifique pour certaines parties du formulaire */
-.form-hint {
-    font-size: 12px;
-    color: #888;
-    margin-top: -10px;
+    font-size: var(--font-size-medium);
+    color: var(--black);
+    box-sizing: border-box;
     margin-bottom: 10px;
 }
 
-/* Style des boutons de lien ou de navigation */
-.link-button {
-    background: none;
-    color: var(--light-green);
-    border: none;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: var(--font-size-small);
-    padding: 0;
+.form-control:focus {
+    border-color: var(--dark-gray);
+    outline: none;
+    box-shadow: 0 0 5px var(--dark-gray);
 }
 
-.link-button:hover {
-    color: var(--dark-green);
-}
-
-/* Alignement des champs de radio et checkbox */
-.form-inline {
+/* Section de profil (formulaires liés aux informations de profil) */
+.profile-section {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    padding: 20px;
+    background-color: var(--white2);
+    border-radius: var(--border-radius);
 }
 
-.form-inline label {
-    margin-left: 10px;
-}
-
-.terms__container {
+/* Conteneur de l'image de profil */
+.profile-image-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.terms__container .checkbox {
-    margin-right: 10px;
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--dark-green);
+    margin-bottom: 20px;
 }
 
-.terms__container .terms {
-    margin: 0;
-    font-size: var(--font-size-small);
+.profile-image-container button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: var(--font-size-medium);
+}
+
+/* Formulaires d'informations */
+.info-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Formulaires alternatifs (comme switch entre deux sections de formulaire) */
+.toggle-forms {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.toggle-header {
+    font-size: var(--font-size-large);
+    color: var(--black);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.toggle-header.active {
+    color: var(--dark-gray);
+}
+
+/* Sections du formulaire (peut être utilisé pour diviser les grandes parties du formulaire) */
+.form-section {
+    margin-bottom: 25px;
+}
+
+/* Champs d'entrée de formulaire (input texte, email, etc.) */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--black);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium);
+    margin-bottom: 15px;
+}
+
+.form-input:focus {
+    border-color: var(--dark-gray);
+    outline: none;
+}
+
+/* Sélection de formulaire (dropdown) */
+.form-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--black);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium);
+    color: var(--black);
+}
+
+.form-select:focus {
+    border-color: var(--dark-gray);
+    outline: none;
 }

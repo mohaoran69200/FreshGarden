@@ -3,7 +3,6 @@
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: var(--card-background-color);
     border-radius: var(--border-radius);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -16,7 +15,6 @@
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
-    color: var(--text-color);
 }
 
 .form-container input[type="text"],
@@ -29,7 +27,6 @@
     padding: 10px;
     border: 1px solid var(--dark-gray);
     border-radius: 4px;
-    font-family: var(--font-family-secondary);
     font-size: var(--font-size-small);
 }
 
@@ -40,7 +37,6 @@
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    font-family: var(--font-family-secondary);
     font-size: var(--font-size-small);
 }
 

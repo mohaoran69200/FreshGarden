@@ -36,27 +36,31 @@ class UserController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
+
         $currentUser = $this->getUser();
 
-        if (!$currentUser || $currentUser !== $user) {
+        // Comparer les identifiants des utilisateurs pour éviter les erreurs de comparaison d'objets
+        if (!$currentUser || $currentUser->getId() !== $user->getId()) {
             $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte.');
             return $this->redirectToRoute('home');
         }
 
+        // Récupérer le profil utilisateur
         $profile = $user->getUserProfile();
 
+        // Formulaires pour les informations personnelles et l'adresse
         $personalForm = $this->createForm(EditPersonalInfoType::class, $profile);
         $addressForm = $this->createForm(EditAdressType::class, $profile);
 
         $personalForm->handleRequest($request);
         $addressForm->handleRequest($request);
 
-        // Gestion de l'upload d'image
-        $imageForm = $this->createForm(ImageUserType::class, $profile); // Assurez-vous que $profile est bien un objet UserProfile
+        // Formulaire pour l'image (Assurez-vous que $profile est bien un objet UserProfile)
+        $imageForm = $this->createForm(ImageUserType::class, $profile);
+        $imageForm->handleRequest($request); // Ajout de cette ligne pour gérer la soumission du formulaire d'image
 
         // Gestion de l'upload d'image
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
-            // On obtient l'image de manière sécurisée
             $imageFile = $imageForm->get('imageFile')->getData();
             if ($imageFile) {
                 $profile->setImageFile($imageFile);
@@ -65,6 +69,7 @@ class UserController extends AbstractController
             }
         }
 
+        // Vérification des formulaires soumis et valides
         if ($personalForm->isSubmitted() && $personalForm->isValid()) {
             $entityManager->flush();
             $this->addFlash('success', 'Vos informations personnelles ont été mises à jour.');
@@ -75,6 +80,7 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Votre adresse a été mise à jour.');
         }
 
+        // Rendre le template Twig avec toutes les informations nécessaires
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'personalForm' => $personalForm->createView(),
@@ -82,6 +88,7 @@ class UserController extends AbstractController
             'imageForm' => $imageForm->createView(),
         ]);
     }
+
 
 
     #[Route('/edit-user/edit-password/{id}', name: 'edit_user_password')]

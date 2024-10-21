@@ -1,17 +1,16 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: var(--font-family-primary);
-    font-size: var(--font-size-small);
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: var(--white2);
     box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: inherit;
 }
 
@@ -22,30 +21,45 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    margin: 0 0 1.5em; /* Ajout d'un peu plus d'espace pour les paragraphes */
+    margin: 0 0 1.5em;
+    color: var(--black);
+    --font-family: var(--font-family-primary) ;
+    font-size: var(--font-size-small);
 }
 
 a {
+    --font-family: var(--font-family-secondary) ;
     text-decoration: none;
+
 }
 
+a:hover, a:focus {
+    text-decoration: underline;
+    color: var(--dark-green);
+}
+
+a:active {
+    color: var(--light-green);
+}
+
+
 h1 {
-    font-family: var(--font-family-heading);
-    font-size: 2.5em; /* Ajustement de la taille pour plus de cohérence */
-    font-weight: 400;
+    --font-family: var(--font-family-heading) ;
+    font-size: var(--font-size-large);
+    color: var(--black);
 }
 
 h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-secondary);
-    font-weight: 700;
-    margin-bottom: 0.5em; /* Espacement sous les titres */
+    --font-family: var(--font-family-secondary) ;
+    font-size: var(--font-size-medium);
+    margin-bottom: 0.5em;
 }
 
 .flash-message {
     padding: 15px;
     margin-bottom: 20px;
     border-radius: var(--border-radius);
-    font-size: var(--font-size-medium); /* Ajustement de la taille du texte pour les messages */
+    font-size: var(--font-size-medium);
 }
 
 .flash-success {
