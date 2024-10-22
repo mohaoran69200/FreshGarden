@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\UserProfile;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,12 @@ class EditAdressType extends AbstractType
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Enregistrer les informations',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
             ]);
     }
 

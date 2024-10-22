@@ -37,8 +37,10 @@
                             <td>{{ user.email }}</td>
                             <td>
                                 <a class="btn btn-view" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
-                                <a class="btn btn-edit" href="{{ path('app_admin_user_edit', {'id': user.id}) }}">Éditer</a>
+                                <a class="btn btn-edit" href="{{ path('app_user_edit_user', {'id': user.id}) }}">Éditer</a>
                                 <a class="btn btn-ban" href="{{ path('app_admin_user_ban', {'id': user.id}) }}">Bannir</a>
+                                <a class="btn btn-delete" href="{{ path('app_user_remove', {'id': user.id}) }}"
+                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</a>
                             </td>
                         </tr>
                     {% endif %}
@@ -161,5 +163,14 @@
         .btn:hover {
             opacity: 0.8;
         }
+
+        .btn-delete {
+            background-color: #e74c3c;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+
     </style>
 {% endblock %}

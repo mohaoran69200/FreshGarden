@@ -18,8 +18,14 @@
     <div class="form-container">
         <h2>Modifier mon Numéro de Téléphone</h2>
         {{ form_start(phoneForm) }}
-        {{ form_row(phoneForm.old_phone) }}
+
+        {# Affiche l'ancien numéro seulement s'il est présent dans le formulaire #}
+        {% if phoneForm.old_phone is defined %}
+            {{ form_row(phoneForm.old_phone) }}
+        {% endif %}
+
         {{ form_row(phoneForm.new_phone) }}
         {{ form_end(phoneForm) }}
     </div>
+
 {% endblock %}

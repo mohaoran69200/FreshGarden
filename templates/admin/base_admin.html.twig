@@ -23,6 +23,12 @@
 {#        <link rel="stylesheet" href="{{ asset('styles/pages/_message.css') }}">#}
     {% endblock %}
 
+    {% block javascripts %}
+        {% block importmap %}
+            {{ importmap(['app', 'form', 'header']) }}
+        {% endblock %}
+    {% endblock %}
+
 </head>
 <body>
 {% block header %}
@@ -36,12 +42,6 @@
 {#            {% endfor %}#}
 {#        </div>#}
 {#    {% endfor %}#}
-{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('js/header.js') }}"></script>
-    {% block importmap %}
-        {{ importmap('app') }}
-    {% endblock %}
 {% endblock %}
 </body>
 </html>

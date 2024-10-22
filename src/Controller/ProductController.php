@@ -8,6 +8,7 @@ use App\Repository\CategorieRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
@@ -29,7 +30,7 @@ class ProductController extends AbstractController
 
     // Je crée un nouveau produit
     #[Route('/new', name: 'new')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function new(
         Request $request,
         EntityManagerInterface $entityManager): Response
@@ -64,7 +65,7 @@ class ProductController extends AbstractController
 
     // Je modifie un produit existant
     #[Route('/update/{id}', name: 'update')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function edit(
         Product $product,
         Request $request,
@@ -77,8 +78,8 @@ class ProductController extends AbstractController
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setUpdatedAt(new \DateTimeImmutable());  // Je mets à jour la date de modification
-            $entityManager->flush();  // Je sauvegarde les changements en base de données
+            $product->setUpdatedAt(new \DateTimeImmutable());
+            $entityManager->flush();
             $this->addFlash('success', 'Produit mis à jour avec succès.');
             return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
         }
@@ -114,7 +115,7 @@ class ProductController extends AbstractController
 
     // Je supprime un produit
     #[Route('/remove/{id}', name: 'remove')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function remove(Product $product, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('delete', $product);  // Je vérifie que l'utilisateur a le droit de supprimer ce produit

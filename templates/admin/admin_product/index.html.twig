@@ -38,6 +38,8 @@
                     <td>
                         <a class="btn btn-show" href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
                         <a class="btn btn-edit" href="{{ path('app_product_update', {'id': product.id}) }}">Éditer</a>
+                        <a class="btn btn-delete" href="{{ path('app_product_remove', {'id': product.id}) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')">Supprimer</a>
                     </td>
                 </tr>
             {% else %}
@@ -89,6 +91,10 @@
 
         .btn-edit {
             background-color: #ffc107;
+        }
+
+        .btn-delete {
+            background-color: #ff252c;
         }
 
         .product-table {

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier Profil{% endblock %}
-{% block importmap %}{{ importmap(['app', 'form']) }}{% endblock %}
+{% block importmap %}{{ importmap(['app', 'form', 'header']) }}{% endblock %}
 
 {% block body %}
     <div class="form-container">
@@ -100,6 +100,10 @@
             <div class="form-footer">
                 <a href="{{ path('app_user_edit_user_password', {'id': user.id}) }}" class="btn-primary">Modifier mon mot de passe</a>
                 <a href="{{ path('app_user_edit_user_contact', {'id': user.id}) }}" class="btn-primary">Modifier mes coordonnées</a>
+                <a class="btn-primary" href="{{ path('app_user_remove', {'id': user.id}) }}"
+                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">
+                    Supprimer mon compte
+                </a>
             </div>
         </div>
     </div>

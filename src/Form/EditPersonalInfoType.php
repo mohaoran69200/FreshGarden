@@ -63,7 +63,7 @@ class EditPersonalInfoType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer les informations',
                 'attr' => [
-                    'class' => 'btn btn-primary' // Classe Bootstrap pour le style
+                    'class' => 'btn btn-primary'
                 ]
             ]);
     }
