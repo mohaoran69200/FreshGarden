@@ -27,10 +27,13 @@ class SearchType extends AbstractType
                 'required' => false,
                 'label' => 'Type de produit'
             ])
-        /*    ->add('city', TextType::class, [
+            ->add('city', TextType::class, [
                 'required' => false,
-                'label' => 'Ville'
-            ])*/
+                'label' => 'Ville',
+                'attr' => [
+                    'placeholder' => 'Ville',
+                ]
+            ])
             ->add('minPrice', IntegerType::class, [
                 'required' => false,
                 'label' => false,

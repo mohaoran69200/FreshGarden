@@ -20,6 +20,12 @@
             </div>
 
             <div class="form-group">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.city) }}
+            </div>
+
+            <div class="form-group">
                 <label for="{{ form.minPrice.vars.id }}">Prix minimum</label>
                 <div class="input-symbol">
                     {{ form_widget(form.minPrice, {'attr': {'class': 'form-control'}}) }}

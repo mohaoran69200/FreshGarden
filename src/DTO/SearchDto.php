@@ -11,6 +11,8 @@ class SearchDto
 
     private ?Categorie $categorie = null;
 
+    private ?string $city = null;
+
 
     #[Assert\Positive()]
     #[Assert\LessThanOrEqual(propertyPath:'maxPrice')]
@@ -41,10 +43,7 @@ class SearchDto
     }
 
 
-
-
-
-/*    public function getCity(): ?string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -52,7 +51,7 @@ class SearchDto
     public function setCity(?string $city): void
     {
         $this->city = $city;
-    }*/
+    }
 
     public function getMinPrice(): ?int
     {
