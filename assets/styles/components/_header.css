@@ -229,6 +229,18 @@ a {
     list-style-type: none;
 }
 
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
     .sticky-buttons {

@@ -103,6 +103,11 @@
             <li>
                 <a href="{{ path('app_product_autres') }}">Autres</a>
             </li>
+            {% if app.user is not null and app.user is defined %}
+            <li>
+                <a href="{{ path('logout') }}">Se déconnecter</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 
@@ -131,22 +136,20 @@
             </a>
         </li>
 
-        <li class="dropdown">
-            <button id="mobile-connexion-button">
+        <li>
+            {% if app.user is not null and app.user is defined %}
+            <a href="{{ path('app_user_show', {id: app.user.id}) }}" id="connexion-button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM12 14.25c-4.97 0-9 2.29-9 5.25v1.5h18v-1.5c0-2.96-4.03-5.25-9-5.25Z"/>
                 </svg>
-            </button>
-            <div class="dropdown-content" id="mobile-dropdown-content">
-                {% if app.user is not null and app.user is defined %}
-                    <a href="{{ path('app_user_show', {id: app.user.id}) }}">Mon profil</a>
-                    <a href="{{ path('logout') }}">Déconnexion</a>
-                {% else %}
-                    <a href="{{ path('login') }}">Connexion</a>
-                    <a href="{{ path('register') }}">Inscription</a>
-                {% endif %}
-            </div>
+            </a>
+            {% else %}
+            <a href="{{ path('login') }}" id="connexion-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM12 14.25c-4.97 0-9 2.29-9 5.25v1.5h18v-1.5c0-2.96-4.03-5.25-9-5.25Z"/>
+                </svg>
+            </a>
+            {% endif %}
         </li>
-
     </ul>
 </header>

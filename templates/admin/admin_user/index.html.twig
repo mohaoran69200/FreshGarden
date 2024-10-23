@@ -78,8 +78,8 @@
                         {% endif %}
                         <td>{{ bannedUser.email }}</td>
                         <td>
-                            <a class="btn btn-view" href="{{ path('app_admin_user_show', {'id': bannedUser.id}) }}">Voir</a>
-                            <a class="btn btn-edit" href="{{ path('app_admin_user_edit', {'id': bannedUser.id}) }}">Éditer</a>
+                            <a class="btn btn-view" href="{{ path('app_user_show', {'id': bannedUser.id}) }}">Voir</a>
+                            <a class="btn btn-edit" href="{{ path('app_user_edit_user', {'id': bannedUser.id}) }}">Éditer</a>
                             <a class="btn btn-unban" href="{{ path('app_admin_user_unban', {'id': bannedUser.id}) }}">Débannir</a>
                         </td>
                     </tr>
