@@ -19,9 +19,9 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
 
         $productsData = [
-            'Fruits' => ['Pomme', 'Orange', 'Fraise', 'Datte'],
-            'Legumes' => ['Carotte', 'Poivron', 'Tomate'],
-            'Autre' => ['Œuf de poule', 'Fromage']
+            'Fruits' => ['Pomme', 'Orange', 'Fraise', 'Datte', 'Melon', 'Framboise', 'Pêche', 'Poire', 'Raisin', 'Cerise', 'Kiwi'],
+            'Legumes' => ['Carotte', 'Poivron', 'Tomate', 'Laitue', 'Epinard', 'Radis', 'Oignon', 'Haricot', 'Betterave', 'Chou'],
+            'Autre' => ['Œuf de poule', 'Fromage', 'Miel', 'Menthe', 'Noisettes' ]
         ];
 
         $categories = [];
@@ -38,11 +38,28 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
             'Orange' => 'public/uploads/product/orange.jpg',
             'Fraise' => 'public/uploads/product/fraise.jpg',
             'Datte' => 'public/uploads/product/datte.jpg',
+            'Melon' => 'public/uploads/product/melon.jpg',
+            'Framboise' => 'public/uploads/product/framboise.jpg',
+            'Pêche' => 'public/uploads/product/peche.jpg',
+            'Poire' => 'public/uploads/product/poire.jpg',
+            'Raisin' => 'public/uploads/product/raisins.jpg',
+            'Cerise' => 'public/uploads/product/cerise.jpg',
+            'Kiwi' => 'public/uploads/product/kiwi.jpg',
             'Carotte' => 'public/uploads/product/carotte.jpg',
             'Poivron' => 'public/uploads/product/poivron.jpg',
             'Tomate' => 'public/uploads/product/tomate.jpg',
+            'Laitue' => 'public/uploads/product/laitue.jpg',
+            'Epinard' => 'public/uploads/product/epinard.jpg',
+            'Radis' => 'public/uploads/product/radis.jpg',
+            'Oignon' => 'public/uploads/product/oignon.jpg',
+            'Haricot' => 'public/uploads/product/haricot.jpg',
+            'Betterave' => 'public/uploads/product/betterave.jpg',
+            'Chou' => 'public/uploads/product/chou.jpg',
             'Œuf de poule' => 'public/uploads/product/oeuf.jpg',
-            'Fromage' => 'public/uploads/product/fromage.jpg'
+            'Fromage' => 'public/uploads/product/fromage.jpg',
+            'Miel' => 'public/uploads/product/miel.jpg',
+            'Menthe' => 'public/uploads/product/menthe.jpg',
+            'Noisettes' => 'public/uploads/product/noisettes.jpg',
         ];
 
         $images = [];
@@ -56,7 +73,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
 
         }
 
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 124; $i++) {
             $categoryName = $faker->randomElement(array_keys($productsData));
             $productName = $faker->randomElement($productsData[$categoryName]);
             $randomUnit = $faker->randomElement(ProductUnit::cases());

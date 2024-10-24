@@ -12,7 +12,6 @@ use Faker\Factory;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\HttpFoundation\File\File;
 
 class UserFixtures extends Fixture
 {
@@ -31,57 +30,41 @@ class UserFixtures extends Fixture
 
         // Liste des villes avec leurs codes postaux pour générer des adresses
         $citiesData = [
-            'Lyon' => '69008',
-            'Venissieux' => '69200',
+            'Lyon' => ['69001','69002','69003','69004','69005','69006','69007','69008','69009'],
+            'Vénissieux' => '69200',
             'Saint-Priest' => '69800',
             'Decines' => '69150',
             'Ecully' => '69130',
+            'Corbas' => '69960',
+            'Bron' => '69500',
+            'Villeurbanne' => '69100',
+            'Meyzieu' => '69330',
+            'Mions' => '69780',
+            'Feyzin' => '69320',
+            'Francheville' => '69340'
         ];
 
-        // Répertoires pour la gestion des fichiers d'images
-        $sourceDir = dirname(__DIR__, 2) . '/assets/images/fixtures'; // Répertoire source des images
-        $destinationDir = dirname(__DIR__, 2) . '/public/uploads/user_profile'; // Répertoire de destination des images
-
-        // Création d'une instance de Filesystem pour manipuler les fichiers
-        $filesystem = new Filesystem();
-
-        // Vérifie si le répertoire source existe
-        if (!$filesystem->exists($sourceDir)) {
-            throw new \Exception("Le dossier source n'existe pas : " . $sourceDir);
-        }
-
-        // Vérifie si le répertoire de destination existe, sinon le crée
-        if (!$filesystem->exists($destinationDir)) {
-            $filesystem->mkdir($destinationDir, 0755);
-        }
-
-        // Copie les fichiers du répertoire source vers le répertoire de destination
-        try {
-            $files = scandir($sourceDir);
-            foreach ($files as $file) {
-                if ($file !== '.' && $file !== '..') {
-                    for ($a = 0; $a < 5; $a++) {
-                        $sourceFilePath = $sourceDir . '/' . $file;
-                        $destinationFilePath = $destinationDir . '/' . $a . '-' . $file;
-
-                        if (is_file($sourceFilePath)) {
-                            $filesystem->copy($sourceFilePath, $destinationFilePath, true);
-                        }
-                    }
-                }
-            }
-        } catch (IOExceptionInterface $exception) {
-            echo "Une erreur est survenue lors de la copie des fichiers : " . $exception->getMessage();
-        }
+        // Gérer la copie des fichiers images
+        $this->copyProfileImages();
 
         // Récupère toutes les valeurs possibles de l'énumération UserGender
         $genders = UserGender::cases(); // Retourne un tableau d'instances de UserGender
 
+        // Tableau pour garder trace des noms d'utilisateur existants
+        $existingUsernames = [];
+
         // Création des utilisateurs avec des données aléatoires
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 46; $i++) {
             // Sélectionne une ville aléatoire et obtient son code postal
             $city = $faker->randomElement(array_keys($citiesData));
-            $postalCode = $citiesData[$city];
+            // Vérifie si la ville a plusieurs codes postaux
+            if (is_array($citiesData[$city])) {
+                // Sélectionne un code postal aléatoire
+                $postalCode = $faker->randomElement($citiesData[$city]);
+            } else {
+                // Sinon, utilise le code postal unique
+                $postalCode = $citiesData[$city];
+            }
 
             // Sélectionne un genre aléatoire parmi ceux définis dans l'énumération
             $randomGender = $faker->randomElement($genders);
@@ -94,15 +77,19 @@ class UserFixtures extends Fixture
                 ->setDateBirth(new DateTimeImmutable($faker->date())) // Date de naissance aléatoire
                 ->setAddress($faker->streetAddress()) // Adresse de rue aléatoire
                 ->setCity($city) // Ville aléatoire
-                ->setPhoneNumber('0696874521') // Numéro de téléphone aléatoire
+                ->setPhoneNumber($faker->numerify('0#########')) // Numéro de téléphone aléatoire de 10 chiffres
                 ->setPostalCode($postalCode) // Code postal correspondant à la ville
                 ->setGender($randomGender) // Genre aléatoire selon l'énumération
                 ->setImageName($i . '-profil.jpg'); // Nom de fichier d'image pour le profil
 
+            // Génération d'un nom d'utilisateur unique
+            $username = $this->generateUniqueUsername($userProfile->getFirstName(), $userProfile->getLastName(), $existingUsernames);
+            $existingUsernames[] = $username; // Ajoute le nom d'utilisateur à la liste des existants
+
             // Création d'un utilisateur
             $user = new User();
             $user
-                ->setEmail('user' . $i . '@mail.com') // Adresse email unique pour chaque utilisateur
+                ->setEmail($username . '@mail.com') // Adresse email unique pour chaque utilisateur
                 ->setPassword($this->userPasswordHasherInterface->hashPassword(
                     $user,
                     'password' // Mot de passe par défaut
@@ -134,7 +121,7 @@ class UserFixtures extends Fixture
             ->setDateBirth(new DateTimeImmutable($faker->date()))
             ->setAddress($faker->streetAddress())
             ->setCity('Vénissieux') // Ville spécifique pour l'admin
-            ->setPhoneNumber('0696874521')
+            ->setPhoneNumber('0613174668')
             ->setPostalCode('69200') // Code postal spécifique pour l'admin
             ->setGender(UserGender::Monsieur) // Genre spécifique pour l'admin
             ->setImageName('admin-profil.jpg'); // Nom de fichier d'image pour le profil admin
@@ -155,5 +142,52 @@ class UserFixtures extends Fixture
 
         // Enregistre toutes les entités persistées dans la base de données
         $manager->flush();
+    }
+
+    // Méthode pour gérer la copie des images de profil
+    private function copyProfileImages(): void
+    {
+        $sourceDir = dirname(__DIR__, 2) . '/assets/images/fixtures';
+        $destinationDir = dirname(__DIR__, 2) . '/public/uploads/user_profile';
+
+        $filesystem = new Filesystem();
+
+        if (!$filesystem->exists($sourceDir)) {
+            throw new \Exception("Le dossier source n'existe pas : " . $sourceDir);
+        }
+
+        if (!$filesystem->exists($destinationDir)) {
+            $filesystem->mkdir($destinationDir, 0755);
+        }
+
+        try {
+            $files = scandir($sourceDir);
+            foreach ($files as $file) {
+                if ($file !== '.' && $file !== '..' && is_file($sourceDir . '/' . $file)) {
+                    // Utiliser uniqid() pour générer un nom de fichier unique
+                    $filesystem->copy($sourceDir . '/' . $file, $destinationDir . '/' . uniqid() . '-' . $file, true);
+                }
+            }
+        } catch (IOExceptionInterface $exception) {
+            echo "Une erreur est survenue lors de la copie des fichiers : " . $exception->getMessage();
+        }
+    }
+
+    // Méthode pour générer un nom d'utilisateur unique
+    private function generateUniqueUsername(string $firstName,
+                                            string $lastName,
+                                            array $existingUsernames): string
+    {
+        // Crée un nom d'utilisateur de base
+        $username = strtolower($firstName[0] . $lastName); // Exemple : jsmith
+
+        // Assure-toi que le nom d'utilisateur est unique
+        $counter = 1;
+        while (in_array($username, $existingUsernames)) {
+            $username = strtolower($firstName[0] . $lastName . $counter);
+            $counter++;
+        }
+
+        return $username;
     }
 }
