@@ -18,6 +18,7 @@
                     <th>Code Postal</th>
                     <th>Ville</th>
                     <th>Email</th>
+                    <th>Téléphone</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -35,6 +36,7 @@
                                 <td colspan="5">Profil non disponible</td>
                             {% endif %}
                             <td>{{ user.email }}</td>
+                            <td>{{ user.userProfile.phoneNumber }}</td>
                             <td>
                                 <a class="btn btn-view" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
                                 <a class="btn btn-edit" href="{{ path('app_user_edit_user', {'id': user.id}) }}">Éditer</a>
@@ -47,6 +49,11 @@
                 {% endfor %}
                 </tbody>
             </table>
+
+            {# Pagination #}
+            <div class="pagination">
+                {{ knp_pagination_render(users) }}
+            </div>
         </div>
 
         <!-- Utilisateurs bannis -->

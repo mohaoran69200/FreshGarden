@@ -5,39 +5,26 @@ namespace App\Repository;
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
-/**
- * @extends ServiceEntityRepository<Message>
- */
 class MessageRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Message::class);
     }
 
-    //    /**
-    //     * @return Message[] Returns an array of Message objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findReceivedMessagesPaginated(int $userId, int $page = 1, int $limit = 10): PaginationInterface
+    {
+        // Créer une requête pour obtenir les messages reçus par l'utilisateur spécifié
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.recipient = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('m.createdAt', 'DESC'); // Trier par date de création (du plus récent au plus ancien)
 
-    //    public function findOneBySomeField($value): ?Message
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        // Appliquer la pagination
+        return $this->paginator->paginate($qb, $page, $limit);
+    }
 }
+

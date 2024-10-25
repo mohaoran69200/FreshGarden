@@ -90,7 +90,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    // Je vais sur la page d'un produit
+    // La page d'un produit
     #[Route('/show/{id}', name: 'show')]
     public function show(Product $product, FavoriteRepository $favoriteRepository): Response
     {
@@ -131,22 +131,26 @@ class ProductController extends AbstractController
     #[Route('/fruits', name: 'fruits')]
     public function fruits(ProductRepository $productRepository,
                            CategorieRepository $categorieRepository,
-                           FavoriteRepository $favoriteRepository): Response
+                           FavoriteRepository $favoriteRepository,
+                           Request $request): Response
     {
-        $categorie = $categorieRepository->findOneBy(['name' => 'Fruits']);  // Je récupère la catégorie "Fruits"
-        $products = $productRepository->findBy(['categorie' => $categorie]);  // Je récupère les produits associés
+        $categorie = $categorieRepository->findOneBy(['name' => 'Fruits']);
 
-        $user = $this->getUser();  // Je récupère l'utilisateur connecté
+        // Utiliser la méthode dans le repository pour récupérer les produits paginés
+        $page = $request->query->getInt('page', 1);
+        $products = $productRepository->findByCategoryPaginated($categorie, $page);
+
+        // Récupérer l'utilisateur et vérifier les favoris
+        $user = $this->getUser();
         $isFavorite = false;
 
-        // Si l'utilisateur est connecté, je vérifie chaque produit pour voir s'il est dans ses favoris
         if ($user) {
             foreach ($products as $product) {
                 $favorite = $favoriteRepository->findOneBy([
                     'user' => $user,
                     'productFavorite' => $product,
                 ]);
-                $isFavorite = $favorite !== null;  // Je mets à jour le statut de favori pour chaque produit
+                $isFavorite = $favorite !== null;
             }
         }
 
@@ -157,26 +161,29 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     // Je récupère et affiche les produits de la catégorie "Légumes"
     #[Route('/legumes', name: 'legumes')]
     public function legumes(ProductRepository $productRepository,
                             CategorieRepository $categorieRepository,
-                            FavoriteRepository $favoriteRepository): Response
+                            FavoriteRepository $favoriteRepository,
+                            Request $request): Response
     {
-        $categorie = $categorieRepository->findOneBy(['name' => 'Légumes']);  // Je récupère la catégorie "Légumes"
-        $products = $productRepository->findBy(['categorie' => $categorie]);  // Je récupère les produits associés
+        $categorie = $categorieRepository->findOneBy(['name' => 'Légumes']);
 
-        $user = $this->getUser();  // Je récupère l'utilisateur connecté
+        // Utiliser la méthode dans le repository pour récupérer les produits paginés
+        $page = $request->query->getInt('page', 1);
+        $products = $productRepository->findByCategoryPaginated($categorie, $page);
+
+        $user = $this->getUser();
         $isFavorite = false;
-
-        // Si l'utilisateur est connecté, je vérifie chaque produit pour voir s'il est dans ses favoris
         if ($user) {
             foreach ($products as $product) {
                 $favorite = $favoriteRepository->findOneBy([
                     'user' => $user,
                     'productFavorite' => $product,
                 ]);
-                $isFavorite = $favorite !== null;  // Je mets à jour le statut de favori pour chaque produit
+                $isFavorite = $favorite !== null;
             }
         }
 
@@ -187,26 +194,29 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     // Je récupère et affiche les produits de la catégorie "Autres"
     #[Route('/autres', name: 'autres')]
     public function autres(ProductRepository $productRepository,
                            CategorieRepository $categorieRepository,
-                           FavoriteRepository $favoriteRepository): Response
+                           FavoriteRepository $favoriteRepository,
+                           Request $request): Response
     {
-        $categorie = $categorieRepository->findOneBy(['name' => 'Autre']);  // Je récupère la catégorie "Autres"
-        $products = $productRepository->findBy(['categorie' => $categorie]);  // Je récupère les produits associés
+        $categorie = $categorieRepository->findOneBy(['name' => 'Autre']);
 
-        $user = $this->getUser();  // Je récupère l'utilisateur connecté
+        // Utiliser la méthode dans le repository pour récupérer les produits paginés
+        $page = $request->query->getInt('page', 1);
+        $products = $productRepository->findByCategoryPaginated($categorie, $page);
+
+        $user = $this->getUser();
         $isFavorite = false;
-
-        // Si l'utilisateur est connecté, je vérifie chaque produit pour voir s'il est dans ses favoris
         if ($user) {
             foreach ($products as $product) {
                 $favorite = $favoriteRepository->findOneBy([
                     'user' => $user,
                     'productFavorite' => $product,
                 ]);
-                $isFavorite = $favorite !== null;  // Je mets à jour le statut de favori pour chaque produit
+                $isFavorite = $favorite !== null;
             }
         }
 

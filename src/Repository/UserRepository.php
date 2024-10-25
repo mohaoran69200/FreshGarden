@@ -32,4 +32,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function findPaginatedUsers(int $page = 1, int $limit = 20)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $this->getEntityManager()
+            ->getRepository(User::class)
+            ->createQueryBuilder('u')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

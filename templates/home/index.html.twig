@@ -1,4 +1,3 @@
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil - Fresh Garden{% endblock %}
@@ -25,36 +24,42 @@
 				<div class="category">
 					<h3>Fruits</h3>
 					<div class="grid">
-						{% for product in products %}
-							{% if product.categorie.name == 'Fruits' %}
+						{% if fruits is not empty %}
+							{% for product in fruits %}
 								{% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
 								{% include '_partials/product/_cardProductSmall.html.twig' with {'product': product, 'isFavorite': isFavorite} %}
-							{% endif %}
-						{% endfor %}
+							{% endfor %}
+						{% else %}
+							<p>Aucun produit trouvé.</p>
+						{% endif %}
 					</div>
 				</div>
 
 				<div class="category">
 					<h3>Légumes</h3>
 					<div class="grid">
-						{% for product in products %}
-							{% if product.categorie.name == 'Legumes' %}
+						{% if legumes is not empty %}
+							{% for product in legumes %}
 								{% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
 								{% include '_partials/product/_cardProductSmall.html.twig' with {'product': product, 'isFavorite': isFavorite} %}
-							{% endif %}
-						{% endfor %}
+							{% endfor %}
+						{% else %}
+							<p>Aucun produit trouvé.</p>
+						{% endif %}
 					</div>
 				</div>
 
 				<div class="category">
 					<h3>Autres Produits</h3>
 					<div class="grid">
-						{% for product in products %}
-							{% if product.categorie.name == 'Autre' %}
+						{% if autres is not empty %}
+							{% for product in autres %}
 								{% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
 								{% include '_partials/product/_cardProductSmall.html.twig' with {'product': product, 'isFavorite': isFavorite} %}
-							{% endif %}
-						{% endfor %}
+							{% endfor %}
+						{% else %}
+							<p>Aucun produit trouvé.</p>
+						{% endif %}
 					</div>
 				</div>
 			</div>

@@ -5,25 +5,26 @@ namespace App\Repository;
 use App\DTO\SearchDto;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Product>
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, public PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
     }
 
-    public function search(SearchDto $search): array
+    public function search(SearchDto $search, int $page = 1, int $limit = 12): PaginationInterface
     {
         // Créer la requête de base pour l'entité Product
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p.user', 'u') // Jointure avec l'entité User
-            ->leftJoin('u.userProfile', 'up'); // Jointure avec l'entité UserProfile
+            ->leftJoin('p.user', 'u')
+            ->leftJoin('u.userProfile', 'up');
 
         // Filtrage par nom du produit
         if ($search->getSearch()) {
@@ -55,16 +56,26 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('maxPrice', $search->getMaxPrice());
         }
 
-        // Retourner les résultats de la requête
-        return $qb->getQuery()->getResult();
+        return $this->paginator->paginate($qb, $page, $limit);
     }
 
-//    public function paginate(int $page=1, int $limit=12): Paginator{
-//        return new Paginator($this
-//            ->createQueryBuilder('p')
-//            ->setFirstResult(($page - 1) * $limit)
-//            ->setMaxResults($limit)
-//            ->getQuery());
-//    }
+    public function findByCategoryPaginated($category, int $page = 1, int $limit = 12): PaginationInterface
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.categorie = :categorie')
+            ->setParameter('categorie', $category);
+
+        return $this->paginator->paginate($qb, $page, $limit);
+    }
+
+    public function findAllPaginatedForAdmin(int $page = 1, int $limit = 20): PaginationInterface
+    {
+        // Création de la requête de base pour récupérer tous les produits
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC'); // Tri des produits par ID, vous pouvez adapter selon vos besoins
+
+        // Utilisation de la pagination avec KnpPaginatorBundle
+        return $this->paginator->paginate($qb, $page, $limit);
+    }
 }
 

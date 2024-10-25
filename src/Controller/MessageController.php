@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -28,15 +29,21 @@ class MessageController extends AbstractController
 
     // J'affiche la page principale des messages
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(MessageRepository $messageRepository, Request $request): Response
     {
-        // Je redirige l'utilisateur vers la page de connexion s'il n'est pas connecté
+        // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
         }
 
+        // Récupérer la page actuelle
+        $page = $request->query->getInt('page', 1);
+
+        // Utiliser la méthode de pagination pour obtenir les messages reçus par l'utilisateur connecté
+        $messages = $messageRepository->findReceivedMessagesPaginated($this->getUser()->getId(), $page, 10);
+
         return $this->render('message/index.html.twig', [
-            'controller_name' => 'MessageController',
+            'messages' => $messages,
         ]);
     }
 
@@ -83,18 +90,21 @@ class MessageController extends AbstractController
 
     // J'affiche les messages reçus par l'utilisateur connecté
     #[Route('/received', name: 'received')]
-    public function received(): Response
+    public function received(MessageRepository $messageRepository, Request $request): Response
     {
-        // Je récupère l'utilisateur connecté
         $user = $this->getUser();
 
-        // Je récupère les messages reçus par cet utilisateur
-        $messages = $user->getReceived();
+        // Récupérer la page actuelle, par défaut 1 si aucune page n'est spécifiée
+        $page = $request->query->getInt('page', 1);
+
+        // Utiliser la pagination pour obtenir les messages reçus
+        $messages = $messageRepository->findReceivedMessagesPaginated($user->getId(), $page);
 
         return $this->render('message/received.html.twig', [
             'messages' => $messages,
         ]);
     }
+
 
     // Je marque un message comme lu et affiche son contenu
     #[Route('/read/{id}', name: 'read')]

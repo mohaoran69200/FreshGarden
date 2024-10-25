@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\DTO\SearchDto;
 use App\Form\SearchType;
 use App\Repository\ProductRepository;
-use App\Repository\FavoriteRepository; // Ajoutez cette ligne
+use App\Repository\FavoriteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,32 +20,29 @@ class SearchController extends AbstractController
     public function index(
         Request $request,
         ProductRepository $productRepository,
-        FavoriteRepository $favoriteRepository
+        FavoriteRepository $favoriteRepository,
+        PaginatorInterface $paginator
     ): Response {
-        // Je crée un nouvel objet SearchDto pour stocker les critères de recherche
+        // Créer un objet SearchDto pour stocker les critères de recherche
         $search = new SearchDto();
-        // Je génère le formulaire de recherche à partir du SearchDto
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
 
-        // J'initialise les résultats avec tous les produits au départ
-        $results = $productRepository->findAll();
+        // Récupérer la page actuelle de la requête
+        $page = $request->query->getInt('page', 1);
 
-        // Si le formulaire est soumis et valide, je recherche selon les critères entrés
+        // Récupérer les résultats paginés en fonction du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            $results = $productRepository->search($search);
+            $results = $productRepository->search($search, $page, 12);
         } else {
-            // Sinon, je récupère le terme de recherche depuis les paramètres de requête
             $searchTerm = $request->query->get('search');
             if ($searchTerm) {
-                // Je mets à jour l'objet SearchDto avec ce terme
                 $search->setSearch($searchTerm);
-                // Je recherche avec ce terme via le repository
-                $results = $productRepository->search($search);
             }
+            $results = $productRepository->search($search, $page, 12);
         }
 
-        // Vérifier si l'utilisateur est connecté
+        // Vérifier si l'utilisateur est connecté pour obtenir ses favoris
         $user = $this->getUser();
         $favorites = [];
 
@@ -55,15 +53,15 @@ class SearchController extends AbstractController
                     'user' => $user,
                     'productFavorite' => $product,
                 ]);
-                $favorites[$product->getId()] = $favorite !== null; // Enregistre si le produit est favori
+                $favorites[$product->getId()] = $favorite !== null;
             }
         }
 
-        // Je retourne la vue avec le formulaire, les résultats et l'état des favoris
+        // Retourner la vue avec le formulaire, les résultats paginés et l'état des favoris
         return $this->render('search/index.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
             'results' => $results,
-            'favorites' => $favorites, // Passez les informations des favoris à la vue
+            'favorites' => $favorites,
         ]);
     }
 }

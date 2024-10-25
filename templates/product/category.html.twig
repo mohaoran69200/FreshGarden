@@ -9,11 +9,15 @@
             <div class="grid-container">
                 <div class="grid">
                     {% for product in products %}
-                        {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': isFavorite }%}
+                        {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': isFavorite } %}
                     {% else %}
                         <p>Aucun produit disponible dans cette catégorie.</p>
                     {% endfor %}
                 </div>
+            </div>
+
+            <div class="pagination">
+                {{ knp_pagination_render(products) }}
             </div>
         </section>
     </main>

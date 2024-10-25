@@ -52,11 +52,14 @@
             <div class="grid-container">
                 <div class="grid">
                     {% for product in results %}
-                        {% set isFavorite = favorites[product.id] ?? false %}  {# Vérifie si le produit est un favori #}
+                        {% set isFavorite = favorites[product.id] ?? false %}
                         {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': isFavorite } %}
                     {% else %}
                         <p>Aucun produit trouvé.</p>
                     {% endfor %}
+                </div>
+                <div class="pagination">
+                    {{ knp_pagination_render(results) }}
                 </div>
             </div>
         </section>
