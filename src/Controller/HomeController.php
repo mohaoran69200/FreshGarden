@@ -12,15 +12,19 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(ProductRepository $productRepository, FavoriteRepository $favoriteRepository, SessionInterface $session): Response
+    public function index(ProductRepository $productRepository,
+                          FavoriteRepository $favoriteRepository,
+                          SessionInterface $session): Response
     {
         $products = $productRepository->findAll();
         $user = $this->getUser();
 
+//        Je verifie si je suis l'admin au moment de la connexion je suis redirigé vers le dashboard admin
         if ($this->isGranted('ROLE_ADMIN') && $session->get('login_origin')) {
-                $session->remove('login_origin');
+            $session->remove('login_origin');
             return $this->redirectToRoute('app_admin_dashboard');
         }
+
 
         $favorites = [];
         if ($user) {

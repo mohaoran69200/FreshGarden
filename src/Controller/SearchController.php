@@ -19,7 +19,7 @@ class SearchController extends AbstractController
     public function index(
         Request $request,
         ProductRepository $productRepository,
-        FavoriteRepository $favoriteRepository // Injectez FavoriteRepository
+        FavoriteRepository $favoriteRepository
     ): Response {
         // Je crée un nouvel objet SearchDto pour stocker les critères de recherche
         $search = new SearchDto();

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\DTO\SearchDto;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -57,4 +58,13 @@ class ProductRepository extends ServiceEntityRepository
         // Retourner les résultats de la requête
         return $qb->getQuery()->getResult();
     }
+
+//    public function paginate(int $page=1, int $limit=12): Paginator{
+//        return new Paginator($this
+//            ->createQueryBuilder('p')
+//            ->setFirstResult(($page - 1) * $limit)
+//            ->setMaxResults($limit)
+//            ->getQuery());
+//    }
 }
+

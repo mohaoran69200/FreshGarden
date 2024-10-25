@@ -90,7 +90,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    // Je montre les détails d'un produit
+    // Je vais sur la page d'un produit
     #[Route('/show/{id}', name: 'show')]
     public function show(Product $product, FavoriteRepository $favoriteRepository): Response
     {
