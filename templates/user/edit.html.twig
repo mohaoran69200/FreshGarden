@@ -27,7 +27,6 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('delete_image' ~ user.userProfile.id) }}">
                         <button type="submit" class="btn-primary">Supprimer l'image</button>
                     </form>
-                {% else %}
                 {% endif %}
             </div>
         </div>
@@ -39,7 +38,6 @@
                 </div>
                 <div id="personal-info" class="form-section" style="display: none;">
                     {{ form_start(personalForm) }}
-
                     <div class="form-group">
                         {{ form_label(personalForm.userName) }}
                         {{ form_widget(personalForm.userName, {'attr': {'class': 'form-input'}}) }}
@@ -95,15 +93,30 @@
                     </div>
                     {{ form_end(addressForm) }}
                 </div>
-            </div>
 
-            <div class="form-footer">
-                <a href="{{ path('app_user_edit_user_password', {'id': user.id}) }}" class="btn-primary">Modifier mon mot de passe</a>
-                <a href="{{ path('app_user_edit_user_contact', {'id': user.id}) }}" class="btn-primary">Modifier mes coordonnées</a>
-                <a class="" href="{{ path('app_user_remove', {'id': user.id}) }}"
-                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">
-                    Supprimer mon compte
-                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="form-section">
+                        <h3>Modifier le rôle de l'utilisateur</h3>
+                        {{ form_start(roleForm) }}
+                        <div class="form-group">
+                            {{ form_label(roleForm.roles) }}
+                            {{ form_widget(roleForm.roles, {'attr': {'class': 'form-select'}}) }}
+                            {{ form_errors(roleForm.roles) }}
+                        </div>
+                        <button type="submit" class="btn-primary">Modifier le rôle</button>
+                        {{ form_end(roleForm) }}
+                    </div>
+                {% endif %}
+
+
+                <div class="form-footer">
+                    <a href="{{ path('app_user_edit_user_password', {'id': user.id}) }}" class="btn-primary">Modifier mon mot de passe</a>
+                    <a href="{{ path('app_user_edit_user_contact', {'id': user.id}) }}" class="btn-primary">Modifier mes coordonnées</a>
+                    <a class="" href="{{ path('app_user_remove', {'id': user.id}) }}"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">
+                        Supprimer mon compte
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -19,6 +19,7 @@ class EditPersonalInfoType extends AbstractType
         $builder
             ->add('userName', TextType::class, [
                 'label' => 'Pseudo',
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Entrez votre pseudo',
                     'class' => 'form-control'

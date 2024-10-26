@@ -1,45 +1,44 @@
-/* Centrer la pagination dans la div */
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-
-.pagination nav ul {
+.pagination ul {
     display: flex;
     list-style-type: none;
     padding: 0;
 }
 
-.pagination nav ul li {
+.pagination ul li {
     margin: 0 5px;
 }
 
-.pagination nav ul li a {
+.pagination ul li a {
     display: inline-block;
-    padding: 8px 12px;
-    color: #555;
+    padding: 10px 15px;
+    color: var(--dark-gray);
     text-decoration: none;
-    border: 1px solid #ddd;
+    border: 1px solid var(--white2);
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.pagination nav ul li a:hover {
-    background-color: #f0f0f0;
-    color: #333;
+.pagination ul li a:hover {
+    background-color: var(--white);
+    color: var(--dark-green);
 }
 
-.pagination nav ul li.active a {
+.pagination ul li.active span,
+.pagination ul li.current-page span {
+    background-color: var(--dark-green);
+    color: var(--white2);
+    padding: 10px 15px;
+    border-radius: 4px;
     font-weight: bold;
-    background-color: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
 }
 
-.pagination nav ul li.disabled a {
-    pointer-events: none;
-    color: #ccc;
-    border-color: #ddd;
+.pagination ul li.disabled span {
+    color: var(--white);
+    border-color: var(--white);
 }

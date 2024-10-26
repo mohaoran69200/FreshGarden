@@ -125,6 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return list<string>
      */
+
     public function getRoles(): array
     {
         return array_unique($this->roles);
@@ -133,10 +134,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param list<string> $roles
      */
+
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
-
+        $this->roles = array_unique($roles);
         return $this;
     }
 

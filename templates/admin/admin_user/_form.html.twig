@@ -1,19 +1,69 @@
 <div class="form-container">
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
     <div class="form-group">
-        {{ form_label(form.username) }}
-        {{ form_widget(form.username, { 'attr': {'class': 'form-control form-input'} }) }}
+        {{ form_label(form.userName) }}
+        {{ form_widget(form.userName, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.userName) }}
     </div>
+
     <div class="form-group">
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email, { 'attr': {'class': 'form-control form-input'} }) }}
+        {{ form_label(form.lastName) }}
+        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.lastName) }}
     </div>
+
     <div class="form-group">
-        {{ form_label(form.password) }}
-        {{ form_widget(form.password, { 'attr': {'class': 'form-control form-input'} }) }}
+        {{ form_label(form.firstName) }}
+        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.firstName) }}
     </div>
-    <div class="form-footer">
-        <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <div class="form-group">
+        {{ form_label(form.address) }}
+        {{ form_widget(form.address, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.address) }}
     </div>
+
+    <div class="form-group">
+        {{ form_label(form.postalCode) }}
+        {{ form_widget(form.postalCode, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.postalCode) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.city) }}
+        {{ form_widget(form.city, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.city) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.dateBirth) }}
+        {{ form_widget(form.dateBirth, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.dateBirth) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.phoneNumber) }}
+        {{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.phoneNumber) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.gender) }}
+        {{ form_widget(form.gender, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.gender) }}
+    </div>
+
+    <div class="profile-image-container">
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image, { 'attr': {'class': 'form-control-file'} }) }}
+        {{ form_errors(form.image) }}
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+
     {{ form_end(form) }}
 </div>

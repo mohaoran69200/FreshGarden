@@ -21,6 +21,11 @@ class HomeController extends AbstractController
     ): Response {
         $user = $this->getUser();
 
+        if ($this->isGranted('ROLE_ADMIN') && $session->get('login_origin')) {
+            $session->remove('login_origin');
+            return $this->redirectToRoute('app_admin_dashboard');
+        }
+
         // Récupérer les objets Categorie
         $categorieFruits = $categorieRepository->findOneBy(['name' => 'Fruits']);
         $categorieLegumes = $categorieRepository->findOneBy(['name' => 'Legumes']);

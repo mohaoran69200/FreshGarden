@@ -10,6 +10,7 @@ use App\Form\EditPersonalInfoType;
 use App\Form\EditPhoneNumberType;
 use App\Form\EditPasswordType;
 use App\Form\ImageUserType;
+use App\Form\RoleType;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -88,12 +89,24 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Votre adresse a été mise à jour.');
         }
 
+        $roleForm = $this->createForm(RoleType::class, $user);
+        $roleForm->handleRequest($request);
+
+        if ($roleForm->isSubmitted() && $roleForm->isValid()) {
+            $data = $roleForm->getData();
+            $user->setRoles($data->getRoles());
+            $entityManager->flush();
+            $this->addFlash('success', 'Le rôle de l\'utilisateur a été modifié avec succès');
+        }
+
+
         // Rendre le template Twig avec toutes les informations nécessaires
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'personalForm' => $personalForm->createView(),
             'addressForm' => $addressForm->createView(),
             'imageForm' => $imageForm->createView(),
+            'roleForm' => $roleForm->createView(),
         ]);
     }
 

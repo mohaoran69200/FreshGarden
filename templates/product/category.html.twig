@@ -16,9 +16,7 @@
                 </div>
             </div>
 
-            <div class="pagination">
-                {{ knp_pagination_render(products) }}
-            </div>
+            {% include '_partials/_pagination.html.twig' with {'pagination': products} %}
         </section>
     </main>
 {% endblock %}

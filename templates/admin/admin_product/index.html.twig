@@ -49,10 +49,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-        {# Ajout de la pagination #}
-        <div class="pagination">
-            {{ knp_pagination_render(products) }}
-        </div>
+        {% include '_partials/_pagination.html.twig' with {'pagination': products} %}
     </div>
 {% endblock %}

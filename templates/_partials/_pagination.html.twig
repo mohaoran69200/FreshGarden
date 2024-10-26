@@ -1,0 +1,40 @@
+{# templates/_partials/_pagination.html.twig #}
+
+{% if pagination is defined %}
+    <div class="pagination">
+        <nav aria-label="Pagination navigation">
+            <ul>
+                {# Lien vers la première page (affiché uniquement si ce n'est pas la première page) #}
+                {% if pagination.currentPageNumber > 1 %}
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': 1})) }}">« Première</a>
+                    </li>
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': pagination.currentPageNumber - 1})) }}">‹ Précédente</a>
+                    </li>
+                {% endif %}
+
+                {# Boucle des pages avec un style distinct pour la page active #}
+                {% for page in 1..pagination.pageCount %}
+                    <li class="{% if page == pagination.currentPageNumber %}active current-page{% endif %}">
+                        {% if page == pagination.currentPageNumber %}
+                            <span>{{ page }}</span>
+                        {% else %}
+                            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': page})) }}">{{ page }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+                {# Lien vers la page suivante (affiché uniquement si ce n'est pas la dernière page) #}
+                {% if pagination.currentPageNumber < pagination.pageCount %}
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': pagination.currentPageNumber + 1})) }}">Suivante ›</a>
+                    </li>
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': pagination.pageCount})) }}">Dernière »</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endif %}
