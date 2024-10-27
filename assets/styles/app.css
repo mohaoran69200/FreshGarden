@@ -23,14 +23,13 @@ h1, h2, h3, h4, h5, h6 {
 p {
     margin: 0 0 1.5em;
     color: var(--black);
-    --font-family: var(--font-family-primary) ;
+    font-family: 'Montserrat', sans-serif ;
     font-size: var(--font-size-small);
 }
 
 a {
-    --font-family: var(--font-family-secondary) ;
+    font-family: 'Lato', sans-serif ;
     text-decoration: none;
-
 }
 
 a:hover, a:focus {
@@ -44,13 +43,13 @@ a:active {
 
 
 h1 {
-    --font-family: var(--font-family-heading) ;
+    font-family: 'Pacifico', cursive ;
     font-size: var(--font-size-large);
     color: var(--black);
 }
 
 h2, h3, h4, h5, h6 {
-    --font-family: var(--font-family-secondary) ;
+    font-family: 'Lato', sans-serif ;
     font-size: var(--font-size-medium);
     margin-bottom: 0.5em;
 }

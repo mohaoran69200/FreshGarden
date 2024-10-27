@@ -1,28 +1,93 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil - Fresh Garden{% endblock %}
+{% block importmap %}{{ importmap(['app', 'form', 'header']) }}{% endblock %}
 
 {% block body %}
 	<section class="home-presentation">
-		<div class="title">
-			<h1>Votre marché local en ligne</h1>
-			<p>Vendez vos récoltes et achetez les produits frais de vos voisins.</p>
+		<div class="text-presentation-container">
+			<div class="text-presentation">
+				<h1>Votre marché local en ligne</h1>
+				<p>Vendez vos récoltes et achetez les produits frais de vos voisins.</p>
+			</div>
 			<div class="btn-container">
 				<a href="{{ path('app_product_new') }}" class="btn-vente">Vendez</a>
 				<a href="{{ path('app_search') }}" class="btn-achat">Achetez</a>
 			</div>
 		</div>
+
 		<div class="img-home-container">
-			<img src="{{ asset('images/img_header.png') }}" alt="image d'acceuil" class="img-home">
+			<div class="img-home" style="background-image: url('{{ asset('images/img_header.png') }}');"></div>
 		</div>
 	</section>
 
-	<main>
-		<section>
-			<h2>Annonces</h2>
+	<main class="main-container">
+		<div class="full-height">
+			<section class="about-section">
+				<h1 class="about-title">À propos de Fresh Garden</h1>
+				<p class="about-text">
+					Fresh Garden est une plateforme dédiée à la vente et à l'achat de produits frais et locaux entre particuliers.
+				</p>
+				<p class="about-text">
+					Notre mission est de créer une communauté où chacun peut partager les fruits de son jardin,
+					manger sainement, et contribuer à un mode de vie plus durable.
+				</p>
+			</section>
+
+			<section class="reason-section">
+				<h1 class="reason-title">Les 4 bonnes raisons de choisir FRESH GARDEN</h1>
+				<div class="card-container">
+					<div class="reason-card">
+						<div class="reason-image">
+							<img src="{{ asset('images/vegetables.jpg') }}" alt="Produit frais">
+						</div>
+						<div class="reason-text">
+							<h3>MANGEZ DES PRODUITS FRAIS ET SAINS</h3>
+							<p>Accédez à des produits de qualité, cultivés avec soin par des particuliers de votre région.
+								Profitez de la fraîcheur et du goût authentique des aliments de saison.</p>
+						</div>
+					</div>
+					<div class="reason-card">
+						<div class="reason-image">
+							<img src="{{ asset('images/gaspillage.jpg') }}" alt="Gaspillage alimentaire">
+						</div>
+						<div class="reason-text">
+							<h3>EVITEZ LE GASPILLAGE ALIMENTAIRE</h3>
+							<p>Ne laissez plus vos excédents se perdre.
+								Vendez vos surplus de fruits, légumes, œufs et bien d'autres produits naturels à des voisins désireux de consommer des produits frais et locaux.</p>
+						</div>
+					</div>
+					<div class="reason-card">
+						<div class="reason-image">
+							<img src="{{ asset('images/potato-field.jpg') }}" alt="Agriculture">
+						</div>
+						<div class="reason-text">
+							<h3>SOUTENEZ L'AGRICULTURE LOCALE</h3>
+							<p>Encouragez les petits producteurs de votre communauté.
+								Chaque achat est un geste en faveur d'une économie locale plus forte et plus solidaire.</p>
+						</div>
+					</div>
+					<div class="reason-card">
+						<div class="reason-image">
+							<img src="{{ asset('images/stock.jpg') }}" alt="Produits et stock">
+						</div>
+						<div class="reason-text">
+							<h3>CONTRÔLE SUR VOS PRODUITS ET VOTRE STOCK</h3>
+							<p>Gérez facilement vos ventes et votre stock depuis votre espace personnel. Décidez de ce que vous vendez, quand vous le vendez, et à quel prix.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<section class="product-container">
+			<h2>Découvrez les produits</h2>
 			<div class="grid-container">
 				<div class="category">
-					<h3>Fruits</h3>
+					<div class="card-title">
+						<h3>Fruits</h3>
+						<a href="{{ path('app_product_fruits') }}" class="link-arrow">Voir plus <span class="arrow">→</span></a>
+					</div>
 					<div class="grid">
 						{% if fruits is not empty %}
 							{% for product in fruits %}
@@ -36,7 +101,10 @@
 				</div>
 
 				<div class="category">
-					<h3>Légumes</h3>
+					<div class="card-title">
+						<h3>Légumes</h3>
+						<a href="{{ path('app_product_legumes') }}" class="link-arrow">Voir plus <span class="arrow">→</span></a>
+					</div>
 					<div class="grid">
 						{% if legumes is not empty %}
 							{% for product in legumes %}
@@ -50,7 +118,10 @@
 				</div>
 
 				<div class="category">
-					<h3>Autres Produits</h3>
+					<div class="card-title">
+						<h3>Produits divers</h3>
+						<a href="{{ path('app_product_autres') }}" class="link-arrow">Voir plus <span class="arrow">→</span></a>
+					</div>
 					<div class="grid">
 						{% if autres is not empty %}
 							{% for product in autres %}

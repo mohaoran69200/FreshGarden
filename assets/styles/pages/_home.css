@@ -1,186 +1,373 @@
-body {
+html, body {
     margin: 0;
-    overflow-x: hidden; /* Cache les débordements horizontaux */
+    overflow-x: hidden;
 }
+
+/******* Section header *******/
 
 .home-presentation {
     display: flex;
     height: 100vh;
-    position: relative;
+    overflow: hidden;
 }
 
-.img-home {
-    position: absolute;
-    top: 60%;
-    right: -275px;
-    transform: translateY(-50%);
-    width: 65%;
-    height: auto;
-    z-index: -1;
-}
-
-.title {
+.text-presentation-container {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    margin: 150px;
-    text-align: center; /* Centrer le texte */
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 }
 
-.title h1 {
-    width: 68%;
-    margin-bottom: 30px;
-    font-size: 2.5rem; /* Utilisation de la taille de police définie dans app.css */
+.text-presentation {
+    text-align: center;
+    margin-bottom: 6rem;
 }
 
-.title p {
-    width: 68%;
-    margin-bottom: 100px;
-    font-size: 1.5rem; /* Utilisation de la taille de police définie dans app.css */
+.text-presentation h1 {
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+}
+
+.text-presentation p {
+    font-size: 1.5rem;
 }
 
 .btn-container {
     display: flex;
-    gap: 10px;
+    gap: 2rem;
+    margin-top: 6rem;
 }
 
 .btn-vente, .btn-achat {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 175px;
-    height: 50px;
-    border-radius: var(--border-radius); /* Utilisation du rayon de bordure défini dans app.css */
+    width: 10rem;
+    height: 3rem;
+    border-radius: var(--border-radius);
     text-align: center;
-    margin: 30px;
 }
 
 .btn-vente {
-    background-color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
+    background-color: var(--light-green);
+    color: var(--white2);
     border: 1px solid var(--light-green);
 }
 
 .btn-vente:hover {
-    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
-    color: #fff;
-    text-decoration: none;
+    background-color: var(--dark-green);
+    color: var(--white2);
     border: 1px solid var(--dark-green);
 }
 
 .btn-achat {
-    background-color: #fff;
-    color: var(--light-green); /* Utilisation de la couleur définie dans app.css */
+    background-color:var(--white2);
+    color: var(--light-green);
     border: 1px solid var(--light-green);
 }
 
 .btn-achat:hover {
-    background-color: var(--dark-green); /* Utilisation de la couleur définie dans app.css */
-    color: #fff;
-    text-decoration: none;
+    background-color: var(--dark-green);
+    color: var(--white2);
 }
 
-/* Grille des catégories */
+.img-home-container {
+    flex: 1;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-home {
+    width: 100%;
+    height: 100%;
+    background-size: 130%;
+    background-repeat: no-repeat;
+    transform: translateY(10%);
+}
+
+
+/******* Section présentation *******/
+
+.full-height {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: 2rem;
+    padding-bottom: 2rem;
+}
+
+.about-section, .reason-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.about-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--dark-green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.about-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--dark-gray);
+    font-family: 'Montserrat', sans-serif;
+    padding: 0 1rem;
+}
+
+.about-text strong {
+    color: var(--dark-green);
+}
+
+.about-text em {
+    font-style: italic;
+    color: var(--dark-gray);
+}
+
+.reason-section {
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+}
+
+.reason-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--black);
+    margin-bottom: 2rem;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1200px;
+    margin-bottom: 2rem;
+}
+
+.reason-card {
+    display: flex;
+    flex-direction: column;
+    width: 16rem;
+    overflow: hidden;
+}
+
+.reason-image {
+    width: 100%;
+    height: 15rem;
+}
+
+.reason-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.reason-text {
+    text-align: center;
+}
+
+.reason-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.reason-text p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+/******* Section des produits *******/
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: var(--dark-green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .grid-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    padding: 20px;
+    gap: 2.5rem;
+    padding: 1.25rem;
 }
 
 .category {
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
 }
 
-.category h3 {
-    margin-bottom: 20px;
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-title h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.link-arrow {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--light-green);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.link-arrow .arrow {
+    margin-left: 0.5rem;
+}
+
+.link-arrow:hover {
+    color: var(--dark-green);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
 }
 
-/* Media Queries pour Tablettes (min-width: 768px et max-width: 1024px) */
+
+/******* Vue Tablette *******/
+
 @media (max-width: 1024px) and (min-width: 768px) {
     .home-presentation {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        height: auto;
         padding: 20px;
     }
 
+    .img-home-container {
+        order: -1;
+        width: 90%;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
     .img-home {
-        position: static;
-        width: 80%;
-        margin-top: 20px;
-        transform: none;
-    }
-
-    .title {
-        margin: 30px 20px;
-    }
-
-    .title h1 {
         width: 100%;
-        font-size: 2.5rem; /* Ajustement pour tablettes */
+        height: 100%;
+        object-fit: contain;
     }
 
-    .title p {
-        width: 100%;
-        font-size: 1.25rem; /* Ajustement pour tablettes */
+    .text-presentation-container {
+        padding: 10px;
+    }
+
+    .text-presentation h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .text-presentation p {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
     }
 
     .btn-container {
-        flex-direction: row;
+        gap: 1rem;
+        margin-top: 1rem;
     }
 
-    .btn-vente, .btn-achat {
-        margin: 10px;
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .reason-card {
+        width: auto;
     }
 
     .grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 colonnes pour tablettes */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Media Queries pour Mobiles (max-width: 768px) */
+
+/******** Vue Mobile *******/
+
 @media (max-width: 768px) {
     .home-presentation {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        height: auto;
         padding: 20px;
     }
 
-    .img-home {
-        position: static;
+    .img-home-container {
+        order: -1;
         width: 90%;
-        margin-top: 20px;
-        transform: none;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
     }
 
-    .title {
-        margin: 30px 20px;
-    }
-
-    .title h1 {
+    .img-home {
         width: 100%;
-        font-size: 2rem; /* Ajustement pour mobiles */
+        height: 100%;
+        object-fit: contain;
     }
 
-    .title p {
+    .text-presentation-container {
+        padding: 10px;
+    }
+
+    .text-presentation h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .text-presentation p {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-text {
+        font-size: 1rem;
+    }
+
+    .reason-title {
+        font-size: 1.5rem;
+    }
+
+    .reason-card {
         width: 100%;
-        font-size: 1.125rem; /* Ajustement pour mobiles */
-    }
-
-    .btn-container {
-        display: none; /* Masquer les boutons pour mobile */
     }
 
     .grid {
-        grid-template-columns: 1fr; /* 1 colonne pour mobiles */
+        grid-template-columns: 1fr;
     }
 }

@@ -194,7 +194,7 @@ class ProductController extends AbstractController
     }
 
 
-    // Je récupère et affiche les produits de la catégorie "Autres"
+    // Je récupère et affiche les produits de la catégorie "Produits divers"
     #[Route('/autres', name: 'autres')]
     public function autres(ProductRepository $productRepository,
                            CategorieRepository $categorieRepository,
@@ -221,7 +221,7 @@ class ProductController extends AbstractController
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
-            'categorie' => 'Autre',
+            'categorie' => 'Produits divers',
             'isFavorite' => $isFavorite,
         ]);
     }
