@@ -156,3 +156,15 @@
     border-color: var(--dark-gray);
     outline: none;
 }
+
+.input-with-eye {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em; /* Ajustez selon vos besoins */
+}

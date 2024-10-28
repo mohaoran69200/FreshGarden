@@ -3,7 +3,7 @@
 {% block title %}
 	Inscription
 {% endblock %}
-
+{% block importmap %}{{ importmap(['app', 'password', 'header']) }}{% endblock %}
 {% block body %}
 	<div class="form-container">
 		<h1>Rejoignez-nous</h1>
@@ -18,17 +18,24 @@
 			{{ form_errors(registrationForm.email) }}
 		</div>
 
-		<div class="form-group">
+		<div class="form-group password-group">
 			{{ form_label(registrationForm.plainPassword.first) }}
-			{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+			<div class="input-with-eye">
+				{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control password-input', 'autocomplete': 'new-password'}}) }}
+				<label for="{{ registrationForm.plainPassword.first.vars.id }}" class="toggle-password" style="cursor: pointer;">👁️</label>
+			</div>
 			{{ form_errors(registrationForm.plainPassword.first) }}
 		</div>
 
-		<div class="form-group">
+		<div class="form-group password-group">
 			{{ form_label(registrationForm.plainPassword.second) }}
-			{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+			<div class="input-with-eye">
+				{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control password-input', 'autocomplete': 'new-password'}}) }}
+				<label for="{{ registrationForm.plainPassword.second.vars.id }}" class="toggle-password" style="cursor: pointer;">👁️</label>
+			</div>
 			{{ form_errors(registrationForm.plainPassword.second) }}
 		</div>
+
 
 		<div class="terms__container">
 			{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'checkbox'}}) }}
@@ -41,4 +48,5 @@
 
 		{{ form_end(registrationForm) }}
 	</div>
+
 {% endblock %}

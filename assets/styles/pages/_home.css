@@ -212,6 +212,12 @@ h2 {
     padding: 1.25rem;
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
+}
+
 .category {
     margin-bottom: 2.5rem;
 }
@@ -245,12 +251,6 @@ h2 {
     color: var(--dark-green);
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.25rem;
-}
-
 
 /******* Vue Tablette *******/
 
@@ -274,7 +274,7 @@ h2 {
     .img-home {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        background-size: contain;
     }
 
     .text-presentation-container {
@@ -312,7 +312,7 @@ h2 {
 }
 
 
-/******** Vue Mobile *******/
+/******** Vue Tablette *******/
 
 @media (max-width: 768px) {
     .home-presentation {
@@ -334,7 +334,7 @@ h2 {
     .img-home {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        background-size: contain;
     }
 
     .text-presentation-container {

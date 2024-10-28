@@ -3,7 +3,7 @@
 {% block title %}
 	Connexion
 {% endblock %}
-
+{% block importmap %}{{ importmap(['app', 'password', 'header']) }}{% endblock %}
 {% block body %}
 	<div class="form-container">
 		<form method="post" action="{{ path('login') }}">
@@ -22,9 +22,12 @@
 					<label for="username">Email</label>
 					<input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
 				</div>
-				<div class="form-group">
+				<div class="form-group password-group">
 					<label for="password">Mot de passe</label>
-					<input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+					<div class="input-with-eye">
+						<input type="password" name="_password" id="password" class="form-control password-input" autocomplete="current-password" required>
+						<label for="password" class="toggle-password" style="cursor: pointer;">👁️</label>
+					</div>
 				</div>
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
@@ -34,4 +37,5 @@
 			{% endif %}
 		</form>
 	</div>
+
 {% endblock %}

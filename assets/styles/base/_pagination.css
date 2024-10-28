@@ -1,3 +1,4 @@
+/* Style général pour la pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -10,13 +11,15 @@
     padding: 0;
 }
 
+/* Style des éléments de pagination */
 .pagination ul li {
     margin: 0 5px;
 }
 
+/* Style des liens de pagination */
 .pagination ul li a {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 8px 12px; /* Réduction de la taille du padding */
     color: var(--dark-gray);
     text-decoration: none;
     border: 1px solid var(--white2);
@@ -24,21 +27,42 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Effet hover sur les liens */
 .pagination ul li a:hover {
     background-color: var(--white);
     color: var(--dark-green);
 }
 
+/* Style pour la page active */
 .pagination ul li.active span,
 .pagination ul li.current-page span {
     background-color: var(--dark-green);
     color: var(--white2);
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 4px;
     font-weight: bold;
 }
 
+/* Style pour les éléments désactivés */
 .pagination ul li.disabled span {
     color: var(--white);
     border-color: var(--white);
+}
+
+/* Pagination en vue mobile */
+@media (max-width: 480px) {
+    .pagination ul {
+        gap: 1px; /* Espacement réduit */
+    }
+
+    .pagination ul li {
+        margin: 0;
+    }
+
+    .pagination ul li a,
+    .pagination ul li.active span,
+    .pagination ul li.current-page span {
+        padding: 6px 8px; /* Réduction du padding pour les éléments */
+        font-size: 0.9rem; /* Taille de police réduite */
+    }
 }

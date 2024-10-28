@@ -5,7 +5,7 @@
 {% block body %}
     <main>
         <section class="search-section">
-            {{ form_start(form, {'action': path('app_search'), 'method': 'GET'}) }}
+            {{ form_start(form, {'action': path('app_search'), 'method': 'GET', 'attr': {'class': 'search-form'}}) }}
 
             <div class="form-group">
                 {{ form_label(form.search) }}
