@@ -12,6 +12,7 @@ use App\Form\EditPasswordType;
 use App\Form\ImageUserType;
 use App\Form\RoleType;
 use App\Repository\FavoriteRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -226,28 +227,47 @@ class UserController extends AbstractController
 
 
     #[Route('/show/{id}', name: 'show')]
-    public function show(User $user, FavoriteRepository $favoriteRepository): Response
+    public function show(User $user,
+                         FavoriteRepository $favoriteRepository,
+                         ProductRepository $productRepository): Response
     {
         // Récupérer l'utilisateur actuellement connecté
         $currentUser = $this->getUser();
 
-        // Initialiser la variable $isFavorite à false par défaut
+        // Initialiser la variable $isFavorite pour l'utilisateur consulté
         $isFavorite = false;
 
-        // Si l'utilisateur est connecté, vérifier s'il a ajouté cet utilisateur (le profil affiché) à ses favoris
-        if ($currentUser) {
-            $favorite = $favoriteRepository->findOneBy([
-                'user' => $currentUser,  // Utilisateur connecté (celui qui peut avoir des favoris)
-                'userFavorite' => $user  // Utilisateur dont on consulte le profil
-            ]);
+        // Tableau pour stocker l'état de favori pour chaque produit de l'utilisateur consulté
+        $productFavorites = [];
 
-            // Si un favori existe, $isFavorite devient true
+        if ($currentUser) {
+            // Vérifier si l'utilisateur consulté est dans les favoris de l'utilisateur connecté
+            $favorite = $favoriteRepository->findOneBy([
+                'user' => $currentUser,
+                'userFavorite' => $user
+            ]);
             $isFavorite = $favorite !== null;
+
+            // Récupérer les produits favoris de l'utilisateur connecté
+            $favorites = $favoriteRepository->findBy(['user' => $currentUser]);
+
+            // Créer un tableau associant chaque produit de l'utilisateur consulté à son état de favori
+            foreach ($user->getProducts() as $product) {
+                $productFavorites[$product->getId()] = false; // Par défaut, le produit n'est pas en favori
+            }
+            foreach ($favorites as $favorite) {
+
+                if ($favorite->getProductFavorite() && array_key_exists($favorite->getProductFavorite()->getId(), $productFavorites)) {
+                    $productFavorites[$favorite->getProductFavorite()->getId()] = true;
+                }
+            }
+
         }
 
         return $this->render('user/show.html.twig', [
-            'user' => $user,              // Utilisateur dont on consulte le profil
-            'isFavorite' => $isFavorite,  // Est-il dans les favoris de l'utilisateur connecté ?
+            'user' => $user,                     // Utilisateur dont on consulte le profil
+            'isFavorite' => $isFavorite,         // Est-il dans les favoris de l'utilisateur connecté ?
+            'productFavorites' => $productFavorites, // État des favoris pour chaque produit de l'utilisateur consulté
         ]);
     }
 

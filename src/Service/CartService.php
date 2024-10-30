@@ -55,7 +55,7 @@ class CartService
                 $cartData[] =
                     [
                         'product' => $product,
-                        'quatity' => $quantity
+                        'quantity' => $quantity
                     ];
             }
         }

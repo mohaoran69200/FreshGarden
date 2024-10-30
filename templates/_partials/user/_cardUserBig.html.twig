@@ -1,59 +1,69 @@
-<div class="user-card-large">
-    <!-- Photo de profil (grande version) -->
-    {% if user.userProfile and user.userProfile.imageName %}
-        <img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil" class="user-profile-pic-large">
-    {% else %}
-        <img src="{{ asset('images/utilisateur.png') }}" alt="Photo de profil par défaut" class="user-profile-pic-large">
-    {% endif %}
-
-
-
-
-    <!-- Contenu de la carte utilisateur (grande version) -->
-    <div class="user-card-content-large">
-        <h3 class="user-name-large">
-            {% if user.userProfile is not null %}
-                {{ user.userProfile.userName ?: user.userProfile.firstName ?: user.email }}
+<main>
+    <section>
+        <div class="user-card-large">
+            <!-- Photo de profil (grande version) -->
+            {% if user.userProfile and user.userProfile.imageName %}
+                <img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil" class="user-profile-pic-large">
             {% else %}
-                {{ user.email }}
+                <img src="{{ asset('images/utilisateur.png') }}" alt="Photo de profil par défaut" class="user-profile-pic-large">
             {% endif %}
-        </h3>
-
-        {% if user.userProfile is not null %}
-            <p class="user-city-large">{{ user.userProfile.city }}</p>
-        {% else %}
-            <p class="user-city-large"></p>
-        {% endif %}
 
 
-        <!-- Vérifie si l'utilisateur connecté est celui dont on affiche le profil -->
-        {% if app.user and app.user.id == user.id %}
-            <!-- Si l'utilisateur connecté est celui dont on affiche le profil, on affiche le bouton "Modifier mon profil" -->
-            <a href="{{ path('app_user_edit_user', { id: user.id }) }}">
-                <button class="contact-button-large">Modifier mon profil</button>
-            </a>
-        {% else %}
-            <!-- Sinon, on affiche les boutons "Contacter" et "Suivre" -->
-            <div class="actions-large">
-                <a href="{{ path('message_send', { id: user.id }) }}">
-                    <button class="contact-button-large">Contacter</button>
-                </a>
-                <button class="favorite-button-large" onclick="window.location.href='{{ path('app_favorite_toggle_user', {id: user.id}) }}'">
-                    Suivre
-                </button>
-            </div>
-        {% endif %}
 
-        <!-- Liste des annonces -->
-        <div class="ads-list-large">
-            <h4>Ses annonces :</h4>
-            <ul>
-                {% for product in user.products %}
-                    <li><a href="{{ path('app_product_show', { id: product.id }) }}">{{ product.name }} - {{ product.price }}€</a></li>
+
+            <!-- Carte utilisateur (grande version) -->
+            <div class="user-card-content-large">
+                <h3 class="user-name-large">
+                    {% if user.userProfile is not null %}
+                        {{ user.userProfile.userName ?: user.userProfile.firstName ?: user.email }}
+                    {% else %}
+                        {{ user.email }}
+                    {% endif %}
+                </h3>
+
+                {% if user.userProfile is not null %}
+                    <p class="user-city-large">{{ user.userProfile.city }}</p>
                 {% else %}
-                    <li>Aucune annonce disponible.</li>
-                {% endfor %}
-            </ul>
+                    <p class="user-city-large"></p>
+                {% endif %}
+
+
+                <!-- Vérifie si l'utilisateur connecté est celui dont on affiche le profil -->
+                {% if app.user and app.user.id == user.id %}
+                    <!-- Si l'utilisateur connecté est celui dont on affiche le profil, on affiche le bouton "Modifier mon profil" -->
+                    <a href="{{ path('app_user_edit_user', { id: user.id }) }}">
+                        <button class="contact-button-large">Modifier mon profil</button>
+                    </a>
+                {% else %}
+                    <!-- Sinon, j'affiche les boutons "Contacter" et "Suivre" -->
+                    <div class="actions-large">
+                        <a href="{{ path('message_send', { id: user.id }) }}">
+                            <button class="contact-button-large">Contacter</button>
+                        </a>
+                        <button class="favorite-button-large" onclick="window.location.href='{{ path('app_favorite_toggle_user', {id: user.id}) }}'">
+                            {% if isFavorite %}
+                                Ne plus suivre
+                            {% else %}
+                                Suivre
+                            {% endif %}
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+
+    <section>
+        <h2>Ses annonces :</h2>
+        <div class="grid-container">
+            <div class="grid">
+                {% for product in user.products %}
+                    {% set isProductFavorite = productFavorites[product.id] ?? false %}
+                    {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': isProductFavorite } %}
+                {% else %}
+                    <p>Aucun annonce trouvé.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>

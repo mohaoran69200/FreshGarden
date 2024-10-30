@@ -8,20 +8,20 @@
 
         <ul class="desktop-menu">
             <li>
-                <a href="{{ path('home') }}">Accueil</a>
+                <a href="{{ path('home') }}">accueil</a>
             </li>
             <li>
-                <a href="{{ path('app_product_fruits') }}">Fruits</a>
+                <a href="{{ path('app_product_fruits') }}">fruits</a>
             </li>
             <li>
-                <a href="{{ path('app_product_legumes') }}">Légumes</a>
+                <a href="{{ path('app_product_legumes') }}">légumes</a>
             </li>
             <li>
-                <a href="{{ path('app_product_autres') }}">Produits divers</a>
+                <a href="{{ path('app_product_autres') }}">produits divers</a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li>
-                    <a href="{{ path('app_admin_dashboard') }}">Accueil Administrateur</a>
+                    <a href="{{ path('app_admin_dashboard') }}">accueil administrateur</a>
                 </li>
             {% endif %}
         </ul>
@@ -69,11 +69,11 @@
                 </button>
                 <div class="dropdown-content">
                     {% if app.user is not null and app.user is defined %}
-                        <a href="{{ path('app_user_show', {id: app.user.id}) }}">Mon profil</a>
-                        <a href="{{ path('logout') }}">Déconnexion</a>
+                        <a href="{{ path('app_user_show', {id: app.user.id}) }}">mon profil</a>
+                        <a href="{{ path('logout') }}">déconnexion</a>
                     {% else %}
-                        <a href="{{ path('login') }}">Connexion</a>
-                        <a href="{{ path('register') }}">Inscription</a>
+                        <a href="{{ path('login') }}">connexion</a>
+                        <a href="{{ path('register') }}">inscription</a>
                     {% endif %}
                 </div>
             </li>
@@ -92,20 +92,20 @@
 
         <ul class="pages">
             <li>
-                <a href="{{ path('home') }}">Home</a>
+                <a href="{{ path('home') }}">acceuil</a>
             </li>
             <li>
-                <a href="{{ path('app_product_fruits') }}">Fruits</a>
+                <a href="{{ path('app_product_fruits') }}">fruits</a>
             </li>
             <li>
-                <a href="{{ path('app_product_legumes') }}">Légumes</a>
+                <a href="{{ path('app_product_legumes') }}">légumes</a>
             </li>
             <li>
-                <a href="{{ path('app_product_autres') }}">Autres</a>
+                <a href="{{ path('app_product_autres') }}">autres</a>
             </li>
             {% if app.user is not null and app.user is defined %}
             <li>
-                <a href="{{ path('logout') }}">Se déconnecter</a>
+                <a href="{{ path('logout') }}">se déconnecter</a>
             </li>
             {% endif %}
         </ul>

@@ -2,9 +2,11 @@
 .page-container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Aligne les cartes en haut */
-    margin: 20px auto;
-    max-width: 100%; /* Limite la largeur maximale du conteneur */
+    align-items: center;
+    flex-direction: column;
+    margin-top: 1rem;
+    max-width: 90%;
+    padding: 20px;
 }
 
 /* Conteneur principal qui contient le grid des cartes produits */
@@ -161,28 +163,23 @@
 .actions .favorite-button svg {
     width: 24px;
     height: 24px;
+    color: #ff3333;
 }
 
 .actions .favorite-button:hover svg {
     color: #ff3333;
+    background-color: var(--dark-green);
 }
 
 
 /* Style pour la grande carte produit (product-card-large) */
 .product-card-large {
     width: 100%;
-    max-width: 900px;
-    border-radius: 15px; /* Légèrement plus arrondi */
+    max-width: 700px;
+    border-radius: var(--border-radius); /* Légèrement plus arrondi */
     overflow: hidden;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée */
-    background-color: #ffffff;
-    margin: 20px auto; /* Centrer la carte */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card-large:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
+    background-color: var(--white2);
 }
 
 /* Image du produit */
@@ -298,13 +295,16 @@
 .user-card {
     background-color: var(--white2);
     border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     padding: 15px;
-    max-width: 350px;
-    margin: 20px;
+    width: 100%;
+    height: 90px;
+    max-width: 700px;
+    margin: 1rem;
     transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
@@ -314,16 +314,22 @@
 }
 
 .user-profile-pic {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     object-fit: cover;
+    display: flex;
+    align-items: center;
     border-radius: 50%;
-    margin: 0 auto 10px auto;
     border: 3px solid var(--light-green);
 }
 
 .user-card-content {
+    display: flex;
+    align-items: center;
     text-align: center;
+    margin: 1rem;
+    width: 90%;
+    justify-content: space-around;
 }
 
 .user-name {
@@ -338,11 +344,11 @@
     margin-bottom: 10px;
 }
 
-.actions {
+.actions-user-small {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 15px;
+    width: 25%;
 }
 
 .contact-button {
@@ -363,12 +369,19 @@
     background: none;
     border: none;
     cursor: pointer;
+    color: #ff4d4d;
+    transition: color 0.3s ease;
 }
 
 .favorite-button svg {
     width: 24px;
     height: 24px;
     color: var(--dark-green);
+}
+
+.favorite-button svg:hover {
+    color: #ff3333;
+    background-color: var(--dark-green);
 }
 
 .ads-list {
@@ -470,15 +483,18 @@
 }
 
 .favorite-button-large {
-    background: none;
+    background-color: var(--light-green);
+    color: white;
     border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
 }
 
-.favorite-button-large svg {
-    width: 30px;
-    height: 30px;
-    color: var(--dark-green);
+.favorite-button-large:hover {
+    background-color: var(--dark-green);
 }
 
 .ads-list-large {
