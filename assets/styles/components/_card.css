@@ -28,7 +28,7 @@
 .product-card {
     width: 100%;
     max-width: 300px;
-    height: auto;
+    height: 430px;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -70,7 +70,7 @@
 
 .product-details-container h3 {
     font-size: 1.2rem;
-    color: #333;
+    color: var(--dark-green);
     margin-bottom: 8px;
 }
 
@@ -93,7 +93,7 @@
 
 
 .user-details-container a {
-    color: #28a745;
+    color: var(--dark-green);
     font-weight: bold;
     text-decoration: none;
 }
@@ -127,8 +127,8 @@
     margin: 0;
 }
 
-.actions button {
-    background-color: #28a745;
+.actions .cart-btn {
+    background-color: var(--light-green);
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -138,41 +138,52 @@
     transition: background-color 0.3s;
 }
 
-.actions button:hover {
-    background-color: #218838;
-}
-
-.actions .favorite-button svg {
-    width: 24px;
-    height: 24px;
-}
-
-.actions .favorite-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ff4d4d;
-    transition: color 0.3s ease;
-}
-
-.actions button.modify,
-.actions button.delete {
-    margin-left: 5px;
-}
-
-.actions .favorite-button svg {
-    width: 24px;
-    height: 24px;
-    color: #ff3333;
-}
-
-.actions .favorite-button:hover svg {
-    color: #ff3333;
+.actions .cart-btn:hover {
     background-color: var(--dark-green);
 }
 
+/*.actions .favorite-button {*/
+/*    background-color: white;*/
+/*    !*border: 2px solid red;*!*/
+/*    border-radius: 50%;*/
+/*    padding: 8px;*/
+/*    transition: background-color 0.3s ease, border-color 0.3s ease;*/
+/*}*/
 
-/* Style pour la grande carte produit (product-card-large) */
+/*.actions .favorite-button svg {*/
+/*    fill: none;*/
+/*    stroke: red;*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*}*/
+
+/*.actions .favorite-button:hover svg {*/
+/*    fill: red;*/
+/*}*/
+
+.actions-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.actions-user button {
+    background-color: var(--light-green);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.actions-user button:hover {
+    background-color: var(--dark-green);
+}
+
+    /* Style pour la grande carte produit (product-card-large) */
 .product-card-large {
     width: 100%;
     max-width: 700px;
@@ -205,10 +216,8 @@
 }
 
 .product-info-large h2 {
-    margin: 0;
     font-size: 28px; /* Taille de police augmentée pour le nom du produit */
     color: var(--dark-green);
-    margin-bottom: 10px; /* Espace sous le titre */
 }
 
 .product-info-large p {
@@ -267,10 +276,6 @@
     transition: background-color 0.3s ease;
 }
 
-.actions-large button:hover {
-    background-color: #218838;
-}
-
 .add-to-cart-button {
     background-color: var(--dark-green);
     color: white;
@@ -289,6 +294,48 @@
     background-color: #0056b3; /* Teinte plus foncée au survol */
 }
 
+/* Style par défaut : bordure rouge, intérieur blanc */
+.favorite-button {
+    background-color: white;
+    border: 2px solid transparent;
+    padding: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Icône SVG à l’intérieur du bouton */
+.favorite-button svg {
+    fill: none;
+    stroke: red;
+    width: 24px;
+    height: 24px;
+}
+
+/* Au survol : icône remplie en rouge */
+.favorite-button:hover svg {
+    fill: red;
+    cursor: pointer;
+}
+
+/* État actif (ajouté aux favoris) : icône rouge pleine */
+.favorite-button.active {
+    background-color: white;
+}
+
+.favorite-button.active svg {
+    fill: red;
+    stroke: red;
+}
+
+/* État actif au survol : icône remplie en vert */
+.favorite-button.active:hover {
+    background-color: white;
+}
+
+.favorite-button.active:hover svg {
+    fill: green;
+    stroke: green;
+    cursor: pointer;
+}
 
 
 /* Carte utilisateur small */
@@ -365,24 +412,6 @@
     background-color: var(--dark-green);
 }
 
-.favorite-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ff4d4d;
-    transition: color 0.3s ease;
-}
-
-.favorite-button svg {
-    width: 24px;
-    height: 24px;
-    color: var(--dark-green);
-}
-
-.favorite-button svg:hover {
-    color: #ff3333;
-    background-color: var(--dark-green);
-}
 
 .ads-list {
     margin-top: 20px;
@@ -426,11 +455,6 @@
     max-width: 700px; /* Ajuster selon la taille que tu veux */
     margin: 30px auto;
     transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-.user-card-large:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
 }
 
 .user-profile-pic-large {
