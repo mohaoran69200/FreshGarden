@@ -26,5 +26,19 @@ class MessageRepository extends ServiceEntityRepository
         // Appliquer la pagination
         return $this->paginator->paginate($qb, $page, $limit);
     }
+
+    public function findSentMessagesPaginated(int $userId, int $page = 1, int $limit = 10): PaginationInterface
+    {
+        // Créer une requête pour obtenir les messages envoyés par l'utilisateur spécifié
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.sender = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('m.createdAt', 'DESC'); // Trier par date de création (du plus récent au plus ancien)
+
+        // Appliquer la pagination
+        return $this->paginator->paginate($qb, $page, $limit);
+    }
+
+
 }
 

@@ -1,18 +1,18 @@
-/* Bouton de base (générique) */
-/*.btn {*/
-/*    display: inline-block;*/
-/*    padding: 12px 24px;*/
-/*    font-size: var(--font-size-medium);*/
-/*    font-weight: bold;*/
-/*    border-radius: var(--border-radius);*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    transition: background-color 0.3s ease, color 0.3s ease;*/
-/*    text-align: center;*/
-/*    text-decoration: none;*/
-/*    outline: none;*/
-/*    color: var(--white2);*/
-/*}*/
+ /*Bouton de base (générique) */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: var(--font-size-medium);
+    font-weight: bold;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: var(--white2);
+}
 
 /* Bouton principal */
 .btn-primary {

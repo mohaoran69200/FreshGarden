@@ -152,11 +152,25 @@ class ProductController extends AbstractController
                 $isFavorite = $favorite !== null;
             }
         }
+        // Gestion des favoris
+        $favorites = [];
+        if ($user) {
+            $favorites = $favoriteRepository->findBy(['user' => $user]);
+        }
+
+        $favoritesMap = [];
+        foreach ($favorites as $favorite) {
+            $productFavorite = $favorite->getProductFavorite();
+            if ($productFavorite !== null) {
+                $favoritesMap[$productFavorite->getId()] = true;
+            }
+        }
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
             'categorie' => 'Fruits',
             'isFavorite' => $isFavorite,
+            'favorites' => $favoritesMap,
         ]);
     }
 
@@ -185,11 +199,25 @@ class ProductController extends AbstractController
                 $isFavorite = $favorite !== null;
             }
         }
+        // Gestion des favoris
+        $favorites = [];
+        if ($user) {
+            $favorites = $favoriteRepository->findBy(['user' => $user]);
+        }
+
+        $favoritesMap = [];
+        foreach ($favorites as $favorite) {
+            $productFavorite = $favorite->getProductFavorite();
+            if ($productFavorite !== null) {
+                $favoritesMap[$productFavorite->getId()] = true;
+            }
+        }
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
             'categorie' => 'Légumes',
             'isFavorite' => $isFavorite,
+            'favorites' => $favoritesMap,
         ]);
     }
 
@@ -218,11 +246,25 @@ class ProductController extends AbstractController
                 $isFavorite = $favorite !== null;
             }
         }
+        // Gestion des favoris
+        $favorites = [];
+        if ($user) {
+            $favorites = $favoriteRepository->findBy(['user' => $user]);
+        }
+
+        $favoritesMap = [];
+        foreach ($favorites as $favorite) {
+            $productFavorite = $favorite->getProductFavorite();
+            if ($productFavorite !== null) {
+                $favoritesMap[$productFavorite->getId()] = true;
+            }
+        }
 
         return $this->render('product/category.html.twig', [
             'products' => $products,
             'categorie' => 'Produits divers',
             'isFavorite' => $isFavorite,
+            'favorites' => $favoritesMap,
         ]);
     }
 }

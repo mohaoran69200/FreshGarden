@@ -45,7 +45,7 @@ class MessageVoter extends Voter
 
             case self::DELETE:
                 // L'utilisateur peut supprimer le message s'il en est l'expéditeur
-                return $user === $message->getSender();
+                return $user === $message->getSender() || $user === $message->getRecipient();
         }
 
         // Retourne false par défaut si l'attribut n'est pas reconnu

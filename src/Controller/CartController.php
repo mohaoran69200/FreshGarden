@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -13,15 +14,15 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/cart', name: 'cart_')]
 class CartController extends AbstractController
 {
-    // Je récupère et j'affiche le contenu total du panier en utilisant le service CartService.
+    // Affiche le contenu total du panier
     #[Route('/', name: 'index')]
     public function index(CartService $cartService): Response
     {
-        return $this->render('cart/index.html.twig',
-            ['cart' => $cartService->getTotal()]);
+        $cartItems = $cartService->getTotal();
+        return $this->render('cart/index.html.twig', ['cart' => $cartItems]);
     }
 
-    // J'ajoute un produit au panier en fonction de l'ID et je redirige vers la page du panier.
+    // Ajoute un produit au panier
     #[Route('/add/{id}', name: 'add')]
     public function addToCart(CartService $cartService, int $id): Response
     {
@@ -29,7 +30,16 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_index');
     }
 
-    // Je retire un produit du panier en fonction de l'ID et je redirige vers la page du panier.
+    // Met à jour la quantité d'un produit dans le panier
+    #[Route('/update/{id}', name: 'update_quantity')]
+    public function updateQuantity(CartService $cartService, int $id, Request $request): Response
+    {
+        $quantity = (int)$request->request->get('quantity', 0); // Récupère la quantité depuis le formulaire
+        $cartService->updateCartQuantity($id, $quantity); // Met à jour la quantité
+        return $this->redirectToRoute('cart_index');
+    }
+
+    // Retire un produit du panier
     #[Route('/remove/{id}', name: 'remove')]
     public function removeToCart(CartService $cartService, int $id): Response
     {
@@ -37,7 +47,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_index');
     }
 
-    // Je vide complètement le panier et redirige l'utilisateur vers la page d'accueil.
+    // Vide le panier
     #[Route('/removeAll', name: 'removeAll')]
     public function removeAll(CartService $cartService): Response
     {

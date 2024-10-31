@@ -6,7 +6,8 @@
     <main>
         <section>
             <div class="form-container">
-                <h1>Envoyer un message à {{ recipient.userProfile.userName ? recipient.userProfile.userName : recipient.userProfile.firstName }}</h1>
+                <h1>Envoyer un message à
+                    {{ recipient.userProfile.userName ? recipient.userProfile.userName : recipient.userProfile.firstName }}</h1>
 
                 {{ form_start(form) }}
 
@@ -25,7 +26,7 @@
                 {{ form_end(form) }}
 
                 <div class="form-footer">
-                    <a href="{{ path('message_index') }}" class="btn">Retour aux messages</a>
+                    <a href="{{ path('message_index') }}" class="back-btn">Retour aux messages</a>
                 </div>
             </div>
         </section>

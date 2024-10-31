@@ -17,16 +17,35 @@ class CartService
         $this->requestStack = $requestStack;
         $this->entityManager = $entityManager;
     }
-    public function addToCart(int $id): void
+// App/Service/CartService.php
+
+    public function addToCart(int $id, int $quantity = 1): void
     {
-        $cart = $this->requestStack->getSession()->get('cart', []);
-        if(!empty($cart[$id])) {
-            $cart[$id]++;
-        }else {
-            $cart[$id] = 1;
+        $cart = $this->getSession()->get('cart', []);
+        $currentQuantity = $cart[$id] ?? 0;
+        $product = $this->entityManager->getRepository(Product::class)->find($id);
+
+        if ($product) {
+            $maxQuantity = min($quantity, $product->getStock()); // Assure de ne pas dépasser le stock
+            $cart[$id] = min($currentQuantity + $maxQuantity, $product->getStock());
+            $this->getSession()->set('cart', $cart);
         }
+    }
+
+    public function updateCartQuantity(int $id, int $quantity): void
+    {
+        $cart = $this->getSession()->get('cart', []);
+        $product = $this->entityManager->getRepository(Product::class)->find($id);
+
+        if ($product && $quantity > 0) {
+            $cart[$id] = min($quantity, $product->getStock());
+        } elseif ($quantity === 0) {
+            unset($cart[$id]);
+        }
+
         $this->getSession()->set('cart', $cart);
     }
+
 
     public function removeToCart(int $id): void
     {
@@ -37,7 +56,7 @@ class CartService
 
     public function removeCartAll()
     {
-       return $this->getSession()->remove('cart');
+        return $this->getSession()->remove('cart');
     }
 
     public function getTotal(): array
@@ -50,7 +69,7 @@ class CartService
                 $product = $this->entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
                 if (!$product)
                 {
-
+                    continue;
                 }
                 $cartData[] =
                     [

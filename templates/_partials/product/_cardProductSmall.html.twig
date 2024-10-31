@@ -56,12 +56,12 @@
 		<!-- Afficher les boutons Modifier et Supprimer uniquement si le produit appartient à l'utilisateur connecté -->
 		<div class="actions-user">
 			<a href="{{ path('app_product_update', { id: product.id }) }}">
-				<button>Modifier</button>
+				<button class="edit-button">Modifier</button>
 			</a>
 			<form action="{{ path('app_product_remove', { id: product.id }) }}" method="post">
 				<input type="hidden" name="_method" value="DELETE">
 				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
-				<button type="submit">Supprimer</button>
+				<button type="submit" class="delete-button">Supprimer</button>
 			</form>
 		</div>
 	{% endif %}

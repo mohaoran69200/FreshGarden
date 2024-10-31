@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le message{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+            <div class="form-container">
+                <div class="form-group">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                </div>
+
+                <button type="submit" class="btn-primary">Sauvegarder les modifications</button>
+
+                {{ form_end(form) }}
+
+                <div class="form-footer">
+                    <a href="{{ path('message_sent') }}" class="back-btn">Retour à la liste des messages envoyés</a>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

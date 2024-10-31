@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages envoyés{% endblock %}
+
+{% block body %}
+    <main>
+        <section class="message-section">
+            <h2>Messages envoyés</h2>
+
+            <table class="message-table">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Destinataire</th>
+                    <th>Date d'envoi</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ message.title }}</td>
+                        <td>
+                            {{ message.recipient.userProfile.userName ?: message.recipient.userProfile.firstName ?: message.recipient.email }}
+                        </td>
+                        <td>{{ message.createdAt|date('d/m/Y H:i') }}</td>
+                        <td class="action-btn">
+                            <form action="{{ path('message_read', { id: message.id }) }}" method="get">
+                                <button type="submit" class="view-btn">Voir</button>
+                            </form>
+                            <form action="{{ path('message_edit', { id: message.id }) }}" method="get">
+                                <button type="submit" class="edit-btn">Modifier</button>
+                            </form>
+                            <form action="{{ path('message_delete', {id: message.id}) }}" method="post" class="delete-form">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+                                <button type="submit" class="delete-btn">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {# Pagination #}
+            <div class="pagination">
+                {% include '_partials/_pagination.html.twig' with {'pagination': messages} %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

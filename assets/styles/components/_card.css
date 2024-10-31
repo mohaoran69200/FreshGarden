@@ -24,7 +24,7 @@
     align-items: flex-start; /* Aligne les éléments au début verticalement */
 }
 
-/*style pour cardProduct small*/
+/****************************************************style pour cardProduct small***********************************************************/
 .product-card {
     width: 100%;
     max-width: 300px;
@@ -79,7 +79,6 @@
     color: #28a745; /* Couleur accent pour le prix */
 }
 
-/* Détails de l'utilisateur */
 .user-details-container {
     display: flex;
     justify-content: space-between;
@@ -142,25 +141,6 @@
     background-color: var(--dark-green);
 }
 
-/*.actions .favorite-button {*/
-/*    background-color: white;*/
-/*    !*border: 2px solid red;*!*/
-/*    border-radius: 50%;*/
-/*    padding: 8px;*/
-/*    transition: background-color 0.3s ease, border-color 0.3s ease;*/
-/*}*/
-
-/*.actions .favorite-button svg {*/
-/*    fill: none;*/
-/*    stroke: red;*/
-/*    width: 24px;*/
-/*    height: 24px;*/
-/*}*/
-
-/*.actions .favorite-button:hover svg {*/
-/*    fill: red;*/
-/*}*/
-
 .actions-user {
     display: flex;
     justify-content: space-between;
@@ -169,8 +149,8 @@
 }
 
 .actions-user button {
-    background-color: var(--light-green);
-    color: #fff;
+    /*background-color: var(--light-green);*/
+    /*color: #fff;*/
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -179,11 +159,9 @@
     transition: background-color 0.3s;
 }
 
-.actions-user button:hover {
-    background-color: var(--dark-green);
-}
 
-    /* Style pour la grande carte produit (product-card-large) */
+
+    /************************************* Style pour la grande carte produit  ********************************************/
 .product-card-large {
     width: 100%;
     max-width: 700px;
@@ -193,7 +171,6 @@
     background-color: var(--white2);
 }
 
-/* Image du produit */
 .product-details-container-large {
     display: flex;
     flex-direction: column;
@@ -209,7 +186,6 @@
     border-bottom: 1px solid #e0e0e0; /* Ligne séparatrice sous l'image */
 }
 
-/* Informations sur le produit */
 .product-info-large {
     padding: 20px; /* Ajout de padding pour plus d'espace */
     text-align: left; /* Alignement à gauche pour le texte */
@@ -227,7 +203,6 @@
     line-height: 1.6; /* Espacement entre les lignes accru pour la lisibilité */
 }
 
-/* Style pour le conteneur de prix et de stock */
 .price-stock {
     display: flex;
     justify-content: space-between;
@@ -241,7 +216,6 @@
     margin-right: 15px; /* Espace entre le prix et le stock */
 }
 
-/* Détails de l'utilisateur */
 .user-details-container-large {
     padding: 15px 20px; /* Ajout de padding pour l'espace */
     border-top: 1px solid #e0e0e0; /* Ligne séparatrice au-dessus des détails de l'utilisateur */
@@ -260,7 +234,6 @@
     color: #555;
 }
 
-/* Styles pour les boutons d'action */
 .actions-large {
     padding: 20px;
     display: flex;
@@ -285,16 +258,27 @@
     background-color: darkgreen; /* Teinte plus foncée au survol */
 }
 
-.edit-button, .delete-button {
-    background-color: #007bff; /* Couleur de fond pour les boutons Modifier et Supprimer */
-    color: white;
+.edit-button {
+    background-color: var(--orange);
+    color: var(--white);
 }
 
-.edit-button:hover, .delete-button:hover {
-    background-color: #0056b3; /* Teinte plus foncée au survol */
+.edit-button:hover {
+    background-color: var(--orange-hover);
+    color: var(--white);
 }
 
-/* Style par défaut : bordure rouge, intérieur blanc */
+.delete-button {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.delete-button:hover {
+    background-color: var(--red-hover);
+    color: var(--white);
+}
+
+
 .favorite-button {
     background-color: white;
     border: 2px solid transparent;
@@ -302,7 +286,6 @@
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Icône SVG à l’intérieur du bouton */
 .favorite-button svg {
     fill: none;
     stroke: red;
@@ -310,13 +293,11 @@
     height: 24px;
 }
 
-/* Au survol : icône remplie en rouge */
 .favorite-button:hover svg {
     fill: red;
     cursor: pointer;
 }
 
-/* État actif (ajouté aux favoris) : icône rouge pleine */
 .favorite-button.active {
     background-color: white;
 }
@@ -326,7 +307,6 @@
     stroke: red;
 }
 
-/* État actif au survol : icône remplie en vert */
 .favorite-button.active:hover {
     background-color: white;
 }
@@ -338,7 +318,7 @@
 }
 
 
-/* Carte utilisateur small */
+/************************************************************ Carte utilisateur small ********************************************************/
 .user-card {
     background-color: var(--white2);
     border: 1px solid #e0e0e0;
@@ -412,38 +392,12 @@
     background-color: var(--dark-green);
 }
 
-
-.ads-list {
-    margin-top: 20px;
-    text-align: left;
-}
-
-.ads-list h4 {
-    font-size: 1.1rem;
+.ads-count a {
     color: var(--dark-green);
-    margin-bottom: 10px;
-}
-
-.ads-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.ads-list li {
-    margin-bottom: 10px;
-}
-
-.ads-list a {
-    text-decoration: none;
-    color: var(--light-green);
-}
-
-.ads-list a:hover {
-    text-decoration: underline;
 }
 
 
-/* Style pour la grande carte utilisateur (userBig) */
+/**************************************** Style pour la grande carte utilisateur (userBig) *************************************************/
 .user-card-large {
     background-color: var(--white2);
     border: 1px solid #e0e0e0;
@@ -558,15 +512,69 @@
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 768px) {
     .grid {
         grid-template-columns: repeat(2, 1fr); /* 2 éléments par ligne pour les écrans encore plus petits */
     }
+
+    .user-card {
+        flex-direction: column; /* Alignement vertical */
+        height: auto; /* Laisser la hauteur s'ajuster */
+        padding: 20px;
+        text-align: center;
+    }
+
+    .user-profile-pic {
+        width: 65px; /* Réduction de taille pour s'adapter à l'écran */
+        height: 65px;
+        margin-bottom: 10px;
+    }
+
+    .user-card-content {
+        flex-direction: column; /* Contenu empilé verticalement */
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .actions-user-small {
+        width: 100%; /* Utilise la pleine largeur */
+        justify-content: center; /* Centrer les actions */
+        margin-top: 10px;
+    }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 480px) {
     .grid {
         grid-template-columns: 1fr; /* 1 élément par ligne sur mobile */
+    }
+
+    .user-card {
+        padding: 15px;
+        margin: 10px;
+        max-width: 100%; /* Prend toute la largeur de l'écran */
+    }
+
+    .user-profile-pic {
+        width: 55px; /* Réduction supplémentaire pour mobile */
+        height: 55px;
+    }
+
+    .contact-button {
+        padding: 6px 10px; /* Réduction de padding */
+        font-size: 0.9em; /* Taille de police ajustée */
+    }
+
+    .user-name {
+        font-size: 1em; /* Taille de texte légèrement réduite */
+    }
+
+    .user-city {
+        font-size: 0.85rem; /* Taille de texte réduite */
+    }
+
+    .ads-count a {
+        font-size: 0.85em; /* Taille de police ajustée */
     }
 }
 

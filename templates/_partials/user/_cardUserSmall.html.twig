@@ -22,7 +22,7 @@
 			</div>
 
 			<div class="ads-count">
-				<h3>{{ user.products|length }} annonces</h3>
+				<a href="{{ path('app_user_show', {id: user.id}) }}#user-ads">{{ user.products|length }} annonces</a>
 			</div>
 		</div>
 	</a>

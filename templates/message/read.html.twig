@@ -1,20 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Envoyer un message{% endblock %}
+{% block title %}
+    Message de  {% if message.sender.userProfile.userName is not empty %}
+    {{ message.sender.userProfile.userName }}
+{% elseif message.sender.userProfile.firstName is not empty %}
+    {{ message.sender.userProfile.firstName }}
+{% else %}
+    {{ message.sender.email }}
+{% endif %}
+{% endblock %}
 
 {% block body %}
     <main>
-        <section>
+        <section class="message-view-section">
             <h1>Messagerie</h1>
-            <h2>{{ message.title }}</h2>
-            <p>Message de {{ message.sender.email }}</p>
-            <p>Le {{ message.createdAt|date('d/m/Y H:i') }}</p>
-            <div>{{ message.message }}</div>
+            <h2 class="message-title">{{ message.title }}</h2>
 
-            <div>
-                <a href="{{ path('message_index') }}">Retour aux messages</a>
+            <div class="chat-bubble">
+                <p class="message-info">
+                    <strong>
+                        {% if message.sender.userProfile.userName is not empty %}
+                            {{ message.sender.userProfile.userName }}
+                        {% elseif message.sender.userProfile.firstName is not empty %}
+                            {{ message.sender.userProfile.firstName }}
+                        {% else %}
+                            {{ message.sender.email }}
+                        {% endif %}
+                        , le {{ message.createdAt|date('d/m/Y H:i') }}
+                    </strong>
+                </p>
+                <div class="message-content">{{ message.message }}</div>
             </div>
+
+            <div class="action-buttons">
+                <a href="{{ path('message_index') }}" class="back-btn">Retour aux messages</a>
+                <a href="{{ path('message_send', { id: message.sender.id }) }}" class="reply-btn">Répondre</a>
+            </div>
+
         </section>
     </main>
-
 {% endblock %}

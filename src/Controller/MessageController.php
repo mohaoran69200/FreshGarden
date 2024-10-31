@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,6 +88,56 @@ class MessageController extends AbstractController
             'recipient' => $recipient,
         ]);
     }
+
+    #[Route('/sent', name: 'sent')]
+    public function sent(MessageRepository $messageRepository, Request $request, PaginatorInterface $pagination): Response
+    {
+        $user = $this->getUser();
+
+        // Récupérer la page actuelle, par défaut 1 si aucune page n'est spécifiée
+        $page = $request->query->getInt('page', 1);
+
+        // Utiliser la pagination pour obtenir les messages envoyés
+        $messages = $messageRepository->findSentMessagesPaginated($user->getId(), $page);
+
+        return $this->render('message/sent.html.twig', [
+            'messages' => $messages,
+            'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/edit/{id}', name: 'edit')]
+    public function edit(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Message $message
+    ): Response {
+        // Je vérifie que l'utilisateur a les droits pour éditer ce message
+        $this->denyAccessUnlessGranted('edit', $message);
+
+        // Je crée le formulaire pour modifier le message
+        $form = $this->createForm(MessageType::class, $message);
+
+        // Je gère la soumission du formulaire
+        $form->handleRequest($request);
+
+        // Si le formulaire est soumis et valide, j'enregistre les modifications
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            // Je notifie l'utilisateur que le message a été modifié
+            $this->addFlash("message", "Votre message a bien été modifié.");
+            return $this->redirectToRoute('message_sent');
+        }
+
+        // Si le formulaire n'est pas soumis ou est invalide, je renvoie le formulaire avec la vue
+        return $this->render('message/edit.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message,
+        ]);
+    }
+
 
     // J'affiche les messages reçus par l'utilisateur connecté
     #[Route('/received', name: 'received')]

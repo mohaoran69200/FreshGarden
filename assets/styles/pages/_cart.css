@@ -1,6 +1,6 @@
 .cart-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 50px auto;
     border-radius: var(--border-radius);
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -81,4 +81,33 @@ h1 {
 
 .checkout-btn:hover {
     background-color: var(--dark-green);
+}
+
+/* Styles pour le label de la quantité */
+.quantity-select {
+    padding: 10px;
+    border: 1px solid var(--dark-gray);
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    font-size: var(--font-size-medium);
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Changement de style au survol */
+.quantity-select:hover {
+    border-color: var(--light-green);
+}
+
+/* Changement de style au focus */
+.quantity-select:focus {
+    outline: none;
+    border-color: var(--dark-green);
+    background-color: #f9f9f9; /* couleur de fond légèrement grisée pour indiquer le focus */
+}
+
+/* Ajustement du label */
+.cart-item label {
+    margin-right: 10px; /* espace entre le label et le select */
+    font-weight: bold; /* rendre le label en gras pour une meilleure lisibilité */
 }

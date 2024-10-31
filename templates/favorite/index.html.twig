@@ -3,29 +3,27 @@
 {% block title %}Mes Favoris{% endblock %}
 
 {% block body %}
-    <h1>Mes Favoris</h1>
-
-    <div class="favorites-container">
-        <h2>Produits Favoris</h2>
-        <div class="favorites-list">
-            {% if productFavorites is not empty %}
+    <h2>Produits Favoris</h2>
+    {% if productFavorites is not empty %}
+        <div class="grid-container">
+            <div class="grid">
                 {% for product in productFavorites %}
                     {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': true } %}
                 {% endfor %}
-            {% else %}
-                <div class="card">Vous n'avez pas encore de produits favoris.</div>
-            {% endif %}
+            </div>
         </div>
+    {% else %}
+        <span class="fav-none">Vous n'avez pas encore de produits favoris.</span>
+    {% endif %}
 
+    <div class="favorites-list user-favorites">
         <h2>Utilisateurs Favoris</h2>
-        <div class="favorites-list">
-            {% if userFavorites is not empty %}
-                {% for user in userFavorites %}
-                    {% include '_partials/user/_cardUserSmall.html.twig' with { 'user': user, 'isFavorite': true } %}
-                {% endfor %}
-            {% else %}
-                <div class="card">Vous n'avez pas encore d'utilisateurs favoris.</div>
-            {% endif %}
-        </div>
+        {% if userFavorites is not empty %}
+            {% for user in userFavorites %}
+                {% include '_partials/user/_cardUserSmall.html.twig' with { 'user': user, 'isFavorite': true } %}
+            {% endfor %}
+        {% else %}
+            <span class="fav-none">Vous n'avez pas encore d'utilisateurs favoris.</span>
+        {% endif %}
     </div>
 {% endblock %}
