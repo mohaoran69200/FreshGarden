@@ -42,8 +42,9 @@ class ProductType extends AbstractType
                 'required' => false,
             ])
             ->add('price', MoneyType::class, [
-                'currency' => "EUR",
+                'label' => 'Prix',
                 'rounding_mode' => 0,
+                'currency' => '',
             ])
             ->add('unit', EnumType::class, [
                 'class' => ProductUnit::class
@@ -57,7 +58,8 @@ class ProductType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('image', ImageType::class, [
-                'label' => 'Image'
+                'label' => 'Image',
+                'required' => false,
             ])
             ;
     }

@@ -40,6 +40,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <a href="{{ path('message_index') }}" class="back-btn">Retour aux messages</a>
             {# Pagination #}
             <div class="pagination">
                 {% include '_partials/_pagination.html.twig' with {'pagination': messages} %}

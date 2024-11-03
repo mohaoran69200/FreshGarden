@@ -103,6 +103,7 @@
     margin: 0;
     padding: 0 10px; /* Ajouter un peu d'espace horizontal */
     text-align: center; /* Centrer le texte dans chaque span */
+    font-family: 'Lato', sans-serif;
 }
 
 .user-details-container svg {

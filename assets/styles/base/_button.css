@@ -14,23 +14,5 @@
     color: var(--white2);
 }
 
-/* Bouton principal */
-.btn-primary {
-    background-color: var(--light-green);
-}
-
-.btn-primary:hover {
-    background-color: var(--dark-green);
-}
-
-/* Bouton secondaire (moins important ou action alternative) */
-.btn-secondary {
-    background-color: var(--dark-green);
-}
-
-.btn-secondary:hover {
-    background-color: var(--light-green);
-}
-
 
 

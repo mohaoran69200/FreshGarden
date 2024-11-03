@@ -18,7 +18,10 @@ class SearchType extends AbstractType
         $builder
             ->add('search', TextType::class,[
                 'required' => false,
-                'label' => 'Recherche'
+                'label' => 'Recherche',
+                'attr' => [
+                    'placeholder' => 'Entrez un produit',
+                ]
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
@@ -49,8 +52,7 @@ class SearchType extends AbstractType
                     'placeholder' => 'Prix maximum',
                     'min' => 0,
                 ]
-            ])
-;
+            ]);
 
     }
     public function configureOptions(OptionsResolver $resolver): void

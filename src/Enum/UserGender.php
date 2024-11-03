@@ -3,7 +3,7 @@
 namespace App\Enum;
 
 enum UserGender: string {
-    case Monsieur = 'Homme';
-    case Madame = 'Femme';
+    case Monsieur = 'Monsieur';
+    case Madame = 'Madame';
     case Autre = 'Autre';
 }

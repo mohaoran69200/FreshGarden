@@ -1,0 +1,31 @@
+{% if app.session.flashBag.has('success') %}
+    <div class="alert alert-success">
+        {% for message in app.session.flashBag.get('success') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if app.session.flashBag.has('danger') %}
+    <div class="alert alert-danger">
+        {% for message in app.session.flashBag.get('danger') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if app.session.flashBag.has('info') %}
+    <div class="alert alert-info">
+        {% for message in app.session.flashBag.get('info') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if app.session.flashBag.has('warning') %}
+    <div class="alert alert-warning">
+        {% for message in app.session.flashBag.get('warning') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}

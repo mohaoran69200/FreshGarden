@@ -323,7 +323,7 @@ class UserController extends AbstractController
         if ($request->files->has('image')) {
             $imageFile = $request->files->get('image');
             $imageName = uniqid() . '.' . $imageFile->guessExtension();
-            $imageFile->move($this->getParameter('kernel.project_dir') . '/public/uploads/', $imageName);
+            $imageFile->move($this->getParameter('kernel.project_dir') . '/public/uploads/user_profile', $imageName);
 
             $profile->setImageName($imageName);
             $entityManager->persist($profile);
@@ -357,10 +357,22 @@ class UserController extends AbstractController
             throw new AccessDeniedException('Invalid CSRF token.');
         }
 
+        // Chemin pour supprimer l'image
+        $imagePath = $this->getParameter('kernel.project_dir') . '/public/uploads/images/user_profile' . $profile->getImageName();
+
+        // Supprimez le fichier physique s'il existe
+        if ($profile->getImageName() && file_exists($imagePath)) {
+            unlink($imagePath); // Supprimez le fichier
+        }
+
+        // Supprimez l'image de l'entité et persistez
         $profile->setImageName(null);
         $entityManager->persist($profile);
         $entityManager->flush();
 
+        $this->addFlash('success', 'L\'image de profil a été supprimée avec succès.');
+
         return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
     }
+
 }

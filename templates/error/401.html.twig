@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Non Autorisé{% endblock %}
+
+{% block body %}
+    <h1>401 - Non Autorisé</h1>
+    <p>Vous devez vous connecter pour accéder à cette page.</p>
+    <a href="{{ path('login') }}">Se connecter</a>
+{% endblock %}

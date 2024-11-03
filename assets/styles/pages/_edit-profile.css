@@ -1,12 +1,3 @@
-/* Conteneur principal du formulaire de profil */
-.form-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .form-container div {
     margin-bottom: 15px;
 }
@@ -31,7 +22,6 @@
 }
 
 .form-container button[type="submit"] {
-    background-color: var(--light-green);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -40,41 +30,80 @@
     font-size: var(--font-size-small);
 }
 
-.form-container button[type="submit"]:hover {
-    background-color: var(--dark-green);
-}
 
 .profile-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0; /* Ajoute un peu d'espace autour de la pastille */
+    margin: 20px 0;
 }
 
 .profile-image {
-    width: 100px; /* Taille de la pastille */
-    height: 100px; /* Taille de la pastille */
-    border-radius: 50%; /* Rend l'image ronde */
-    object-fit: cover; /* Maintient le rapport d'aspect de l'image en remplissant la pastille */
-    border: 2px solid var(--dark-gray); /* Optionnel : Ajoute une bordure légère autour de la pastille */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--dark-green);
 }
 
-/* Styles pour le bouton de suppression d'image */
+.btn-save-image,
 .btn-delete-image {
-    background-color: #f44336; /* Couleur rouge pour le bouton de suppression */
+    background-color: var(--light-green); /* Couleur de fond par défaut */
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
+    font-size: var(--font-size-small); /* Taille de texte cohérente */
+}
+
+.btn-save-image {
+    background-color: var(--light-green); /* Couleur spécifique pour le bouton de sauvegarde */
+}
+
+.btn-save-image:hover {
+    background-color: var(--dark-green); /* Couleur plus foncée au survol */
+}
+
+.btn-delete-image {
+    background-color: var(--red); /* Couleur spécifique pour le bouton de suppression */
 }
 
 .btn-delete-image:hover {
-    background-color: #c62828; /* Couleur plus foncée au survol */
+    background-color: var(--red-hover); /* Couleur plus foncée au survol */
 }
 
-/* Styles pour le modal */
+
+.form-footer {
+    display: flex; /* Aligne les éléments horizontalement */
+    gap: 10px; /* Espacement entre les liens */
+}
+
+.btn-primary {
+    background-color: var(--light-green); /* Couleur de fond des boutons */
+    color: white;
+    padding: 10px 15px; /* Espacement intérieur */
+    border-radius: 4px; /* Coins arrondis */
+    text-decoration: none; /* Pas de soulignement */
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-green);
+    color: var(--white2)/* Couleur au survol */
+}
+
+.btn-delete-account {
+    font-size: 0.8em; /* Taille de police plus petite */
+    color: var(--red); /* Couleur du texte (rouge) */
+    align-self: center; /* Centre verticalement le lien par rapport aux autres */
+}
+
+.btn-delete-account:hover {
+    color: var(--red-hover);
+    text-decoration: underline;
+}
+
+
 .modal {
     display: none;
     position: fixed;
@@ -89,10 +118,15 @@
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    position: absolute; /* Changez margin à position */
+    top: 50%; /* Centre verticalement */
+    left: 50%; /* Centre horizontalement */
+    transform: translate(-50%, -50%); /* Ajuste le centre de la modal */
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    max-width: 600px; /* Ajoutez une largeur maximale pour de meilleures tailles */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ajoutez une ombre pour un meilleur effet visuel */
 }
 
 .close {
@@ -108,3 +142,4 @@
     text-decoration: none;
     cursor: pointer;
 }
+

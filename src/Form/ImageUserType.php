@@ -25,7 +25,7 @@ class ImageUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => UserProfile::class, // Remplacez null par votre entité UserProfile
+            'data_class' => UserProfile::class,
         ]);
     }
 }

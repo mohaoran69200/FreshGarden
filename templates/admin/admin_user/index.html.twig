@@ -38,10 +38,10 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.userProfile.phoneNumber }}</td>
                             <td>
-                                <a class="btn btn-view" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
-                                <a class="btn btn-edit" href="{{ path('app_user_edit_user', {'id': user.id}) }}">Éditer</a>
-                                <a class="btn btn-ban" href="{{ path('app_admin_user_ban', {'id': user.id}) }}">Bannir</a>
-                                <a class="btn btn-delete" href="{{ path('app_user_remove', {'id': user.id}) }}"
+                                <a class="btn-admin btn-view" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
+                                <a class="btn-admin btn-edit" href="{{ path('app_user_edit_user', {'id': user.id}) }}">Éditer</a>
+                                <a class="btn-admin btn-ban" href="{{ path('app_admin_user_ban', {'id': user.id}) }}">Bannir</a>
+                                <a class="btn-admin btn-delete" href="{{ path('app_user_remove', {'id': user.id}) }}"
                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</a>
                             </td>
                         </tr>
@@ -81,9 +81,9 @@
                         {% endif %}
                         <td>{{ bannedUser.email }}</td>
                         <td>
-                            <a class="btn btn-view" href="{{ path('app_user_show', {'id': bannedUser.id}) }}">Voir</a>
-                            <a class="btn btn-edit" href="{{ path('app_user_edit_user', {'id': bannedUser.id}) }}">Éditer</a>
-                            <a class="btn btn-unban" href="{{ path('app_admin_user_unban', {'id': bannedUser.id}) }}">Débannir</a>
+                            <a class="btn-admin btn-view" href="{{ path('app_user_show', {'id': bannedUser.id}) }}">Voir</a>
+                            <a class="btn-admin btn-edit" href="{{ path('app_user_edit_user', {'id': bannedUser.id}) }}">Éditer</a>
+                            <a class="btn-admin btn-unban" href="{{ path('app_admin_user_unban', {'id': bannedUser.id}) }}">Débannir</a>
                         </td>
                     </tr>
                 {% endfor %}

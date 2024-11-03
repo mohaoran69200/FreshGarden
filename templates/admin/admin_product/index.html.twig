@@ -36,9 +36,9 @@
                     <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ product.description }}</td>
                     <td>
-                        <a class="btn btn-show" href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
-                        <a class="btn btn-edit" href="{{ path('app_product_update', {'id': product.id}) }}">Éditer</a>
-                        <a class="btn btn-delete" href="{{ path('app_product_remove', {'id': product.id}) }}"
+                        <a class="btn-admin btn-view" href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
+                        <a class="btn-admin btn-edit" href="{{ path('app_product_update', {'id': product.id}) }}">Éditer</a>
+                        <a class="btn-admin btn-delete" href="{{ path('app_product_remove', {'id': product.id}) }}"
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')">Supprimer</a>
                     </td>
                 </tr>

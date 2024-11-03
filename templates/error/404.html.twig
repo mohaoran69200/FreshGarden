@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Non Trouvée{% endblock %}
+
+{% block body %}
+    <h1>404 - Page Non Trouvée</h1>
+    <p>Désolé, la page que vous cherchez n'existe pas.</p>
+    <a href="{{ path('home') }}">Retour à l'accueil</a>
+{% endblock %}

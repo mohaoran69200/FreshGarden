@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+{% block body %}
+    <h1>Mes Commandes</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Total</th>
+            <th>Date de Création</th>
+            <th>Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.total }}</td>
+                <td>{{ order.createdAt|date('Y-m-d H:i') }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if orders is empty %}
+        <p>Aucune commande trouvée.</p>
+    {% endif %}
+
+{% endblock %}

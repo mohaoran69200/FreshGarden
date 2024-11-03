@@ -16,12 +16,24 @@ class EditAdressType extends AbstractType
         $builder
             ->add('address', TextType::class, [
                 'label' => 'Adresse',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => '1 rue de la Paix',
+                    ]
             ])
             ->add('postalCode', TextType::class, [
                 'label' => 'Code Postal',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => '75000',
+                ]
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Paris',
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer les informations',

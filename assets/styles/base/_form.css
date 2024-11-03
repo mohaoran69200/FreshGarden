@@ -1,7 +1,7 @@
 /* Container principal du formulaire */
 .form-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 100px auto;
     padding: 20px;
     background-color: var(--white2);
     border-radius: var(--border-radius);
@@ -168,3 +168,23 @@
     transform: translateY(-50%);
     font-size: 1.2em; /* Ajustez selon vos besoins */
 }
+
+.mdp {
+    width: 24px; /* Ajustez la taille selon vos besoins */
+    height: 24px; /* Ajustez la taille selon vos besoins */
+    fill: var(--dark-green); /* Changez la couleur si nécessaire */
+}
+
+.toggle-symbol {
+    font-size: 1.5rem; /* Changez la taille de la police */
+    font-weight: bold; /* Rendre le symbole en gras */
+    color: var(--dark-green); /* Couleur des symboles */
+    margin-left: 5px; /* Espace à gauche du symbole */
+    transition: transform 0.2s; /* Effet de transition */
+}
+
+.toggle-header:hover .toggle-symbol {
+    transform: scale(1.2); /* Agrandir légèrement au survol */
+}
+
+

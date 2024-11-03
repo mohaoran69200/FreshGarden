@@ -1,7 +1,7 @@
 /* Formulaire de recherche */
 .search-section {
-    max-width: 77%;
-    margin: 0 auto;
+    max-width: 55%;
+    margin: 50px auto;
     padding: 20px;
     background-color: var(--white2);
     border-radius: var(--border-radius);
@@ -12,7 +12,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: space-between;
 }
 
 .form-group {
@@ -46,15 +45,15 @@
 
 .btn {
     flex: 1 1 100%;
-    max-width: 200px;
+    max-width: 420px;
     background-color: var(--light-green);
-    color: #fff;
+    color: var(--white2);
     border: none;
     border-radius: var(--border-radius);
     padding: 12px;
     cursor: pointer;
     font-size: var(--font-size-medium);
-    margin-top: 20px;
+    margin: 20px auto;
     align-self: flex-end;
     text-align: center;
 }

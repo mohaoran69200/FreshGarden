@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\Email;
 
@@ -22,6 +23,10 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Adresse Email',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'exemple@mail.com',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer une adresse email',
@@ -34,6 +39,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
+                    'required' => true,
                     'label' => 'Mot de passe',
                     'attr' => ['autocomplete' => 'new-password'],
                     'constraints' => [
@@ -41,13 +47,18 @@ class RegistrationFormType extends AbstractType
                             'message' => 'Veuillez entrer un mot de passe',
                         ]),
                         new Length([
-                            'min' => 6,
+                            'min' => 8,
                             'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                             'max' => 4096,
+                        ]),
+                        new Regex([
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/',
+                            'message' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule et un caractère spécial',
                         ]),
                     ],
                 ],
                 'second_options' => [
+                    'required' => true,
                     'label' => 'Confirmation du mot de passe',
                     'attr' => ['autocomplete' => 'new-password'],
                 ],
@@ -56,7 +67,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
-                'label' => "Vous accepter les conditions générales d'utilisations",
+                'label' => "Vous acceptez les conditions générales d'utilisation",
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Vous devez accepter les conditions',

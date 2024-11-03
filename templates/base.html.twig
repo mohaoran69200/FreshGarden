@@ -24,14 +24,8 @@
 {% block header %}
 	{% include '_partials/_header.html.twig' %}
 {% endblock %}
+{% include '_partials/_flash_messages.html.twig' %}
 {% block body %}
-	{% for type, messages in app.flashes %}
-		<div class="flash-message flash-{{ type }}">
-			{% for message in messages %}
-				<p>{{ message }}</p>
-			{% endfor %}
-		</div>
-	{% endfor %}
 {% endblock %}
 
 </body>

@@ -1,6 +1,10 @@
 <div class="user-card card">
 	<a href="{{ path('app_user_show', { id: user.id }) }}" class="user-card-link">
-		<img src="{{ vich_uploader_asset(user.userProfile) }}" alt="Photo de profil" class="user-profile-pic">
+		{% if user.userProfile and user.userProfile.imageName %}
+			<img src="{{ vich_uploader_asset(user.userProfile, 'imageFile') }}" alt="Photo de profil" class="user-profile-pic">
+		{% else %}
+			<img src="{{ asset('images/utilisateur.png') }}" alt="Photo de profil par défaut" class="user-profile-pic">
+		{% endif %}
 		<div class="user-card-content">
 			<h3>{{ user.email }}</h3>
 			<span class="user-name">{{ user.userProfile.userName ?: user.userProfile.firstName }}</span>

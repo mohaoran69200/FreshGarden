@@ -19,14 +19,17 @@ class MessageType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre',
+                'required' => false,
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'Message',
+                'attr' => [
+                    'placeholder' => 'Ecrivez votre message',
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

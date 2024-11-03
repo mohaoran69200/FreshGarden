@@ -29,22 +29,32 @@ class MessageController extends AbstractController
     }
 
     // J'affiche la page principale des messages
+    // Affiche la page principale des messages
     #[Route('/', name: 'index')]
-    public function index(MessageRepository $messageRepository, Request $request): Response
+    public function index(MessageRepository $messageRepository): Response
     {
         // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
         }
 
-        // Récupérer la page actuelle
-        $page = $request->query->getInt('page', 1);
+        // Récupérer les 5 derniers messages reçus
+        $receivedMessages = $messageRepository->findBy(
+            ['recipient' => $this->getUser()],
+            ['createdAt' => 'DESC'],
+            5
+        );
 
-        // Utiliser la méthode de pagination pour obtenir les messages reçus par l'utilisateur connecté
-        $messages = $messageRepository->findReceivedMessagesPaginated($this->getUser()->getId(), $page, 10);
+        // Récupérer les 5 derniers messages envoyés
+        $sentMessages = $messageRepository->findBy(
+            ['sender' => $this->getUser()],
+            ['createdAt' => 'DESC'],
+            5
+        );
 
         return $this->render('message/index.html.twig', [
-            'messages' => $messages,
+            'receivedMessages' => $receivedMessages,
+            'sentMessages' => $sentMessages,
         ]);
     }
 

@@ -6,8 +6,12 @@
     <main>
         <section class="message-section">
             <h2>Mes messages</h2>
-            <p>Vous avez {{ messages.getTotalItemCount }} messages</p>
+            <div class="message-links">
+                <a href="{{ path('message_received') }}" class="message-link">Messages reçus</a>
+                <a href="{{ path('message_sent') }}" class="message-link">Messages envoyés</a>
+            </div>
 
+            <h3>Derniers messages reçus</h3>
             <table class="message-table">
                 <thead>
                 <tr>
@@ -18,27 +22,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for message in messages %}
+                {% for message in receivedMessages %}
                     <tr class="{% if not message.isRead %}unread{% else %}read{% endif %}">
+                        <td>{{ message.sender.userProfile.userName ?: message.sender.userProfile.firstName ?: message.sender.email }}</td>
+                        <td><a href="{{ path('message_read', {id: message.id}) }}">{{ message.title }}</a></td>
+                        <td>{{ message.createdAt|date('d/m/Y H:i') }}</td>
                         <td>
-                            {{ message.sender.userProfile.userName ?: message.sender.userProfile.firstName ?: message.sender.email }}
-                        </td>
-                        <td>
-                            <a href="{{ path('message_read', {id: message.id}) }}">{{ message.title }}</a>
-                        </td>
-                        <td>
-                            {{ message.createdAt|date('d/m/Y H:i') }}
-                        </td>
-                        <td>
-                            <form action="{{ path('message_read', {id: message.id}) }}" method="get" class="view-form">
-                                <button type="submit" class="view-btn">Voir</button>
-                            </form>
-
+                            <a href="{{ path('message_read', {id: message.id}) }}" class="view-btn">Voir</a>
                             <form action="{{ path('message_delete', {id: message.id}) }}" method="post" class="delete-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
                                 <button type="submit" class="delete-btn">Supprimer</button>
                             </form>
-
                         </td>
                     </tr>
                 {% else %}
@@ -48,7 +42,43 @@
                 {% endfor %}
                 </tbody>
             </table>
-            {% include '_partials/_pagination.html.twig' with {'pagination': messages} %}
+
+            <h3>Derniers messages envoyés</h3>
+            <table class="message-table">
+                <thead>
+                <tr>
+                    <th>À</th>
+                    <th>Sujet</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for message in sentMessages %}
+                    <tr>
+                        <td>{{ message.recipient.userProfile.userName ?: message.recipient.userProfile.firstName ?: message.recipient.email }}</td>
+                        <td><a href="{{ path('message_read', {id: message.id}) }}">{{ message.title }}</a></td>
+                        <td>{{ message.createdAt|date('d/m/Y H:i') }}</td>
+                        <td class="action-btn">
+                            <form action="{{ path('message_read', { id: message.id }) }}" method="get">
+                                <button type="submit" class="view-btn">Voir</button>
+                            </form>
+                            <form action="{{ path('message_edit', { id: message.id }) }}" method="get">
+                                <button type="submit" class="edit-btn">Modifier</button>
+                            </form>
+                            <form action="{{ path('message_delete', {id: message.id}) }}" method="post" class="delete-form">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+                                <button type="submit" class="delete-btn">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun message envoyé.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </section>
     </main>
 {% endblock %}

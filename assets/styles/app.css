@@ -32,15 +32,6 @@ a {
     text-decoration: none;
 }
 
-a:hover, a:focus {
-    color: var(--dark-green);
-}
-
-a:active {
-    color: var(--light-green);
-}
-
-
 h1 {
     font-family: 'Pacifico', cursive ;
     font-size: var(--font-size-large);
@@ -55,25 +46,56 @@ h2, h3, h4, h5, h6 {
 
 .flash-message {
     padding: 15px;
-    margin-bottom: 20px;
-    border-radius: var(--border-radius);
-    font-size: var(--font-size-medium);
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
-.flash-success {
-    background-color: #d4edda;
-    color: #155724;
+.flash-message-success {
+    background-color: #d4edda; /* Vert clair */
+    color: #155724; /* Texte vert */
+    border: 1px solid #c3e6cb; /* Bordure verte */
 }
 
-.flash-error {
-    background-color: #f8d7da;
-    color: #721c24;
+.flash-message-danger {
+    background-color: #f8d7da; /* Rouge clair */
+    color: #721c24; /* Texte rouge */
+    border: 1px solid #f5c6cb; /* Bordure rouge */
 }
 
-.flash-info {
-    background-color: #cce5ff;
-    color: #004085;
+.flash-message-warning {
+    background-color: #fff3cd; /* Jaune clair */
+    color: #856404; /* Texte jaune */
+    border: 1px solid #ffeeba; /* Bordure jaune */
 }
+
+.flash-message-info {
+    background-color: #cce5ff; /* Bleu clair */
+    color: #004085; /* Texte bleu */
+    border: 1px solid #b8daff; /* Bordure bleue */
+}
+
+label.required::after {
+    content: ' *'; /* Ajoute un astérisque */
+    color: var(--dark-gray); /* Change la couleur de l'astérisque */
+    font-weight: bold; /* Rend l'astérisque en gras */
+}
+
+/* Cible les messages d'erreur pour leur donner un style distinct */
+.form-error-message {
+    color: red; /* Texte rouge pour indiquer une erreur */
+    font-size: 0.9rem; /* Taille de texte ajustée */
+    margin-top: 5px; /* Espace entre le champ et le message d'erreur */
+}
+
+/* Style personnalisé pour les champs de formulaire en erreur */
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+    border-color: red; /* Bordure rouge pour les champs en erreur */
+    background-color: #ffe6e6; /* Fond légèrement rosé pour attirer l'attention */
+}
+
 
 /* Media Queries pour Responsive Design */
 @media (max-width: 768px) {

@@ -41,8 +41,8 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            {% else %}
-                <p>Vous devez être connecté pour voir vos messages.</p>
+                <a href="{{ path('message_index') }}" class="back-btn">Retour aux messages</a>
+                {% include '_partials/_pagination.html.twig' with {'pagination': messages} %}
             {% endif %}
         </section>
     </main>
