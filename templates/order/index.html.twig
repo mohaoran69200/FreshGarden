@@ -12,15 +12,22 @@
             <th>Total</th>
             <th>Date de Création</th>
             <th>Statut</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
         {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.total }}</td>
+                <td>{{ order.total }} €</td>
                 <td>{{ order.createdAt|date('Y-m-d H:i') }}</td>
                 <td>{{ order.status.name }}</td>
+                <td>
+                    <a href="{{ path('app_order_show', { id: order.id }) }}" class="view-btn">Voir</a>
+                    {% if order.status.name == 'En_attente' %}
+                        <a href="{{ path('app_order_cancel', { id: order.id }) }}" class="delete-btn">Annuler</a>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -29,5 +36,4 @@
     {% if orders is empty %}
         <p>Aucune commande trouvée.</p>
     {% endif %}
-
 {% endblock %}

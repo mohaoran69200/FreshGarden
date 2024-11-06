@@ -38,7 +38,9 @@ class OrderController extends AbstractController
 
     #[Route('/order/new', name: 'app_order_new')]
     #[IsGranted('ROLE_USER')]
-    public function create(Request $request, EntityManagerInterface $entityManager, CartService $cartService): Response
+    public function create(Request $request,
+                           EntityManagerInterface $entityManager,
+                           CartService $cartService): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -46,7 +48,7 @@ class OrderController extends AbstractController
         // Vérifier s'il existe déjà une commande avec le statut ENATTENTE
         $existingOrder = $entityManager->getRepository(Order::class)->findOneBy([
             'user' => $user,
-            'status' => OrderStatus::ENATTENTE
+            'status' => OrderStatus::En_attente
         ]);
 
         // Récupérer les produits du panier
@@ -59,7 +61,7 @@ class OrderController extends AbstractController
             // Si aucune commande en attente n'existe, créer une nouvelle commande
             $order = new Order();
             $order->setUser($user);
-            $order->setStatus(OrderStatus::ENATTENTE);
+            $order->setStatus(OrderStatus::En_attente);
             $order->setCreatedAt(new \DateTimeImmutable());
 
             // Calcul du total de la commande
@@ -108,7 +110,7 @@ class OrderController extends AbstractController
             if ($order->getDeliveryMode() === DeliveryMode::Livraison) {
                 if (!$user->getUserProfile()->getAddress()) {
                     $form->addError(new FormError(
-                        'Vous devez renseigner une addresse sur votre compte pour pouvoir commander en livraison'
+                        'Vous devez renseigner une addresse sur votre compte pour pouvoir être livré'
                     ));
                 }
             }
@@ -117,13 +119,13 @@ class OrderController extends AbstractController
                     $delivery = new Delivery();
                     $delivery->setAddress($user->getUserProfile()->getAddress());
                     $delivery->setCommand($order);
-                    $delivery->setStatus(DeliveryStatus::ENATTENTE);
+                    $delivery->setStatus(DeliveryStatus::En_Attente);
                 }
-                $order->setStatus(OrderStatus::CONFIRME);
+                $order->setStatus(OrderStatus::Confirmée);
                 $cartService->removeCartAll();
                 $entityManager->flush();
                 // Si le formulaire est validé, on affiche un message de succès
-                $this->addFlash('success', 'Votre commande a été mise à jour avec succès.');
+                $this->addFlash('success', 'Votre commande est validée.');
                 return $this->redirectToRoute('home');
             }
         }
@@ -146,7 +148,7 @@ class OrderController extends AbstractController
         }
 
         // Mettre à jour le statut de la commande à 'ANNULEE'
-        $order->setStatus(OrderStatus::ANNULEE);
+        $order->setStatus(OrderStatus::Annulée);
 
         // Persist la mise à jour
         $entityManager->flush();
@@ -155,5 +157,21 @@ class OrderController extends AbstractController
 
         // Rediriger vers la liste des commandes de l'utilisateur
         return $this->redirectToRoute('home');
+    }
+
+    #[Route('/order/{id}', name: 'app_order_show')]
+    #[IsGranted('ROLE_USER')]
+    public function show(Order $order): Response
+    {
+        // Vérifiez que l'utilisateur connecté est bien celui qui a passé la commande
+        $user = $this->getUser();
+        if ($order->getUser() !== $user) {
+            $this->addFlash('error', 'Vous ne pouvez pas accéder à une commande qui ne vous appartient pas.');
+            return $this->redirectToRoute('app_order');
+        }
+
+        return $this->render('order/show.html.twig', [
+            'order' => $order
+        ]);
     }
 }

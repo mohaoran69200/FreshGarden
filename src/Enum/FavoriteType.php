@@ -3,6 +3,6 @@
 namespace App\Enum;
 
 enum FavoriteType: string {
-    case USER = 'user';
-    case PRODUCT = 'product';
+    case User = 'user';
+    case Product = 'product';
 }

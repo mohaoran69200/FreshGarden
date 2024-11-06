@@ -10,6 +10,7 @@ import './styles/pages/_edit-profile.css';
 import './styles/pages/_home.css';
 import './styles/pages/_message.css';
 import './styles/pages/_favorite.css';
+import './styles/pages/_order.css';
 import './styles/components/_admin.css';
 import './styles/components/_card.css';
 import './styles/components/_footer.css';

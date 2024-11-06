@@ -69,6 +69,7 @@
                 </button>
                 <div class="dropdown-content">
                     {% if app.user is not null and app.user is defined %}
+                        <a href="{{ path('app_order', {id: app.user.id}) }}">mes commandes</a>
                         <a href="{{ path('app_user_show', {id: app.user.id}) }}">mon profil</a>
                         <a href="{{ path('logout') }}">déconnexion</a>
                     {% else %}

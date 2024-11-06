@@ -14,33 +14,33 @@
                 <th>Quantité</th>
                 <th>Prix unitaire</th>
                 <th>Total</th>
-                <th>Mode de récupération</th>
+
             </tr>
             </thead>
             <tbody>
+            {% set totalAmount = 0 %} {# Initialisation du montant total #}
             {% for orderLine in order.orderLines %}
+                {% set lineTotal = orderLine.product.price * orderLine.quantity %}
+                {% set totalAmount = totalAmount + lineTotal %} {# Ajout du total de la ligne au montant total #}
                 <tr>
                     <td>{{ orderLine.product.name }}</td>
                     <td>{{ orderLine.quantity }}</td>
                     <td>{{ orderLine.product.price }} €</td>
-                    <td>{{ orderLine.product.price * orderLine.quantity }} €</td>
-
-                    {# Vérification que 'item.deliveryMode' existe #}
-                    <td>
-                        {% if orderLine.deliveryMode is defined %}
-                            {# Si 'deliveryMode' est défini dans l'item, on affiche le champ associé dans le formulaire #}
-                            {{ form_row(orderLine.deliveryMode) }}
-                        {% else %}
-                            <p>Mode de livraison non défini</p>
-                        {% endif %}
-                    </td>
+                    <td>{{ lineTotal }} €</td>
+{#                    <td>#}
+{#                        {% if orderLine.deliveryMode is defined %}#}
+{#                            {{ form_row(orderLine.deliveryMode) }}#}
+{#                        {% else %}#}
+{#                            <p>Mode de livraison non défini</p>#}
+{#                        {% endif %}#}
+{#                    </td>#}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
         <div class="total">
-            <strong>Total de la commande :</strong>  €
+            <strong>Total de la commande :</strong> {{ totalAmount }} €
         </div>
     </div>
 
@@ -49,10 +49,9 @@
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Confirmer la commande</button>
-            <a href="{{ path('app_order') }}" class="btn btn-secondary">Annuler</a>
+            <button type="submit" class="view-btn">Confirmer la commande</button>
+            <a href="{{ path('app_order') }}" class="delete-btn">Annuler</a>
         </div>
         {{ form_end(form) }}
     </div>
-
 {% endblock %}

@@ -3,8 +3,8 @@
 namespace App\Enum;
 
 enum DeliveryStatus: string {
-    case ENATTENTE = "En attente";
-    case EXPEDIE = "Expediée";
-    case LIVREE = "Livrée";
-    case ANNULEE = "Annulée";
+    case En_Attente = "En attente";
+    case Expediée = "Expediée";
+    case Livrée = "Livrée";
+    case Annulée = "Annulée";
 }
