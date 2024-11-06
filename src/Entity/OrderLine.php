@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Enum\DeliveryMethod;
+use App\Enum\DeliveryMode;
 use App\Repository\OrderLineRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,12 +24,6 @@ class OrderLine
 
     #[ORM\Column]
     private ?int $quantity = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderLine')]
-    private ?Delivery $delivery = null;
-
-    #[ORM\Column(enumType: DeliveryMethod::class)]
-    private ?DeliveryMethod $deliveryMethod = null;
 
     public function getId(): ?int
     {
@@ -68,30 +62,6 @@ class OrderLine
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getDelivery(): ?Delivery
-    {
-        return $this->delivery;
-    }
-
-    public function setDelivery(?Delivery $delivery): static
-    {
-        $this->delivery = $delivery;
-
-        return $this;
-    }
-
-    public function getDeliveryMethod(): ?DeliveryMethod
-    {
-        return $this->deliveryMethod;
-    }
-
-    public function setDeliveryMethod(DeliveryMethod $deliveryMethod): static
-    {
-        $this->deliveryMethod = $deliveryMethod;
 
         return $this;
     }

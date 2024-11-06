@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle commande{% endblock %}
+
+{% block body %}
+    <h1>Nouvelle commande</h1>
+
+    <div class="order-summary">
+        <h3>Produits sélectionnés</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+                <th>Mode de récupération</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for orderLine in order.orderLines %}
+                <tr>
+                    <td>{{ orderLine.product.name }}</td>
+                    <td>{{ orderLine.quantity }}</td>
+                    <td>{{ orderLine.product.price }} €</td>
+                    <td>{{ orderLine.product.price * orderLine.quantity }} €</td>
+
+                    {# Vérification que 'item.deliveryMode' existe #}
+                    <td>
+                        {% if orderLine.deliveryMode is defined %}
+                            {# Si 'deliveryMode' est défini dans l'item, on affiche le champ associé dans le formulaire #}
+                            {{ form_row(orderLine.deliveryMode) }}
+                        {% else %}
+                            <p>Mode de livraison non défini</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total">
+            <strong>Total de la commande :</strong>  €
+        </div>
+    </div>
+
+    <h3>Choisissez votre mode de livraison</h3>
+    <div class="delivery-method">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Confirmer la commande</button>
+            <a href="{{ path('app_order') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

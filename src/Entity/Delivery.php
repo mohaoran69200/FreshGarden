@@ -16,17 +16,14 @@ class Delivery
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, OrderLine>
-     */
-    #[ORM\OneToMany(targetEntity: OrderLine::class, mappedBy: 'delivery')]
-    private Collection $orderLine;
-
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
     #[ORM\Column(enumType: DeliveryStatus::class)]
     private ?DeliveryStatus $status = null;
+
+    #[ORM\OneToOne(mappedBy: 'delivery', cascade: ['persist', 'remove'])]
+    private ?Order $command = null;
 
     public function __construct()
     {
@@ -36,36 +33,6 @@ class Delivery
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, OrderLine>
-     */
-    public function getOrderLine(): Collection
-    {
-        return $this->orderLine;
-    }
-
-    public function addOrderLine(OrderLine $orderLine): static
-    {
-        if (!$this->orderLine->contains($orderLine)) {
-            $this->orderLine->add($orderLine);
-            $orderLine->setDelivery($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrderLine(OrderLine $orderLine): static
-    {
-        if ($this->orderLine->removeElement($orderLine)) {
-            // set the owning side to null (unless already changed)
-            if ($orderLine->getDelivery() === $this) {
-                $orderLine->setDelivery(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getAddress(): ?string
@@ -88,6 +55,28 @@ class Delivery
     public function setStatus(DeliveryStatus $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCommand(): ?Order
+    {
+        return $this->command;
+    }
+
+    public function setCommand(?Order $command): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($command === null && $this->command !== null) {
+            $this->command->setDelivery(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($command !== null && $command->getDelivery() !== $this) {
+            $command->setDelivery($this);
+        }
+
+        $this->command = $command;
 
         return $this;
     }

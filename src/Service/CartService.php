@@ -17,7 +17,6 @@ class CartService
         $this->requestStack = $requestStack;
         $this->entityManager = $entityManager;
     }
-// App/Service/CartService.php
 
     public function addToCart(int $id, int $quantity = 1): void
     {
