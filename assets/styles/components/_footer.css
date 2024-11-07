@@ -1,0 +1,130 @@
+/* Styles de base pour le footer */
+footer {
+    background-color: var(--white2);
+    color: var(--black);
+    padding: 20px;
+    text-align: center;
+}
+
+.top-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #bdc3c7;
+}
+
+.logo-footer img {
+    max-width: 150px;
+}
+
+/* Style pour les sections de liens */
+.top-footer .footer-link1,
+.top-footer .footer-link2,
+.top-footer .footer-link3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.top-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.top-footer li {
+    margin: 5px 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.top-footer li a {
+    color: var(--dark-gray);
+}
+
+.top-footer li a:hover {
+    color: var(--light-green);
+}
+
+.top-footer li svg {
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    color: var(--dark-gray);
+}
+
+/* Style pour les icônes de contact */
+.footer-link3 li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-link3 li svg.size-6,
+.footer-link3 li svg.size-7 {
+    width: 20px;
+    height: 20px;
+}
+
+/* Section inférieure du footer */
+.bottom-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.bottom-footer p {
+    margin: 10px 0;
+}
+
+.social-link {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-link svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Responsive pour les écrans moyens */
+@media (max-width: 768px) {
+    .top-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .bottom-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .social-link {
+        justify-content: center;
+    }
+}
+
+/* Responsive pour les petits écrans */
+@media (max-width: 480px) {
+    .top-footer .footer-link1,
+    .top-footer .footer-link2,
+    .top-footer .footer-link3 {
+        margin: 5px 0;
+    }
+
+    .logo-footer img {
+        max-width: 120px;
+    }
+
+    .social-link svg {
+        width: 25px;
+        height: 25px;
+    }
+}
