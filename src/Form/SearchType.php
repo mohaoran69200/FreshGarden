@@ -18,9 +18,9 @@ class SearchType extends AbstractType
         $builder
             ->add('search', TextType::class,[
                 'required' => false,
-                'label' => 'Recherche',
                 'attr' => [
-                    'placeholder' => 'Entrez un produit',
+                    'style' => 'margin: 0; width: 100%;',
+                    'placeholder' => 'Recherchez un produit',
                 ]
             ])
             ->add('categorie', EntityType::class, [
@@ -28,11 +28,12 @@ class SearchType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Catégorie',
                 'required' => false,
-                'label' => 'Type de produit'
+                'attr' => [
+                    'style' => 'margin: 0;',
+                ]
             ])
             ->add('city', TextType::class, [
                 'required' => false,
-                'label' => 'Ville',
                 'attr' => [
                     'placeholder' => 'Ville',
                 ]

@@ -1,6 +1,6 @@
 /* Formulaire de recherche */
 .search-section {
-    max-width: 55%;
+    max-width: 60%;
     margin: 50px auto;
     padding: 20px;
     background-color: var(--white2);
@@ -10,17 +10,23 @@
 
 .search-form {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
 }
 
-.form-group {
-    flex: 1 1 30%;
-    min-width: 200px;
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-.form-group label {
-    font-family: 'Lato', sans-serif;
+.search-input {
+    flex: 1;
+}
+
+.form-group {
+    flex: 1 1 45%;
+    min-width: 200px;
 }
 
 .form-control {
@@ -43,96 +49,34 @@
     color: var(--dark-gray);
 }
 
-.btn {
-    flex: 1 1 100%;
-    max-width: 420px;
-    background-color: var(--light-green);
-    color: var(--white2);
-    border: none;
-    border-radius: var(--border-radius);
-    padding: 12px;
-    cursor: pointer;
-    font-size: var(--font-size-medium);
-    margin: 20px auto;
-    align-self: flex-end;
-    text-align: center;
-}
+/*.btn {*/
+/*    background-color: var(--light-green);*/
+/*    color: var(--white2);*/
+/*    border: none;*/
+/*    border-radius: var(--border-radius);*/
+/*    padding: 12px;*/
+/*    cursor: pointer;*/
+/*    font-size: var(--font-size-medium);*/
+/*    text-align: center;*/
+/*}*/
 
 .btn:hover {
     background-color: var(--dark-green);
 }
 
-/* Section produits */
-.products-section {
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.products-section h2 {
-    font-size: var(--font-size-large);
-    color: var(--black);
-    margin-bottom: 20px;
-}
-
-/* Grille de produits */
-.grid-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    padding: 1.25rem;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colonnes par défaut */
-    gap: 1.25rem;
-}
-
 /* Vue tablette */
 @media (max-width: 1024px) {
-    .search-form {
-        justify-content: flex-start;
-    }
-
     .form-group {
         flex: 1 1 45%;
-    }
-
-    /*.form-group:nth-child(4),*/
-    /*.form-group:nth-child(5) {*/
-    /*    flex: 1 1 40%; */
-    /*    max-width: 130px;*/
-    /*}*/
-
-    .btn {
-        flex: 1 1 100%;
-        max-width: none;
-    }
-
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
     }
 }
 
 /* Vue mobile */
 @media (max-width: 480px) {
+    .form-row {
+        flex-direction: column;
+    }
     .form-group {
-        flex: 1 1 100%;
-    }
-
-    .form-group:nth-child(4),
-    .form-group:nth-child(5) {
-        flex: 1 1 100%;
-        max-width: none;
-    }
-
-    .btn {
-        max-width: none;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
+        flex: 1 1 45%;
     }
 }

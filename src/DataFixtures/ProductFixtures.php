@@ -21,11 +21,12 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $productsData = [
             'Fruits' => ['Pomme', 'Orange', 'Fraise', 'Datte', 'Melon', 'Framboise', 'Pêche', 'Poire', 'Raisin', 'Cerise', 'Kiwi'],
             'Legumes' => ['Carotte', 'Poivron', 'Tomate', 'Laitue', 'Epinard', 'Radis', 'Oignon', 'Haricot', 'Betterave', 'Chou'],
-            'Autre' => ['Œuf de poule', 'Fromage', 'Miel', 'Menthe', 'Noisettes' ]
+            'Autre' => ['Œuf de poule', 'Fromage', 'Miel', 'Menthe', 'Noisettes']
         ];
 
         $categories = [];
 
+        // Créer les catégories
         foreach ($productsData as $categoryName => $products) {
             $categorie = new Categorie();
             $categorie->setName($categoryName);
@@ -33,6 +34,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
             $categories[$categoryName] = $categorie;
         }
 
+        // Chemins d'images par produit
         $imagePaths = [
             'Pomme' => 'public/uploads/product/pomme.jpg',
             'Orange' => 'public/uploads/product/orange.jpg',
@@ -62,23 +64,21 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
             'Noisettes' => 'public/uploads/product/noisettes.jpg',
         ];
 
-        $images = [];
-        foreach ($imagePaths as $productName => $path) {
-            $image = new Image();
-            $image
-                ->setName(basename($path))
-                ->setUpdatedAt(new DateTimeImmutable());
-            $manager->persist($image);
-            $images[$productName] = $image;
-
-        }
-
+        // Création des produits avec des images uniques
         for ($i = 0; $i < 124; $i++) {
             $categoryName = $faker->randomElement(array_keys($productsData));
             $productName = $faker->randomElement($productsData[$categoryName]);
             $randomUnit = $faker->randomElement(ProductUnit::cases());
-            $productImage = $images[$productName] ?? null;
 
+            // Créer une nouvelle image pour chaque produit
+            $productImage = new Image();
+            $productImage
+                ->setName(basename($imagePaths[$productName])) // Utiliser le même nom de fichier
+                ->setUpdatedAt(new DateTimeImmutable());
+
+            $manager->persist($productImage);
+
+            // Créer le produit
             $product = new Product();
             $product
                 ->setName($productName)
@@ -87,7 +87,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 ->setStock($faker->numberBetween(1, 100))
                 ->setUser($this->getReference('user_' . rand(0, 4)))
                 ->setCategorie($categories[$categoryName])
-                ->setImage($productImage)
+                ->setImage($productImage) // Associer l'image unique
                 ->setCreatedAt(new DateTimeImmutable())
                 ->setUpdatedAt(new DateTimeImmutable());
 
