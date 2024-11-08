@@ -49,16 +49,6 @@
     color: var(--dark-gray);
 }
 
-/*.btn {*/
-/*    background-color: var(--light-green);*/
-/*    color: var(--white2);*/
-/*    border: none;*/
-/*    border-radius: var(--border-radius);*/
-/*    padding: 12px;*/
-/*    cursor: pointer;*/
-/*    font-size: var(--font-size-medium);*/
-/*    text-align: center;*/
-/*}*/
 
 .btn:hover {
     background-color: var(--dark-green);

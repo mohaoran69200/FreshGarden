@@ -9,35 +9,31 @@
         <!-- Utilisateurs actifs -->
         <div class="user-section">
             <h2>Utilisateurs actifs</h2>
-            <table class="user-table">
-                <thead>
-                <tr>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Code Postal</th>
-                    <th>Ville</th>
-                    <th>Email</th>
-                    <th>Téléphone</th>
-                    <th>Actions</th>
+            <table class="admin-table">
+                <thead class="admin-thead">
+                <tr class="admin-tr">
+                    <th class="admin-th">Pseudo</th>
+                    <th class="admin-th">Nom</th>
+                    <th class="admin-th">Prénom</th>
+                    <th class="admin-th">Code Postal</th>
+                    <th class="admin-th">Ville</th>
+                    <th class="admin-th">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for user in users %}
                     {% if not user.isBanned %}
-                        <tr>
+                        <tr class="admin-tr">
                             {% if user.userProfile is not null %}
-                                <td>{{ user.userProfile.userName }}</td>
-                                <td>{{ user.userProfile.lastName }}</td>
-                                <td>{{ user.userProfile.firstName }}</td>
-                                <td>{{ user.userProfile.postalCode }}</td>
-                                <td>{{ user.userProfile.city }}</td>
+                                <td class="admin-td">{{ user.userProfile.userName }}</td>
+                                <td class="admin-td">{{ user.userProfile.lastName }}</td>
+                                <td class="admin-td">{{ user.userProfile.firstName }}</td>
+                                <td class="admin-td">{{ user.userProfile.postalCode }}</td>
+                                <td class="admin-td">{{ user.userProfile.city }}</td>
                             {% else %}
                                 <td colspan="5">Profil non disponible</td>
                             {% endif %}
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.userProfile.phoneNumber }}</td>
-                            <td>
+                            <td class="admin-td">
                                 <a class="btn-admin btn-view" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
                                 <a class="btn-admin btn-edit" href="{{ path('app_user_edit_user', {'id': user.id}) }}">Éditer</a>
                                 <a class="btn-admin btn-ban" href="{{ path('app_admin_user_ban', {'id': user.id}) }}">Bannir</a>
@@ -57,30 +53,30 @@
             <h2>Utilisateurs bannis</h2>
             <table class="user-table">
                 <thead>
-                <tr>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Code Postal</th>
-                    <th>Ville</th>
-                    <th>Email</th>
-                    <th>Actions</th>
+                <tr class="admin-tr">
+                    <th class="admin-th">Pseudo</th>
+                    <th class="admin-th">Nom</th>
+                    <th class="admin-th">Prénom</th>
+                    <th class="admin-th">Code Postal</th>
+                    <th class="admin-th">Ville</th>
+                    <th class="admin-th">Email</th>
+                    <th class="admin-th">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for bannedUser in bannedUsers %}
-                    <tr>
+                    <tr class="admin-tr">
                         {% if bannedUser.userProfile is not null %}
-                            <td>{{ bannedUser.userProfile.userName }}</td>
-                            <td>{{ bannedUser.userProfile.lastName }}</td>
-                            <td>{{ bannedUser.userProfile.firstName }}</td>
-                            <td>{{ bannedUser.userProfile.postalCode }}</td>
-                            <td>{{ bannedUser.userProfile.city }}</td>
+                            <td class="admin-td">{{ bannedUser.userProfile.userName }}</td>
+                            <td class="admin-td">{{ bannedUser.userProfile.lastName }}</td>
+                            <td class="admin-td">{{ bannedUser.userProfile.firstName }}</td>
+                            <td class="admin-td">{{ bannedUser.userProfile.postalCode }}</td>
+                            <td class="admin-td">{{ bannedUser.userProfile.city }}</td>
                         {% else %}
                             <td colspan="5">Profil non disponible</td>
                         {% endif %}
-                        <td>{{ bannedUser.email }}</td>
-                        <td>
+                        <td class="admin-td">{{ bannedUser.email }}</td>
+                        <td class="admin-td">
                             <a class="btn-admin btn-view" href="{{ path('app_user_show', {'id': bannedUser.id}) }}">Voir</a>
                             <a class="btn-admin btn-edit" href="{{ path('app_user_edit_user', {'id': bannedUser.id}) }}">Éditer</a>
                             <a class="btn-admin btn-unban" href="{{ path('app_admin_user_unban', {'id': bannedUser.id}) }}">Débannir</a>

@@ -46,32 +46,6 @@
     border: 2px solid var(--dark-green);
 }
 
-.btn-save-image,
-.btn-delete-image {
-    background-color: var(--light-green); /* Couleur de fond par défaut */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: var(--font-size-small); /* Taille de texte cohérente */
-}
-
-.btn-save-image {
-    background-color: var(--light-green); /* Couleur spécifique pour le bouton de sauvegarde */
-}
-
-.btn-save-image:hover {
-    background-color: var(--dark-green); /* Couleur plus foncée au survol */
-}
-
-.btn-delete-image {
-    background-color: var(--red); /* Couleur spécifique pour le bouton de suppression */
-}
-
-.btn-delete-image:hover {
-    background-color: var(--red-hover); /* Couleur plus foncée au survol */
-}
 
 
 .form-footer {
@@ -79,29 +53,6 @@
     gap: 10px; /* Espacement entre les liens */
 }
 
-.btn-primary {
-    background-color: var(--light-green); /* Couleur de fond des boutons */
-    color: white;
-    padding: 10px 15px; /* Espacement intérieur */
-    border-radius: 4px; /* Coins arrondis */
-    text-decoration: none; /* Pas de soulignement */
-}
-
-.btn-primary:hover {
-    background-color: var(--dark-green);
-    color: var(--white2)/* Couleur au survol */
-}
-
-.btn-delete-account {
-    font-size: 0.8em; /* Taille de police plus petite */
-    color: var(--red); /* Couleur du texte (rouge) */
-    align-self: center; /* Centre verticalement le lien par rapport aux autres */
-}
-
-.btn-delete-account:hover {
-    color: var(--red-hover);
-    text-decoration: underline;
-}
 
 
 .modal {

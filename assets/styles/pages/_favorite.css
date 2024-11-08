@@ -1,8 +1,8 @@
 .fav-none {
-    display: block; /* Permet de définir des marges */
-    text-align: center; /* Centre le texte horizontalement */
-    margin: 20px 0; /* Ajoute un espacement vertical au-dessus et en dessous du texte */
-    font-size: 1.2em; /* Optionnel : augmente la taille de police pour le rendre plus visible */
+    display: block;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.2em;
 }
 
 

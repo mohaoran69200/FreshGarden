@@ -40,18 +40,6 @@ a {
     text-decoration: underline;
 }
 
-/* Boutons de navigation */
-.btn-nav {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.btn-nav li {
-    margin-left: 10px;
-}
-
 /* Menu burger */
 .burger-menu {
     display: none;
@@ -143,32 +131,6 @@ a {
     height: 20px;
 }
 
-/* Boutons circulaires */
-#message-button,
-#cart-button,
-#favorite-button,
-#connexion-button {
-    height: 30px;
-    width: 30px;
-    padding: 5px;
-    border-radius: 50%;
-    color: var(--dark-green);
-    outline: none;
-    border: none;
-    background-color: var(--white2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-#message-button:hover,
-#cart-button:hover,
-#favorite-button:hover,
-#connexion-button:hover{
-    color: var(--white2);
-    background-color: var(--dark-green);
-}
 
 /* Dropdown */
 /* Dropdown Container */
@@ -203,7 +165,7 @@ a {
 
 /* Dropdown Links */
 .dropdown-content a {
-    color: var(--dark-green);
+    color: var(--light-green);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -228,51 +190,8 @@ a {
     list-style-type: none;
 }
 
-.notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
-    font-weight: bold;
-}
 
-/* Mobile */
 @media (max-width: 768px) {
-    .sticky-buttons {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: var(--white2);
-        padding: 10px 0;
-        border-top: 1px solid var(--white2);
-        z-index: 1000;
-    }
-
-    .sticky-buttons li {
-        display: inline-block;
-        margin: 0;
-        list-style-type: none;
-    }
-
-    .sticky-buttons li a {
-        height: 30px;
-        width: 30px;
-        border-radius: 50%;
-        outline: none;
-        border: none;
-        background-color: var(--white2);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
 
     .desktop-menu {
         display: none;
@@ -280,10 +199,6 @@ a {
 
     .burger-menu {
         display: flex;
-    }
-
-    .btn-nav {
-        display: none;
     }
 
     .mobile-menu {
@@ -365,21 +280,4 @@ a {
         visibility: visible;
     }
 
-    #mobile-connexion-button{
-        height: 30px;
-        width: 30px;
-        border-radius: 50%;
-        outline: none;
-        border: none;
-        background-color: var(--white2);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    #mobile-connexion-button:hover {
-        background-color: var(--dark-green);
-        color: var(--white2);
-    }
 }

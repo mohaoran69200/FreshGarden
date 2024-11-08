@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation d'inscription</title>
+</head>
+<body>
+<h1>Bienvenue sur Fresh Garden, {{ user.userProfile.firstName }} !</h1>
+
+<p>Merci de vous être inscrit sur notre site. Nous sommes ravis de vous compter parmi nous.</p>
+
+<p>Pour confirmer votre adresse email, cliquez sur le lien ci-dessous :</p>
+<a href="{{ url('email_confirmation', {token: user.confirmationToken}) }}">Confirmer mon adresse email</a>
+
+<p>À très bientôt sur Fresh Garden !</p>
+
+<p>L'équipe Fresh Garden</p>
+</body>
+</html>

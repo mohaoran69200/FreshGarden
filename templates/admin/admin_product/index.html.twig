@@ -10,32 +10,32 @@
             <a class="btn btn-create" href="{{ path('app_product_new') }}">Créer un nouveau produit</a>
         </div>
 
-        <table class="product-table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Unité</th>
-                <th>Stock</th>
-                <th>Créé le</th>
-                <th>Mis à jour le</th>
-                <th>Description</th>
-                <th>Actions</th>
+        <table class="admin-table">
+            <thead class="admin-thead">
+            <tr class="admin-tr">
+                <th class="admin-th">ID</th>
+                <th class="admin-th">Nom</th>
+                <th class="admin-th">Prix</th>
+                <th class="admin-th">Unité</th>
+                <th class="admin-th">Stock</th>
+                <th class="admin-th">Créé le</th>
+                <th class="admin-th">Mis à jour le</th>
+                <th class="admin-th">Description</th>
+                <th class="admin-th">Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for product in products %}
-                <tr>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.price|number_format(2, ',', ' ') }} €</td>
-                    <td>{{ product.unit.value }}</td>
-                    <td>{{ product.stock }}</td>
-                    <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>
+                <tr class="admin-tr">
+                    <td class="admin-td">{{ product.id }}</td>
+                    <td class="admin-td">{{ product.name }}</td>
+                    <td class="admin-td">{{ product.price|number_format(2, ',', ' ') }} €</td>
+                    <td class="admin-td">{{ product.unit.value }}</td>
+                    <td class="admin-td">{{ product.stock }}</td>
+                    <td class="admin-td">{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="admin-td">{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="admin-td">{{ product.description }}</td>
+                    <td class="admin-td">
                         <a class="btn-admin btn-view" href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
                         <a class="btn-admin btn-edit" href="{{ path('app_product_update', {'id': product.id}) }}">Éditer</a>
                         <a class="btn-admin btn-delete" href="{{ path('app_product_remove', {'id': product.id}) }}"
@@ -43,7 +43,7 @@
                     </td>
                 </tr>
             {% else %}
-                <tr>
+                <tr class="admin-tr">
                     <td colspan="9" class="no-records">Aucun enregistrement trouvé</td>
                 </tr>
             {% endfor %}

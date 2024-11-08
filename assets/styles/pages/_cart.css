@@ -6,11 +6,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Titres */
-h1 {
-    text-align: center;
-}
-
 /* Articles dans le panier */
 .cart-item {
     display: flex;
