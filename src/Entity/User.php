@@ -20,19 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isBanned = false;
 
-    public function isBanned(): bool
-    {
-        return $this->isBanned;
-    }
-
-    public function setIsBanned(bool $isBanned): self
-    {
-        $this->isBanned = $isBanned;
-        return $this;
-    }
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -101,6 +89,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $resetTokenCreatedAt = null;
+
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    private ?string $emailTemporary = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $emailToken = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isBanned = false;
+
+    public function isBanned(): bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): self
+    {
+        $this->isBanned = $isBanned;
+        return $this;
+    }
 
     public function __construct()
     {
@@ -428,5 +436,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isResetTokenExpired(): bool
     {
         return $this->resetTokenCreatedAt < new \DateTimeImmutable('-1 hour');
+    }
+
+    public function getEmailTemporary(): ?string
+    {
+        return $this->emailTemporary;
+    }
+
+    public function setEmailTemporary(?string $emailTemporary): self
+    {
+        $this->emailTemporary = $emailTemporary;
+
+        return $this;
+    }
+
+    public function getEmailToken(): ?string
+    {
+        return $this->emailToken;
+    }
+
+    public function setEmailToken(?string $emailToken): self
+    {
+        $this->emailToken = $emailToken;
+        return $this;
     }
 }

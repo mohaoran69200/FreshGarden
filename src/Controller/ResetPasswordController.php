@@ -19,6 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 
 #[Route('/reset-password')]
 class ResetPasswordController extends AbstractController
@@ -65,10 +66,15 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
+        // Extraire le jeton de réinitialisation sous forme de chaîne
+        $resetTokenString = $resetToken instanceof ResetPasswordToken ? $resetToken->getToken() : (string) $resetToken;
+
+        // Passer uniquement la chaîne du jeton au template
         return $this->render('reset_password/check_email.html.twig', [
-            'resetToken' => $resetToken,
+            'resetToken' => $resetTokenString,
         ]);
     }
+
 
     /**
      * Validates and process the reset URL that the user clicked in their email.

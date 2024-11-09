@@ -18,7 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -162,27 +165,47 @@ class UserController extends AbstractController
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function editContact(Request $request,
                                 User $user,
-                                EntityManagerInterface $entityManager): Response {
+                                EntityManagerInterface $entityManager,
+                                MailerInterface $mailer,
+                                UrlGeneratorInterface $router): Response {
 
         $user = $this->getUser();
 
         // Formulaire de modification d'email
-        $emailForm = $this->createForm(EditEmailType::class, $user);
+        $emailForm = $this->createForm(EditEmailType::class, $user, [
+            'csrf_protection' => true,
+        ]);
         $emailForm->handleRequest($request);
 
         if ($emailForm->isSubmitted() && $emailForm->isValid()) {
-            $oldEmail = $emailForm->get('old_email')->getData();
-            $newEmail = $emailForm->get('email')->getData();
+            $oldEmail = $emailForm->get('email')->getData();
+            $newEmail = $emailForm->get('new_email')->getData();
 
             // Vérifier si l'ancien email correspond à l'email actuel de l'utilisateur
             if ($oldEmail !== $user->getEmail()) {
                 $this->addFlash('danger', 'L\'ancien email est incorrect.');
             } else {
-                $user->setEmail($newEmail);
+                $user->setEmailTemporary($newEmail);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Votre email a bien été mis à jour.');
-                return $this->redirectToRoute('app_user_edit_user');
+                // Générer un token de confirmation
+                $token = bin2hex(random_bytes(32));
+                $user->setResetToken($token); // Utiliser setResetToken
+                $entityManager->flush();
+
+                // Envoyer l'email de confirmation
+                $url = $router->generate('app_user_confirm_email', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+                $email = (new Email())
+                    ->from('noreply@freshgarden.com')
+                    ->to($newEmail)
+                    ->subject('Confirmation de changement d\'email')
+                    ->html("Cliquez sur le lien pour confirmer votre nouvel email : <a href=\"$url\">Confirmer mon email</a>");
+
+                $mailer->send($email);
+
+                $this->addFlash('success', 'Un email de confirmation a été envoyé à votre nouvelle adresse.');
+                return $this->redirectToRoute('home');
+
             }
         }
 
@@ -375,4 +398,25 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
     }
 
+    #[Route('/confirm-email/{token}', name: 'confirm_email')]
+    public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
+    {
+        // Rechercher l'utilisateur par le token
+        $user = $entityManager->getRepository(User::class)->findOneBy(['emailToken' => $token]);
+
+
+        if (!$user) {
+            $this->addFlash('danger', 'Token invalide ou expiré.');
+            return $this->redirectToRoute('home');
+        }
+
+        // Mettre à jour l'email
+        $user->setEmail($user->getEmailTemporary());
+        $user->setEmailTemporary(null);
+        $user->setToken(null);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre email a bien été confirmé.');
+        return $this->redirectToRoute('home');
+    }
 }

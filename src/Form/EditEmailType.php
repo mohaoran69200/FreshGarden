@@ -14,18 +14,19 @@ class EditEmailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('old_email', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Ancien Email',
                 'required' => true,
-                'mapped' => false,
+                'mapped' => true,
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez entrer votre ancien email.']),
                     new EmailConstraint(['message' => 'Veuillez entrer un email valide.']),
                 ],
             ])
-            ->add('email', EmailType::class, [
+            ->add('new_email', EmailType::class, [
                 'label' => 'Nouvel Email',
                 'required' => true,
+                'mapped' => false,
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez entrer votre nouvel email.']),
                     new EmailConstraint(['message' => 'Veuillez entrer un email valide.']),

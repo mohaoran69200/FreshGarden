@@ -6,9 +6,14 @@
 parameters:
 
 services:
+    App\Repository\ResetPasswordRequestRepository:
+        arguments:
+            $registry: '@doctrine'
     App\Controller\ErrorController:
         arguments:
             $twig: '@twig'
+            Symfony\Component\Mailer\MailerInterface:
+                alias: 'mailer'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
