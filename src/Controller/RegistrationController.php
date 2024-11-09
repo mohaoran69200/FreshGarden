@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,12 @@ use Symfony\Component\Uid\Uuid;
 
 class RegistrationController extends AbstractController
 {
+    private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
     #[Route('/register', name: 'register')]
     public function register(
         Request $request,
@@ -41,6 +48,7 @@ class RegistrationController extends AbstractController
 
             // Générer un token de confirmation unique
             $user->setConfirmationToken(Uuid::v4()->toRfc4122());
+            $this->logger->info('Confirmation token: ' . $user->getConfirmationToken());
 
 
             // Enregistrer l'utilisateur dans la base de données

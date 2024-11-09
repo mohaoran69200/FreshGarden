@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,11 +14,21 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, SessionInterface $session): Response
     {
         $session->set('login_origin', true);
-            if ($this->getUser()) {
-                return $this->redirectToRoute('home');
-            }
-        $error = $authenticationUtils->getLastAuthenticationError();
 
+        // Vérifiez si l'utilisateur est connecté
+        if ($this->getUser()) {
+            // Vérifiez si l'utilisateur est activé
+            if (!$this->getUser()->isVerified()) {
+                // Si l'utilisateur n'est pas activé, déconnectez-le et affichez un message
+                $this->get('security.token_storage')->setToken(null);
+                return $this->render('security/login.html.twig', [
+                    'error' => 'Votre compte n\'est pas encore activé. Veuillez vérifier votre email pour activer votre compte.',
+                ]);
+            }
+            return $this->redirectToRoute('home');
+        }
+
+        $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [

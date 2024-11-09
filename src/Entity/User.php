@@ -96,6 +96,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $resetToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $resetTokenCreatedAt = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -400,5 +406,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->isVerified = $isVerified;
         return $this;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetTokenCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->resetTokenCreatedAt = $createdAt;
+        return $this;
+    }
+
+    public function isResetTokenExpired(): bool
+    {
+        return $this->resetTokenCreatedAt < new \DateTimeImmutable('-1 hour');
     }
 }
