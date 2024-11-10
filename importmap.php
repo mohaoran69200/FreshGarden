@@ -17,6 +17,10 @@ return [
         'path' => './assets/js/togglePassword.js',
         'entrypoint' => true,
     ],
+    'address' => [
+        'path' => './assets/js/address/address.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

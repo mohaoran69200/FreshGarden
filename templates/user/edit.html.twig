@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier Profil{% endblock %}
-{% block importmap %}{{ importmap(['app', 'form', 'header']) }}{% endblock %}
+{% block importmap %}{{ importmap(['app', 'form', 'header', 'address']) }}{% endblock %}
 
 {% block body %}
     <div class="form-container">
@@ -76,12 +76,15 @@
                 <div class="toggle-header" onclick="toggleForm('address-info', 'arrow-address')">
                     <h3>Modifier adresse de facturation <span id="arrow-address" class="arrow toggle-symbol">+</span></h3>
                 </div>
-                <div id="address-info" class="form-section" style="display: none;">
+                <div id="address-info" class="form-section">
                     {{ form_start(addressForm) }}
                     <div class="form-group">
                         {{ form_label(addressForm.address) }}
                         {{ form_widget(addressForm.address, {'attr': {'class': 'form-input'}}) }}
                         {{ form_errors(addressForm.address) }}
+                    </div>
+                    <div id="dropdown-menu" class="dropdown hidden">
+                        <ul id="dropdown-results" class="dropdown-list"></ul>
                     </div>
                     <div class="form-group">
                         {{ form_label(addressForm.postalCode) }}
@@ -95,6 +98,7 @@
                     </div>
                     {{ form_end(addressForm) }}
                 </div>
+
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="form-section">

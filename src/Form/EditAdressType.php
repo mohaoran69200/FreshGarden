@@ -19,13 +19,15 @@ class EditAdressType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => '1 rue de la Paix',
-                    ]
+                    'data-action' => 'address-input' // Ajout de l'attribut pour JS
+                ]
             ])
             ->add('postalCode', TextType::class, [
                 'label' => 'Code Postal',
                 'required' => false,
                 'attr' => [
                     'placeholder' => '75000',
+                    'data-action' => 'postal-code-input' // Ajout de l'attribut pour JS
                 ]
             ])
             ->add('city', TextType::class, [
@@ -33,6 +35,7 @@ class EditAdressType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Paris',
+                    'data-action' => 'city-input' // Ajout de l'attribut pour JS
                 ]
             ])
             ->add('save', SubmitType::class, [
