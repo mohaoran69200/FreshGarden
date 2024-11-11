@@ -25,10 +25,7 @@ class Delivery
     #[ORM\OneToOne(mappedBy: 'delivery', cascade: ['persist', 'remove'])]
     private ?Order $command = null;
 
-    public function __construct()
-    {
-        $this->orderLine = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {

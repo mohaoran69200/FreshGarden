@@ -2,7 +2,7 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
+    background-color: var(--white2);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -16,7 +16,8 @@ thead {
 th, td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--white);
+    font-family: 'Montserrat', sans-serif;
 }
 
 th {
@@ -24,11 +25,11 @@ th {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: var(--white);
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: var(--white);
 }
 
 @media screen and (max-width: 1024px) {
@@ -67,13 +68,14 @@ tbody tr:hover {
 .message-table td {
     padding: 15px;
     text-align: left;
-    background-color: var(--white2);
+    background-color: var(--white);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .message-table th {
     font-weight: bold;
-    color: var(--dark-green);
-    background-color: var(--white);
+    color: var(--white);
+    background-color: var(--light-green);
 }
 
 .message-table tr {
@@ -130,8 +132,8 @@ tbody tr:hover {
 
 .admin-th, .admin-td {
     padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+    border-bottom: 1px solid var(--white);
     font-family: 'Lato', sans-serif;
 }
 
@@ -160,7 +162,7 @@ tbody tr:hover {
     }
 
     .admin-th {
-        display: none; /* Cache les en-têtes de table */
+        display: none;
     }
 
     .admin-td {

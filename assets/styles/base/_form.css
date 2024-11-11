@@ -18,6 +18,7 @@
     margin-bottom: 5px;
     font-weight: bold;
     color: var(--black);
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Pied de page du formulaire (soumission, boutons d'action) */
@@ -166,25 +167,44 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.2em; /* Ajustez selon vos besoins */
+    font-size: 1.2em;
 }
 
 .mdp {
-    width: 24px; /* Ajustez la taille selon vos besoins */
-    height: 24px; /* Ajustez la taille selon vos besoins */
-    fill: var(--dark-green); /* Changez la couleur si nécessaire */
+    width: 24px;
+    height: 24px;
+    fill: var(--dark-green);
 }
 
 .toggle-symbol {
-    font-size: 1.5rem; /* Changez la taille de la police */
-    font-weight: bold; /* Rendre le symbole en gras */
-    color: var(--dark-green); /* Couleur des symboles */
-    margin-left: 5px; /* Espace à gauche du symbole */
-    transition: transform 0.2s; /* Effet de transition */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dark-green);
+    margin-left: 5px;
+    transition: transform 0.2s;
 }
 
 .toggle-header:hover .toggle-symbol {
-    transform: scale(1.2); /* Agrandir légèrement au survol */
+    transform: scale(1.2);
 }
 
+label.required::after {
+    content: ' *';
+    color: var(--dark-gray);
+    font-weight: bold;
+}
 
+/* Cible les messages d'erreur pour leur donner un style distinct */
+.form-error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Style personnalisé pour les champs de formulaire en erreur */
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+    border-color: red;
+    background-color: #ffe6e6;
+}

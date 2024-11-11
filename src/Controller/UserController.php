@@ -12,12 +12,13 @@ use App\Form\EditPasswordType;
 use App\Form\ImageUserType;
 use App\Form\RoleType;
 use App\Repository\FavoriteRepository;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Random\RandomException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,22 +33,69 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 #[Route('/user', name: 'app_user_')]
 class UserController extends AbstractController
 {
+    #[Route('/show/{id}', name: 'show')]
+    public function show(User               $user,
+                         FavoriteRepository $favoriteRepository): Response
+    {
+        // Récupérer l'utilisateur actuellement connecté
+        $currentUser = $this->getUser();
+
+        // Initialiser la variable $isFavorite pour l'utilisateur consulté
+        $isFavorite = false;
+
+        // Tableau pour stocker l'état de favori pour chaque produit de l'utilisateur consulté
+        $productFavorites = [];
+
+        if ($currentUser) {
+            // Vérifier si l'utilisateur consulté est dans les favoris de l'utilisateur connecté
+            $favorite = $favoriteRepository->findOneBy([
+                'user' => $currentUser,
+                'userFavorite' => $user
+            ]);
+            $isFavorite = $favorite !== null;
+
+            // Récupérer les produits favoris de l'utilisateur connecté
+            $favorites = $favoriteRepository->findBy(['user' => $currentUser]);
+
+            // Créer un tableau associant chaque produit de l'utilisateur consulté à son état de favori
+            foreach ($user->getProducts() as $product) {
+                $productFavorites[$product->getId()] = false; // Par défaut, le produit n'est pas en favori
+            }
+            foreach ($favorites as $favorite) {
+
+                if ($favorite->getProductFavorite() && array_key_exists($favorite->getProductFavorite()->getId(), $productFavorites)) {
+                    $productFavorites[$favorite->getProductFavorite()->getId()] = true;
+                }
+            }
+
+        }
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,                     // Utilisateur dont on consulte le profil
+            'isFavorite' => $isFavorite,         // Est-il dans les favoris de l'utilisateur connecté ?
+            'productFavorites' => $productFavorites, // État des favoris pour chaque produit de l'utilisateur consulté
+        ]);
+    }
+
+
     #[Route('/edit-user/{id}', name: 'edit_user')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function edit(
-        User $user,
-        Request $request,
+        User                   $user,
+        Request                $request,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
 
         $currentUser = $this->getUser();
 
         // Comparer les identifiants des utilisateurs pour éviter de modifier un profil qui n'est pas à soi,
         // sauf si l'utilisateur a le rôle d'ADMIN
-        if (!$currentUser || ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN'))) {
+        if (!$currentUser instanceof User || ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN'))) {
             $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte, sauf si vous êtes administrateur.');
             return $this->redirectToRoute('home');
         }
+
 
 
         // Je récupére le profil utilisateur
@@ -118,11 +166,12 @@ class UserController extends AbstractController
     #[Route('/edit-user/edit-password/{id}', name: 'edit_user_password')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function editPassword(
-        User $user,
-        Request $request,
-        EntityManagerInterface $entityManager,
+        User                        $user,
+        Request                     $request,
+        EntityManagerInterface      $entityManager,
         UserPasswordHasherInterface $passwordHasher
-    ): Response {
+    ): Response
+    {
         $currentUser = $this->getUser();
 
         if (!$currentUser || $currentUser !== $user) {
@@ -161,15 +210,29 @@ class UserController extends AbstractController
     }
 
 
+    /**
+     * @throws RandomException
+     * @throws TransportExceptionInterface
+     */
     #[Route('/edit-user/edit-contact/{id}', name: 'edit_user_contact')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function editContact(Request $request,
                                 User $user,
                                 EntityManagerInterface $entityManager,
                                 MailerInterface $mailer,
-                                UrlGeneratorInterface $router): Response {
+                                UrlGeneratorInterface $router): Response
+    {
+        // Vérifier si l'utilisateur connecté est bien l'utilisateur que l'on veut modifier
+        $currentUser = $this->getUser();
+        if (!($currentUser instanceof User)) {
+            // Gérer le cas où l'utilisateur connecté n'est pas du bon type ou n'est pas connecté
+            throw new AccessDeniedException('Vous devez être connecté en tant qu\'utilisateur.');
+        }
 
-        $user = $this->getUser();
+        if ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            // Gérer le cas où l'utilisateur connecté n'est pas le même que l'utilisateur cible
+            throw new AccessDeniedException('Vous n\'avez pas la permission d\'accéder à cette ressource.');
+        }
 
         // Formulaire de modification d'email
         $emailForm = $this->createForm(EditEmailType::class, $user, [
@@ -205,7 +268,6 @@ class UserController extends AbstractController
 
                 $this->addFlash('success', 'Un email de confirmation a été envoyé à votre nouvelle adresse.');
                 return $this->redirectToRoute('home');
-
             }
         }
 
@@ -239,7 +301,7 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre numéro de téléphone a bien été mis à jour.');
-            return $this->redirectToRoute('app_user_edit_user');
+            return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
         }
 
         return $this->render('user/edit_contact.html.twig', [
@@ -249,81 +311,28 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/show/{id}', name: 'show')]
-    public function show(User $user,
-                         FavoriteRepository $favoriteRepository,
-                         ProductRepository $productRepository): Response
+
+    #[Route('/confirm-email/{token}', name: 'confirm_email')]
+    public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
     {
-        // Récupérer l'utilisateur actuellement connecté
-        $currentUser = $this->getUser();
+        // Rechercher l'utilisateur par le token
+        $user = $entityManager->getRepository(User::class)->findOneBy(['emailToken' => $token]);
 
-        // Initialiser la variable $isFavorite pour l'utilisateur consulté
-        $isFavorite = false;
-
-        // Tableau pour stocker l'état de favori pour chaque produit de l'utilisateur consulté
-        $productFavorites = [];
-
-        if ($currentUser) {
-            // Vérifier si l'utilisateur consulté est dans les favoris de l'utilisateur connecté
-            $favorite = $favoriteRepository->findOneBy([
-                'user' => $currentUser,
-                'userFavorite' => $user
-            ]);
-            $isFavorite = $favorite !== null;
-
-            // Récupérer les produits favoris de l'utilisateur connecté
-            $favorites = $favoriteRepository->findBy(['user' => $currentUser]);
-
-            // Créer un tableau associant chaque produit de l'utilisateur consulté à son état de favori
-            foreach ($user->getProducts() as $product) {
-                $productFavorites[$product->getId()] = false; // Par défaut, le produit n'est pas en favori
-            }
-            foreach ($favorites as $favorite) {
-
-                if ($favorite->getProductFavorite() && array_key_exists($favorite->getProductFavorite()->getId(), $productFavorites)) {
-                    $productFavorites[$favorite->getProductFavorite()->getId()] = true;
-                }
-            }
-
-        }
-
-        return $this->render('user/show.html.twig', [
-            'user' => $user,                     // Utilisateur dont on consulte le profil
-            'isFavorite' => $isFavorite,         // Est-il dans les favoris de l'utilisateur connecté ?
-            'productFavorites' => $productFavorites, // État des favoris pour chaque produit de l'utilisateur consulté
-        ]);
-    }
-
-
-    #[Route('/remove/{id}', name: 'remove')]
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
-    public function remove(
-        Request $request,
-        User $user,
-        EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage
-    ): Response {
-        $currentUser = $this->getUser();
-
-        // L'utilisateur peut supprimer son propre compte, ou l'admin peut supprimer n'importe quel compte
-        if (!$currentUser || ($currentUser !== $user && !$this->isGranted('ROLE_ADMIN'))) {
-            $this->addFlash('danger', 'Vous ne pouvez supprimer que votre propre compte.');
+        if (!$user) {
+            $this->addFlash('danger', 'Token invalide ou expiré.');
             return $this->redirectToRoute('home');
         }
 
-        // Si l'admin supprime un utilisateur, il ne doit pas se déconnecter lui-même
-        if ($currentUser === $user) {
-            $request->getSession()->invalidate();
-            $tokenStorage->setToken(null);
-        }
-
-        // Suppression de l'utilisateur
-        $entityManager->remove($user);
+        // Mettre à jour l'email
+        $user->setEmail($user->getEmailTemporary());
+        $user->setEmailTemporary(null); // Remise à zéro de l'email temporaire
+        $user->setToken(null); // Suppression du token
         $entityManager->flush();
 
-        $this->addFlash('success', 'Utilisateur supprimé avec succès.');
+        $this->addFlash('success', 'Votre email a bien été confirmé.');
         return $this->redirectToRoute('home');
     }
+
 
 
     #[Route('/update-image', name: 'update_image', methods: ['POST'])]
@@ -331,14 +340,20 @@ class UserController extends AbstractController
     public function updateImage(
         Request $request,
         EntityManagerInterface $entityManager
-    ): JsonResponse {
-
+    ): JsonResponse
+    {
         $user = $this->getUser();
         if (!$user) {
             return new JsonResponse(['error' => 'Unauthorized'], 401);
         }
 
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw new AccessDeniedException('L\'utilisateur connecté n\'est pas valide.');
+        }
+
         $profile = $user->getUserProfile();
+
         if (!$profile) {
             return new JsonResponse(['error' => 'User profile not found.'], 404);
         }
@@ -362,61 +377,87 @@ class UserController extends AbstractController
     #[Route('/delete-image', name: 'delete_image', methods: ['POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function deleteImage(
-        Request $request,
-        EntityManagerInterface $entityManager,
+        Request                       $request,
+        EntityManagerInterface        $entityManager,
         AuthorizationCheckerInterface $authChecker
-    ): Response {
+    ): Response
+    {
+        // Fetch the logged-in user
         $user = $this->getUser();
         if (!$user || !$authChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
         }
 
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw new AccessDeniedException('L\'utilisateur connecté n\'est pas valide.');
+        }
+
         $profile = $user->getUserProfile();
+
         if (!$profile) {
             throw $this->createNotFoundException('User profile not found.');
         }
 
+        // Check CSRF token
         if (!$this->isCsrfTokenValid('delete_image' . $profile->getId(), $request->request->get('_token'))) {
             throw new AccessDeniedException('Invalid CSRF token.');
         }
 
-        // Chemin pour supprimer l'image
-        $imagePath = $this->getParameter('kernel.project_dir') . '/public/uploads/images/user_profile' . $profile->getImageName();
+        // Path to the image
+        $imagePath = $this->getParameter('kernel.project_dir') . '/public/uploads/user_profile' . $profile->getImageName();
 
-        // Supprimez le fichier physique s'il existe
+        // Delete the physical file if it exists
         if ($profile->getImageName() && file_exists($imagePath)) {
-            unlink($imagePath); // Supprimez le fichier
+            unlink($imagePath); // Delete the file
         }
 
-        // Supprimez l'image de l'entité et persistez
+        // Remove the image from the profile entity
         $profile->setImageName(null);
         $entityManager->persist($profile);
         $entityManager->flush();
 
+        // Add a flash message and redirect
         $this->addFlash('success', 'L\'image de profil a été supprimée avec succès.');
 
         return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
     }
 
-    #[Route('/confirm-email/{token}', name: 'confirm_email')]
-    public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
+
+
+    #[Route('/remove/{id}', name: 'remove')]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
+    public function remove(
+        Request                $request,
+        User                   $user,
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface  $tokenStorage
+    ): Response
     {
-        // Rechercher l'utilisateur par le token
-        $user = $entityManager->getRepository(User::class)->findOneBy(['emailToken' => $token]);
+        $currentUser = $this->getUser();
 
-
-        if (!$user) {
-            $this->addFlash('danger', 'Token invalide ou expiré.');
+        // L'utilisateur peut supprimer son propre compte, ou l'admin peut supprimer n'importe quel compte
+        if (!$currentUser || ($currentUser !== $user && !$this->isGranted('ROLE_ADMIN'))) {
+            $this->addFlash('danger', 'Vous ne pouvez supprimer que votre propre compte.');
             return $this->redirectToRoute('home');
         }
 
-        // Mettre à jour l'email
-        $user->setEmail($user->getEmailTemporary());
-        $user->setEmailTemporary(null);
-        $user->setToken(null);
+        // Si l'admin supprime un utilisateur, il ne doit pas se déconnecter lui-même
+        if ($currentUser === $user) {
+            $request->getSession()->invalidate();
+            $tokenStorage->setToken(null);
+        }
+
+        // Suppression de l'utilisateur
+        $entityManager->remove($user);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Votre email a bien été confirmé.');
+        $this->addFlash('success', 'Utilisateur supprimé avec succès.');
         return $this->redirectToRoute('home');
     }
 }
+
+
+
+
+

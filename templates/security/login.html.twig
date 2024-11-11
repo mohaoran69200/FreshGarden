@@ -3,12 +3,19 @@
 {% block title %}
 	Connexion
 {% endblock %}
-{% block importmap %}{{ importmap(['app', 'password', 'header']) }}{% endblock %}
+
+{% block importmap %}
+	{{ importmap(['app', 'password', 'header']) }}
+{% endblock %}
+
 {% block body %}
 	<div class="form-container">
 		<form method="post" action="{{ path('login') }}">
-			{% if error %}
-				<div class="error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% if app.request.hasSession() %}
+				{% set error = app.session.get('security_error') %}
+				{% if error %}
+					<div class="error-message">{{ error|trans({}, 'security') }}</div>
+				{% endif %}
 			{% endif %}
 
 			{% if app.user %}
@@ -33,15 +40,14 @@
 							</svg>
 						</label>
 					</div>
-
 				</div>
+
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-				<button class="btn" type="submit">Se connecter</button>
+				<button class="btn-primary" type="submit">Se connecter</button>
 				<p><a href="{{ path('app_forgot_password_request') }}" class="link-button">Mot de passe oublié</a></p>
 				<p>Vous n'avez pas de compte? <a href="{{ path('register') }}" class="link-button">Inscrivez-vous ici</a></p>
 			{% endif %}
 		</form>
 	</div>
-
 {% endblock %}

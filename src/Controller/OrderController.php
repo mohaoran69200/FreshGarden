@@ -12,6 +12,7 @@ use App\Enum\OrderStatus;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Service\CartService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -22,6 +23,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class OrderController extends AbstractController
 {
+    // Liste de toutes les commandes de l'utilisateur
     #[Route('/order', name: 'app_order')]
     #[IsGranted('ROLE_USER')]
     public function index(OrderRepository $orderRepository): Response
@@ -36,6 +38,8 @@ class OrderController extends AbstractController
         ]);
     }
 
+
+    // Création d'une commande apres validation du panier
     #[Route('/order/new', name: 'app_order_new')]
     #[IsGranted('ROLE_USER')]
     public function create(Request $request,
@@ -62,7 +66,7 @@ class OrderController extends AbstractController
             $order = new Order();
             $order->setUser($user);
             $order->setStatus(OrderStatus::En_attente);
-            $order->setCreatedAt(new \DateTimeImmutable());
+            $order->setCreatedAt(new DateTimeImmutable());
 
             // Calcul du total de la commande
             $total = 0;
@@ -84,7 +88,8 @@ class OrderController extends AbstractController
             }
 
             // Définir le total de la commande
-            $order->setTotal($total);
+            $order->setTotal((string)$total);
+
 
             // Persister la livraison si elle a été créée
             if ($delivery) {
@@ -108,27 +113,35 @@ class OrderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($order->getDeliveryMode() === DeliveryMode::Livraison) {
+                // Si le mode de livraison est 'Livraison', on vérifie que l'utilisateur a une adresse
                 if (!$user->getUserProfile()->getAddress()) {
                     $form->addError(new FormError(
-                        'Vous devez renseigner une addresse sur votre compte pour pouvoir être livré'
+                        'Vous devez renseigner une adresse sur votre compte pour pouvoir être livré'
                     ));
-                }
-            }
-            if ($form->isValid()) {
-                if ($order->getDeliveryMode() === DeliveryMode::Livraison) {
+                } else {
+                    // Créer une livraison
                     $delivery = new Delivery();
                     $delivery->setAddress($user->getUserProfile()->getAddress());
                     $delivery->setCommand($order);
                     $delivery->setStatus(DeliveryStatus::En_Attente);
+
+                    // Persister la livraison car elle est maintenant initialisée
+                    $entityManager->persist($delivery);
                 }
-                $order->setStatus(OrderStatus::Confirmée);
-                $cartService->removeCartAll();
-                $entityManager->flush();
-                // Si le formulaire est validé, on affiche un message de succès
-                $this->addFlash('success', 'Votre commande est validée.');
-                return $this->redirectToRoute('home');
             }
+
+            // Mettre à jour le statut de la commande
+            $order->setStatus(OrderStatus::Confirmée);
+            $cartService->removeCartAll();
+
+            // Enregistrer la commande et la livraison (si elle existe)
+            $entityManager->flush();
+
+            // Si le formulaire est validé, afficher un message de succès
+            $this->addFlash('success', 'Votre commande est validée.');
+            return $this->redirectToRoute('home');
         }
+
 
         return $this->render('order/new.html.twig', [
             'form' => $form->createView(),
@@ -136,6 +149,8 @@ class OrderController extends AbstractController
         ]);
     }
 
+
+    // Annulation d'une commande
     #[Route('/order/cancel/{id}', name: 'app_order_cancel')]
     #[IsGranted('ROLE_USER')]
     public function cancel(Order $order, EntityManagerInterface $entityManager): Response
@@ -159,6 +174,8 @@ class OrderController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+
+    // Affichage d'une commande spécifique
     #[Route('/order/{id}', name: 'app_order_show')]
     #[IsGranted('ROLE_USER')]
     public function show(Order $order): Response

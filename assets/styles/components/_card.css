@@ -13,17 +13,17 @@
 
 /* Conteneur principal qui contient le grid des cartes produits */
 .grid-container {
-    margin: 0 auto; /* Centre le conteneur */
-    padding: 0 20px; /* Ajoute une marge sur les côtés */
-    max-width: 1200px; /* Définit une largeur maximale pour éviter que le contenu ne s'étale trop */
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 1200px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 éléments par ligne */
-    gap: 15px; /* Espace entre les cartes */
-    justify-items: center; /* Centre les éléments horizontalement */
-    align-items: flex-start; /* Aligne les éléments au début verticalement */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-items: center;
+    align-items: flex-start;
 }
 
 /****************************************************style pour cardProduct small***********************************************************/
@@ -34,7 +34,7 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
+    background-color: var(--white2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -60,12 +60,12 @@
 .product-details-container {
     padding: 15px;
     text-align: center;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--white);
 }
 
 .product-info {
     font-size: 14px;
-    color: #777;
+    color: var(--dark-gray);
     display: flex;
     justify-content: space-between;
 }
@@ -78,7 +78,7 @@
 
 .product-info span {
     font-weight: bold;
-    color: #28a745; /* Couleur accent pour le prix */
+    color: var(--light-green);
 }
 
 .user-details-container {
@@ -86,10 +86,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #e0e0e0;
+    background-color: var(--white);
+    border-top: 1px solid var(--white);
     font-size: 14px;
-    color: #555;
+    color: var(--dark-gray);
 }
 
 
@@ -100,18 +100,18 @@
 }
 
 .user-details-container span {
-    display: flex; /* Utiliser flexbox pour aligner le texte et les SVG */
-    align-items: center; /* Centrer verticalement le texte et les SVG */
+    display: flex;
+    align-items: center;
     margin: 0;
-    padding: 0 10px; /* Ajouter un peu d'espace horizontal */
-    text-align: center; /* Centrer le texte dans chaque span */
+    padding: 0 10px;
+    text-align: center;
     font-family: 'Lato', sans-serif;
 }
 
 .user-details-container svg {
     width: 18px;
     height: 18px;
-    color: #555;
+    color: var(--dark-gray);
     margin-right: 6px;
 }
 
@@ -131,7 +131,7 @@
 
 .actions .cart-btn {
     background-color: var(--light-green);
-    color: #fff;
+    color: var(--white2);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -152,8 +152,6 @@
 }
 
 .actions-user button {
-    /*background-color: var(--light-green);*/
-    /*color: #fff;*/
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -163,14 +161,13 @@
 }
 
 
-
     /************************************* Style pour la grande carte produit  ********************************************/
 .product-card-large {
     width: 100%;
     max-width: 700px;
-    border-radius: var(--border-radius); /* Légèrement plus arrondi */
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     background-color: var(--white2);
 }
 
@@ -183,19 +180,19 @@
 
 .product-details-container-large img.product-image {
     width: 100%;
-    height: 300px; /* Ajuster la hauteur si nécessaire */
+    height: 300px;
     object-fit: cover;
     margin-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0; /* Ligne séparatrice sous l'image */
+    border-bottom: 1px solid var(--white);
 }
 
 .product-info-large {
-    padding: 20px; /* Ajout de padding pour plus d'espace */
-    text-align: left; /* Alignement à gauche pour le texte */
+    padding: 20px;
+    text-align: left;
 }
 
 .product-info-large h2 {
-    font-size: 28px; /* Taille de police augmentée pour le nom du produit */
+    font-size: 28px;
     color: var(--dark-green);
 }
 
@@ -203,25 +200,25 @@
     margin: 10px 0;
     color: var(--black);
     font-size: 16px;
-    line-height: 1.6; /* Espacement entre les lignes accru pour la lisibilité */
+    line-height: 1.6;
 }
 
 .price-stock {
     display: flex;
     justify-content: space-between;
-    margin-top: 15px; /* Espace au-dessus du conteneur de prix et de stock */
-    font-size: 18px; /* Augmenter la taille de la police */
+    margin-top: 15px;
+    font-size: 18px;
     font-weight: bold;
     color: #333;
 }
 
 .price-stock .price {
-    margin-right: 15px; /* Espace entre le prix et le stock */
+    margin-right: 15px;
 }
 
 .user-details-container-large {
-    padding: 15px 20px; /* Ajout de padding pour l'espace */
-    border-top: 1px solid #e0e0e0; /* Ligne séparatrice au-dessus des détails de l'utilisateur */
+    padding: 15px 20px;
+    border-top: 1px solid var(--white);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -234,7 +231,7 @@
 .user-details-container-large .user-city {
     display: flex;
     align-items: center;
-    color: #555;
+    color: var(--dark-gray);
 }
 
 .actions-large {
@@ -245,9 +242,9 @@
 }
 
 .actions-large button {
-    padding: 10px 15px; /* Améliorer le padding des boutons */
-    border-radius: 5px; /* Coins arrondis pour les boutons */
-    border: none; /* Supprimer la bordure par défaut */
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -258,7 +255,7 @@
 }
 
 .add-to-cart-button:hover {
-    background-color: darkgreen; /* Teinte plus foncée au survol */
+    background-color: var(--dark-green);
 }
 
 .edit-button {
@@ -281,7 +278,6 @@
     color: var(--white);
 }
 
-
 .favorite-button {
     background-color: white;
     border: 2px solid transparent;
@@ -291,13 +287,13 @@
 
 .favorite-button svg {
     fill: none;
-    stroke: red;
+    stroke: var(--red);
     width: 24px;
     height: 24px;
 }
 
 .favorite-button:hover svg {
-    fill: red;
+    fill: var(--red);
     cursor: pointer;
 }
 
@@ -306,8 +302,8 @@
 }
 
 .favorite-button.active svg {
-    fill: red;
-    stroke: red;
+    fill: var(--red);
+    stroke: var(--red);
 }
 
 .favorite-button.active:hover {
@@ -315,16 +311,17 @@
 }
 
 .favorite-button.active:hover svg {
-    fill: green;
-    stroke: green;
+    fill: var(--dark-green);
+    stroke: var(--dark-green);
     cursor: pointer;
 }
+
 
 
 /************************************************************ Carte utilisateur small ********************************************************/
 .user-card {
     background-color: var(--white2);
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--white);
     border-radius: var(--border-radius);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -370,7 +367,7 @@
 
 .user-city {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--dark-gray);
     margin-bottom: 10px;
 }
 
@@ -409,7 +406,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    max-width: 700px; /* Ajuster selon la taille que tu veux */
+    max-width: 700px;
     margin: 30px auto;
     transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
@@ -508,78 +505,78 @@
 }
 
 
-/* Responsive adjustments for mobile */
 @media screen and (max-width: 1200px) {
     .grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 éléments par ligne en écran plus petit */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media screen and (max-width: 1024px) {
     .grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 éléments par ligne pour les écrans encore plus petits */
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .user-card {
-        flex-direction: column; /* Alignement vertical */
-        height: auto; /* Laisser la hauteur s'ajuster */
+        flex-direction: column;
+        height: auto;
         padding: 20px;
         text-align: center;
     }
 
     .user-profile-pic {
-        width: 65px; /* Réduction de taille pour s'adapter à l'écran */
+        width: 65px;
         height: 65px;
         margin-bottom: 10px;
     }
 
     .user-card-content {
-        flex-direction: column; /* Contenu empilé verticalement */
+        flex-direction: column;
         align-items: center;
         text-align: center;
         width: 100%;
     }
 
     .actions-user-small {
-        width: 100%; /* Utilise la pleine largeur */
-        justify-content: center; /* Centrer les actions */
+        width: 100%;
+        justify-content: center;
         margin-top: 10px;
     }
 }
 
 @media screen and (max-width: 768px) {
     .grid {
-        grid-template-columns: 1fr; /* 1 élément par ligne sur mobile */
+        grid-template-columns: 1fr;
     }
 
     .user-card {
         padding: 15px;
         margin: 10px;
-        max-width: 100%; /* Prend toute la largeur de l'écran */
+        max-width: 100%;
     }
 
     .user-profile-pic {
-        width: 55px; /* Réduction supplémentaire pour mobile */
+        width: 55px;
         height: 55px;
     }
 
     .contact-button {
-        padding: 6px 10px; /* Réduction de padding */
-        font-size: 0.9em; /* Taille de police ajustée */
+        padding: 6px 10px;
+        font-size: 0.9em;
     }
 
     .user-name {
-        font-size: 1em; /* Taille de texte légèrement réduite */
+        font-size: 1em;
     }
 
     .user-city {
-        font-size: 0.85rem; /* Taille de texte réduite */
+        font-size: 0.85rem;
     }
 
     .ads-count a {
-        font-size: 0.85em; /* Taille de police ajustée */
+        font-size: 0.85em;
     }
 }
+
 
 
 

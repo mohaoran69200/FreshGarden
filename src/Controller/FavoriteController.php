@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Favorite;
+use App\Entity\User;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use App\Repository\FavoriteRepository;
@@ -79,7 +80,11 @@ class FavoriteController extends AbstractController
         } else {
             // Sinon, je l'ajoute aux favoris de l'utilisateur.
             $favorite = new Favorite();
-            $favorite->setUser($user);
+            $user = $this->getUser();
+            if ($user instanceof User) {
+                $favorite->setUser($user);
+            }
+
             $favorite->setProductFavorite($product);
 
             $entityManager->persist($favorite);
@@ -123,7 +128,11 @@ class FavoriteController extends AbstractController
         } else {
             // Sinon, je l'ajoute aux favoris de l'utilisateur.
             $favorite = new Favorite();
-            $favorite->setUser($user);
+            $user = $this->getUser();
+            if ($user instanceof User) {
+                $favorite->setUser($user);
+            }
+
             $favorite->setUserFavorite($favoriteUser);
 
             $entityManager->persist($favorite);

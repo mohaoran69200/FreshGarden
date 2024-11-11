@@ -36,10 +36,10 @@
     padding: 40px 30px;
     transition: transform 0.3s ease;
     min-width: 250px;
-    max-width: 500px; /* Limit max width for consistency */
-    height: 250px; /* Adjust height */
+    max-width: 500px;
+    height: 250px;
     text-align: center;
-    flex-direction: column; /* Ensure content stacks vertically */
+    flex-direction: column;
 }
 
 .stat-item:hover {
@@ -50,7 +50,7 @@
 
 /* Stat Icon Styling */
 .stat-icon {
-    font-size: 4em; /* Increase icon size */
+    font-size: 4em;
     color: var(--light-green);
     margin-bottom: 20px;
 }

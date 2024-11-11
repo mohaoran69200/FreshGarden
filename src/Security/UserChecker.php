@@ -8,7 +8,6 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusExce
 
 class UserChecker implements UserCheckerInterface
 {
-    // La méthode doit retourner "void" pour respecter l'interface
     public function checkPreAuth(UserInterface $user): void
     {
         // Si l'utilisateur est banni, on l'empêche de se connecter

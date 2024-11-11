@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
             const input = passwordInputs[index];
             const isPasswordType = input.getAttribute('type') === 'password';
 
-            // Changer le type de champ
+            // Je change le type de champ
             input.setAttribute('type', isPasswordType ? 'text' : 'password');
 
-            // Changer l'icône en fonction de l'état
+            // Je change l'icône en fonction de l'état
             if (isPasswordType) {
                 // Si le mot de passe est caché, changer à visible (œil barré)
                 label.innerHTML = `

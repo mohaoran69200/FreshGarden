@@ -7,6 +7,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Message;
 
+/**
+ * @extends Voter<string, Message>
+ */
 class MessageVoter extends Voter
 {
     const VIEW = 'view';
@@ -22,7 +25,9 @@ class MessageVoter extends Voter
     }
 
     // Cette méthode détermine si l'utilisateur est autorisé à effectuer l'action sur le sujet
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute,
+                                       $subject,
+                                       TokenInterface $token): bool
     {
         $user = $token->getUser();
 

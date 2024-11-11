@@ -37,10 +37,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Gestion du clic sur le bouton de connexion mobile
     mobileConnexionButton.addEventListener("click", function() {
-        mobileDropdownContent.classList.toggle("dropdown-content--active"); // Toggle la classe pour afficher/cacher le dropdown
+        mobileDropdownContent.classList.toggle("dropdown-content--active");
     });
 
-    // Fermer le dropdown si l'utilisateur clique en dehors
+    // Je ferme le dropdown si l'utilisateur clique en dehors
     window.addEventListener("click", function(event) {
         if (!mobileConnexionButton.contains(event.target) && !mobileDropdownContent.contains(event.target)) {
             mobileDropdownContent.classList.remove("dropdown-content--active");

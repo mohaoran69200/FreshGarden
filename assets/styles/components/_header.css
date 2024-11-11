@@ -141,7 +141,7 @@ a {
 
 /* Dropdown Content (Menu) */
 .nav .dropdown-content {
-    display: block; /* Pas de display none, le contrôle se fait avec visibility et opacity */
+    display: block;
     position: absolute;
     background-color: var(--white2);
     min-width: 160px;
@@ -152,15 +152,14 @@ a {
     /* Transition pour l'apparition/disparition */
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px); /* Légère translation vers le bas */
+    transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
-/* Active State: When Dropdown is visible */
 .nav .dropdown-content--active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0); /* Retour à la position initiale */
+    transform: translateY(0);
 }
 
 /* Dropdown Links */
@@ -173,12 +172,11 @@ a {
 }
 
 .dropdown-content a:hover {
-    background-color: var(--white2); /* Légère couleur de fond au survol */
-    color: var(--dark-green); /* Couleur de texte au survol */
-    border-radius: 4px; /* Coins légèrement arrondis */
+    background-color: var(--white2);
+    color: var(--dark-green);
+    border-radius: 4px;
 }
 
-/* Transition fluide lors de l'ouverture/fermeture */
 .nav .dropdown-content {
     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }

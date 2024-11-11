@@ -47,7 +47,10 @@ class ProductType extends AbstractType
                 'currency' => '',
             ])
             ->add('unit', EnumType::class, [
-                'class' => ProductUnit::class
+                'class' => ProductUnit::class,
+                'attr' => [
+                    'style' => 'margin: 0;'
+                ]
             ])
             ->add('stock', IntegerType::class, [
                 'label' => 'Stock',
@@ -56,6 +59,9 @@ class ProductType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
+                'attr' => [
+                    'style' => 'margin: 0;'
+                ]
             ])
             ->add('image', ImageType::class, [
                 'label' => 'Image',

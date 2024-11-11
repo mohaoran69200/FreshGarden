@@ -1,20 +1,3 @@
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: var(--font-size-medium);
-    font-weight: bold;
-    border-radius: var(--border-radius);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: var(--white2);
-}
-
-
-
 /********************************************** Boutons d'administration **********************************************/
 .btn-admin {
     padding: 8px 16px;
@@ -28,13 +11,9 @@
     transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Bouton "Créer" */
-.btn-create {
-    background-color: #28a745; /* Vert */
-}
-
-.btn-create:hover {
-    background-color: #218838; /* Teinte plus foncée au survol */
+.btn-admin:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
 
 .btn-view { background-color: #007bff; }
@@ -52,11 +31,8 @@
 .btn-delete { background-color: #e74c3c; }
 .btn-delete:hover { background-color: #c0392b; }
 
-/* Effet hover général */
-.btn-admin:hover {
-    opacity: 0.9; /* Légère réduction d'opacité */
-    transform: translateY(-2px); /* Légère élévation pour donner un effet de clic */
-}
+
+
 
 @media screen and (max-width: 1024px) {
     .btn-admin {
@@ -168,12 +144,23 @@
 }
 
 /***************************************** Formulaire de recherche ****************************************************/
-.btn:hover {
+
+.search-btn {
+    background-color: var(--light-green);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: var(--font-size-small);
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
     background-color: var(--dark-green);
 }
 
 /****************************************** Bouton panier *************************************************************/
-/* Bouton d'achat */
 .checkout-btn {
     background-color: var(--light-green);
     color: #fff;
@@ -192,54 +179,55 @@
 /********************************************* edit profil ************************************************************/
 .btn-save-image,
 .btn-delete-image {
-    background-color: var(--light-green); /* Couleur de fond par défaut */
+    background-color: var(--light-green);
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: var(--font-size-small); /* Taille de texte cohérente */
+    font-size: var(--font-size-small);
 }
 
 .btn-save-image {
-    background-color: var(--light-green); /* Couleur spécifique pour le bouton de sauvegarde */
+    background-color: var(--light-green);
 }
 
 .btn-save-image:hover {
-    background-color: var(--dark-green); /* Couleur plus foncée au survol */
+    background-color: var(--dark-green);
 }
 
 .btn-delete-image {
-    background-color: var(--red); /* Couleur spécifique pour le bouton de suppression */
+    background-color: var(--red);
 }
 
 .btn-delete-image:hover {
-    background-color: var(--red-hover); /* Couleur plus foncée au survol */
+    background-color: var(--red-hover);
 }
 
 .btn-primary {
-    background-color: var(--light-green); /* Couleur de fond des boutons */
+    background-color: var(--light-green);
     color: white;
-    padding: 10px 15px; /* Espacement intérieur */
-    border-radius: 4px; /* Coins arrondis */
-    text-decoration: none; /* Pas de soulignement */
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
 }
 
 .btn-primary:hover {
     background-color: var(--dark-green);
-    color: var(--white2)/* Couleur au survol */
+    color: var(--white2);
 }
 
 .btn-delete-account {
-    font-size: 0.8em; /* Taille de police plus petite */
-    color: var(--red); /* Couleur du texte (rouge) */
-    align-self: center; /* Centre verticalement le lien par rapport aux autres */
+    font-size: 0.8em;
+    color: var(--red);
+    align-self: center;
 }
 
 .btn-delete-account:hover {
     color: var(--red-hover);
     text-decoration: underline;
 }
+
 
 /**************************************************** page d'acceuil *************************************************/
 .btn-container {
@@ -358,7 +346,7 @@
 }
 
 .back-btn {
-    background-color: var(--dark-gray);
+    background-color: var(--orange);
 }
 
 .reply-btn {
@@ -366,7 +354,7 @@
 }
 
 .back-btn:hover {
-    background-color: var(--dark-gray);
+    background-color: var(--orange-hover);
     color: var(--white2);
     transform: scale(1.05);
 }

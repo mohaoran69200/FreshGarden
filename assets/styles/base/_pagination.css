@@ -19,7 +19,7 @@
 /* Style des liens de pagination */
 .pagination ul li a {
     display: inline-block;
-    padding: 8px 12px; /* Réduction de la taille du padding */
+    padding: 8px 12px;
     color: var(--dark-gray);
     text-decoration: none;
     border: 1px solid var(--white2);
@@ -29,8 +29,8 @@
 
 /* Effet hover sur les liens */
 .pagination ul li a:hover {
-    background-color: var(--white);
-    color: var(--dark-green);
+    background-color: var(--dark-green);
+    color: var(--white);
 }
 
 /* Style pour la page active */
@@ -52,7 +52,7 @@
 /* Pagination en vue mobile */
 @media (max-width: 480px) {
     .pagination ul {
-        gap: 1px; /* Espacement réduit */
+        gap: 1px;
     }
 
     .pagination ul li {
@@ -62,7 +62,7 @@
     .pagination ul li a,
     .pagination ul li.active span,
     .pagination ul li.current-page span {
-        padding: 6px 8px; /* Réduction du padding pour les éléments */
-        font-size: 0.9rem; /* Taille de police réduite */
+        padding: 6px 8px;
+        font-size: 0.9rem;
     }
 }

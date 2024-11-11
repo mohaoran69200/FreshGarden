@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,8 +20,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -88,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $resetToken = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $resetTokenCreatedAt = null;
+    private ?DateTimeImmutable $resetTokenCreatedAt = null;
 
     #[ORM\Column(type: 'string', length: 180, nullable: true)]
     private ?string $emailTemporary = null;
@@ -234,7 +233,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->userProfile;
     }
 
-    public function setUserProfile(UserProfile $userProfile): static
+    public function setUserProfile(UserProfile $userProfile): self
     {
         if ($userProfile->getUser() !== $this) {
             $userProfile->setUser($this);
@@ -427,7 +426,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->resetToken;
     }
 
-    public function setResetTokenCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setResetTokenCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->resetTokenCreatedAt = $createdAt;
         return $this;
@@ -435,7 +434,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isResetTokenExpired(): bool
     {
-        return $this->resetTokenCreatedAt < new \DateTimeImmutable('-1 hour');
+        return $this->resetTokenCreatedAt < new DateTimeImmutable('-1 hour');
     }
 
     public function getEmailTemporary(): ?string

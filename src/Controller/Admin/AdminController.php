@@ -7,12 +7,13 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin', name: 'app_admin')]
+#[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
     #[Route('/', name: '_dashboard')]
-    #[isGranted('ROLE_ADMIN')]
     public function dashboard(UserRepository $userRepository, ProductRepository $productRepository): Response
     {
         //Je récupére le nombre total d'utilisateur

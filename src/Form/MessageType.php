@@ -27,9 +27,10 @@ class MessageType extends AbstractType
                     'placeholder' => 'Ecrivez votre message',
                 ]
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
-            ]);
+         ->add('submit', SubmitType::class, [
+             'label' => 'Envoyer',
+             'attr' => ['class' => 'btn btn-primary'],
+         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

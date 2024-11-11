@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\FavoriteRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\ProductRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -13,20 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProductType;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/product', name: 'app_product_')]
 class ProductController extends AbstractController
 {
-    private AuthorizationCheckerInterface $authChecker;
-
-    // J'initialise l'AuthorizationChecker
-    public function __construct(AuthorizationCheckerInterface $authChecker)
-    {
-        $this->authChecker = $authChecker;
-    }
-
     // Je crée un nouveau produit
     #[Route('/new', name: 'new')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -41,9 +34,17 @@ class ProductController extends AbstractController
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             // J'ajoute les informations de l'utilisateur et la date de création/mise à jour
-            $product->setUser($this->getUser())
-                ->setCreatedAt(new \DateTimeImmutable())
-                ->setUpdatedAt(new \DateTimeImmutable());
+            /** @var User|null $user */
+            $user = $this->getUser();
+
+            if (!$user instanceof User) {
+                throw new \LogicException('L\'utilisateur doit être connecté pour créer un produit.');
+            }
+
+            $product->setUser($user)
+                ->setCreatedAt(new DateTimeImmutable())
+                ->setUpdatedAt(new DateTimeImmutable());
+
 
             // Je persiste le produit dans la base de données
             $entityManager->persist($product);
@@ -62,6 +63,7 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     // Je modifie un produit existant
     #[Route('/update/{id}', name: 'update')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -77,7 +79,7 @@ class ProductController extends AbstractController
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setUpdatedAt(new \DateTimeImmutable());
+            $product->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
             $this->addFlash('success', 'Produit mis à jour avec succès.');
             return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
@@ -88,6 +90,7 @@ class ProductController extends AbstractController
             'product' => $product,
         ]);
     }
+
 
     // La page d'un produit
     #[Route('/show/{id}', name: 'show')]
@@ -112,6 +115,7 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     // Je supprime un produit
     #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -126,6 +130,7 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('home');  // Je redirige vers la page d'accueil
     }
 
+
     // Je récupère et affiche les produits de la catégorie "Fruits"
     #[Route('/fruits', name: 'fruits')]
     public function fruits(ProductRepository $productRepository,
@@ -136,8 +141,8 @@ class ProductController extends AbstractController
         $categorie = $categorieRepository->findOneBy(['name' => 'Fruits']);
 
         // Utiliser la méthode dans le repository pour récupérer les produits paginés
-        $page = $request->query->getInt('page', 1);
-        $products = $productRepository->findByCategoryPaginated($categorie, $page);
+
+        $products = $productRepository->findByCategoryPaginated($categorie, $request->query->getInt('page', 1));
 
         // Récupérer l'utilisateur et vérifier les favoris
         $user = $this->getUser();
@@ -182,11 +187,15 @@ class ProductController extends AbstractController
                             FavoriteRepository $favoriteRepository,
                             Request $request): Response
     {
+
         $categorie = $categorieRepository->findOneBy(['name' => 'Légumes']);
 
         // Utiliser la méthode dans le repository pour récupérer les produits paginés
-        $page = $request->query->getInt('page', 1);
-        $products = $productRepository->findByCategoryPaginated($categorie, $page);
+
+
+        $products = $productRepository->findByCategoryPaginated($categorie, $request->query->getInt('page', 1));
+
+
 
         $user = $this->getUser();
         $isFavorite = false;

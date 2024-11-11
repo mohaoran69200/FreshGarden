@@ -28,7 +28,7 @@
 
 /* Lien pour retirer un article */
 .cart-item a {
-    color: #ff4d4d;
+    color: var(--orange);
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
@@ -36,7 +36,7 @@
 }
 
 .cart-item a:hover {
-    color: #d93636;
+    color: var(--orange-hover);
 }
 
 /* Total du panier */

@@ -13,6 +13,7 @@ class ProductVoter extends Voter
     const EDIT = 'edit';
     const DELETE = 'delete';
 
+    // Cette méthode détermine si le voter peut gérer l'attribut et le sujet donnés
     protected function supports(string $attribute, $subject): bool
     {
         // Le sujet doit être une instance de Product
@@ -20,11 +21,12 @@ class ProductVoter extends Voter
             && $subject instanceof Product;
     }
 
+    // Cette méthode détermine si l'utilisateur est autorisé à effectuer l'action sur le sujet
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
-        // Vérifiez que l'utilisateur est authentifié
+        // On vérifie que l'utilisateur est authentifié
         if (!$user instanceof UserInterface) {
             return false;
         }
@@ -32,19 +34,11 @@ class ProductVoter extends Voter
         /** @var Product $product */
         $product = $subject;
 
-        switch ($attribute) {
-            case self::VIEW:
-                // Tout le monde peut voir le produit
-                return true;
-
-            case self::EDIT:
-                // Seul le propriétaire du produit ou un admin peut le modifier
-                return $user === $product->getUser() || in_array('ROLE_ADMIN', $user->getRoles());
-
-            case self::DELETE:
-                // Seul le propriétaire du produit ou un admin peut le supprimer
-                return $user === $product->getUser() || in_array('ROLE_ADMIN', $user->getRoles());
-        }
-        return false;
+        return match ($attribute) {
+            self::VIEW => true,
+            self::EDIT, self::DELETE => $user === $product->getUser() || in_array('ROLE_ADMIN', $user->getRoles()),
+            default => false,
+        };
     }
 }
+

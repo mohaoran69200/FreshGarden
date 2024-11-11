@@ -8,32 +8,23 @@ use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
 #[Route('/message', name: 'message_')]
 class MessageController extends AbstractController
 {
-    private AuthorizationCheckerInterface $authChecker;
-
-    // Je crée un constructeur pour initialiser l'AuthorizationChecker
-    public function __construct(AuthorizationCheckerInterface $authChecker)
-    {
-        $this->authChecker = $authChecker;
-    }
-
     // J'affiche la page principale des messages
     // Affiche la page principale des messages
     #[Route('/', name: 'index')]
     public function index(MessageRepository $messageRepository): Response
     {
-        // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
         }
@@ -57,6 +48,7 @@ class MessageController extends AbstractController
             'sentMessages' => $sentMessages,
         ]);
     }
+
 
     // Je gère l'envoi d'un message à un utilisateur spécifique
     #[Route('/send/{id}', name: 'send')]
@@ -82,7 +74,11 @@ class MessageController extends AbstractController
 
         // Si le formulaire est soumis et valide, j'enregistre le message
         if ($form->isSubmitted() && $form->isValid()) {
-            $message->setSender($this->getUser());
+            $user = $this->getUser();
+            if (!$user instanceof User) {
+                throw new LogicException('L\'utilisateur authentifié n\'est pas valide.');
+            }
+            $message->setSender($user);
 
             $entityManager->persist($message);
             $entityManager->flush();
@@ -99,15 +95,23 @@ class MessageController extends AbstractController
         ]);
     }
 
+
     #[Route('/sent', name: 'sent')]
-    public function sent(MessageRepository $messageRepository, Request $request, PaginatorInterface $pagination): Response
+    public function sent(MessageRepository $messageRepository,
+                         Request $request,
+                         PaginatorInterface $pagination): Response
     {
-        $user = $this->getUser();
+        $this->getUser();
 
         // Récupérer la page actuelle, par défaut 1 si aucune page n'est spécifiée
         $page = $request->query->getInt('page', 1);
 
         // Utiliser la pagination pour obtenir les messages envoyés
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw new LogicException('L\'utilisateur authentifié n\'est pas valide.');
+        }
+
         $messages = $messageRepository->findSentMessagesPaginated($user->getId(), $page);
 
         return $this->render('message/sent.html.twig', [
@@ -115,6 +119,7 @@ class MessageController extends AbstractController
             'pagination' => $pagination,
         ]);
     }
+
 
     #[Route('/edit/{id}', name: 'edit')]
     public function edit(
@@ -153,13 +158,18 @@ class MessageController extends AbstractController
     #[Route('/received', name: 'received')]
     public function received(MessageRepository $messageRepository, Request $request): Response
     {
-        $user = $this->getUser();
+        $this->getUser();
 
         // Récupérer la page actuelle, par défaut 1 si aucune page n'est spécifiée
         $page = $request->query->getInt('page', 1);
 
         // Utiliser la pagination pour obtenir les messages reçus
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw new LogicException('L\'utilisateur authentifié n\'est pas valide.');
+        }
         $messages = $messageRepository->findReceivedMessagesPaginated($user->getId(), $page);
+
 
         return $this->render('message/received.html.twig', [
             'messages' => $messages,
@@ -186,6 +196,7 @@ class MessageController extends AbstractController
         // J'affiche la page du message avec son contenu
         return $this->render('message/read.html.twig', ['message' => $message]);
     }
+
 
     // Je supprime un message
     #[Route('/delete/{id}', name: 'delete')]

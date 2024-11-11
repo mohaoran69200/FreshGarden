@@ -2,34 +2,52 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    private TokenStorageInterface $tokenStorage;
+    private AuthenticationUtils $authenticationUtils;
+
+// Injecter AuthenticationUtils
+    public function __construct(TokenStorageInterface $tokenStorage, AuthenticationUtils $authenticationUtils)
+    {
+        $this->tokenStorage = $tokenStorage;
+        $this->authenticationUtils = $authenticationUtils;
+    }
+
     #[Route(path: '/login', name: 'login')]
-    public function login(AuthenticationUtils $authenticationUtils, SessionInterface $session): Response
+    public function login(SessionInterface $session): Response
     {
         $session->set('login_origin', true);
 
-        // Vérifiez si l'utilisateur est connecté
-        if ($this->getUser()) {
-            // Vérifiez si l'utilisateur est activé
-            if (!$this->getUser()->isVerified()) {
-                // Si l'utilisateur n'est pas activé, déconnectez-le et affichez un message
-                $this->get('security.token_storage')->setToken(null);
-                return $this->render('security/login.html.twig', [
-                    'error' => 'Votre compte n\'est pas encore activé. Veuillez vérifier votre email pour activer votre compte.',
-                ]);
+// Vérifiez si l'utilisateur est connecté
+        $user = $this->getUser();
+
+// Si l'utilisateur est déjà connecté, redirigez vers la page d'accueil
+        if ($user instanceof User) {
+// Si l'utilisateur n'est pas vérifié, déconnectez-le
+            if (!$user->isVerified()) {
+// Déconnecter l'utilisateur
+                $this->tokenStorage->setToken(null);  // Déconnecte l'utilisateur
+                $this->addFlash('warning', 'Votre compte n\'est pas activé. Vous allez être déconnecté.');
+                return $this->redirectToRoute('logout');  // Redirection vers la page de déconnexion
             }
+
+// Si l'utilisateur est connecté et validé, redirigez-le vers la page d'accueil
             return $this->redirectToRoute('home');
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+// Récupérer l'email saisi lors de la dernière tentative de connexion
+        $lastUsername = $this->authenticationUtils->getLastUsername();
+        $error = $this->authenticationUtils->getLastAuthenticationError();
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -40,6 +58,6 @@ class SecurityController extends AbstractController
     #[Route('/logout', name: 'logout')]
     public function logout(): void
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

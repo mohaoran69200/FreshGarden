@@ -8,13 +8,22 @@ use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * @extends ServiceEntityRepository<Message>
+ */
 class MessageRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Message::class);
+        $this->paginator = $paginator;
     }
 
+    /**
+     * @return PaginationInterface<int, Message>
+     */
     public function findReceivedMessagesPaginated(int $userId, int $page = 1, int $limit = 10): PaginationInterface
     {
         // Créer une requête pour obtenir les messages reçus par l'utilisateur spécifié
@@ -27,6 +36,9 @@ class MessageRepository extends ServiceEntityRepository
         return $this->paginator->paginate($qb, $page, $limit);
     }
 
+    /**
+     * @return PaginationInterface<int, Message>
+     */
     public function findSentMessagesPaginated(int $userId, int $page = 1, int $limit = 10): PaginationInterface
     {
         // Créer une requête pour obtenir les messages envoyés par l'utilisateur spécifié
@@ -38,7 +50,4 @@ class MessageRepository extends ServiceEntityRepository
         // Appliquer la pagination
         return $this->paginator->paginate($qb, $page, $limit);
     }
-
-
 }
-

@@ -22,19 +22,21 @@
 
 </head>
 <body>
+<div class="wrapper">
+	{% block header %}
+		{% include '_partials/_header.html.twig' %}
+	{% endblock %}
 
-{% block header %}
-	{% include '_partials/_header.html.twig' %}
-{% endblock %}
+	{% include '_partials/_flash_messages.html.twig' %}
 
-{% include '_partials/_flash_messages.html.twig' %}
+	<main>
+		{% block body %}
+		{% endblock %}
+	</main>
 
-{% block body %}
-{% endblock %}
-
-{% block footer %}
-	{% include '_partials/_footer.html.twig' %}
-{% endblock %}
-
+	{% block footer %}
+		{% include '_partials/_footer.html.twig' %}
+	{% endblock %}
+</div>
 </body>
 </html>

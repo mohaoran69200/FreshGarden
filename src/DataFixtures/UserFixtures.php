@@ -104,6 +104,7 @@ class UserFixtures extends Fixture
                     'password' // Mot de passe par défaut
                 ))
                 ->setRoles(['ROLE_USER']) // Rôle utilisateur
+                ->setIsVerified(true)
                 ->setUserProfile($userProfile); // Liaison avec le profil utilisateur
 
             // Ajoute une référence à cet utilisateur pour d'autres fixtures potentielles
@@ -144,6 +145,7 @@ class UserFixtures extends Fixture
                 'password' // Mot de passe par défaut pour l'admin
             ))
             ->setRoles(['ROLE_ADMIN']) // Rôle admin
+            ->setIsVerified(true)
             ->setUserProfile($userProfile); // Liaison avec le profil utilisateur
 
         // Persiste l'utilisateur admin dans la base de données

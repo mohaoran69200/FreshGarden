@@ -53,14 +53,17 @@ class EditPersonalInfoType extends AbstractType
             ])
             ->add('gender', ChoiceType::class, [
                 'choices' => [
-                    'Homme' => UserGender::Monsieur,
-                    'Femme' => UserGender::Madame,
+                    'Monsieur' => UserGender::Monsieur,
+                    'Madame' => UserGender::Madame,
                     'Autre' => UserGender::Autre,
                 ],
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,
                 'label' => 'Titre',
+                'attr' => [
+                    'style' => 'margin: 0;',
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer les informations',

@@ -6,6 +6,7 @@ import './styles/base/_form.css';
 import './styles/base/_button.css';
 import './styles/base/_table.css';
 import './styles/base/_pagination.css';
+import './styles/base/_flash_messages.css';
 import './styles/pages/_cart.css';
 import './styles/pages/_edit-profile.css';
 import './styles/pages/_home.css';
