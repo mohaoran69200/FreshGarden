@@ -181,13 +181,6 @@ a {
     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }
 
-/* Sticky buttons */
-.sticky-buttons li {
-    display: none;
-    margin: 0;
-    list-style-type: none;
-}
-
 
 @media (max-width: 768px) {
 

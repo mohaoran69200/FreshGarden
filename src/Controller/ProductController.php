@@ -27,13 +27,13 @@ class ProductController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager): Response
     {
-        $product = new Product();  // Je crée un nouvel objet produit
-        $form = $this->createForm(ProductType::class, $product);  // Je génère le formulaire pour le produit
-        $form->handleRequest($request);  // Je traite la requête du formulaire
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
 
-        // Si le formulaire est soumis et valide
+
         if ($form->isSubmitted() && $form->isValid()) {
-            // J'ajoute les informations de l'utilisateur et la date de création/mise à jour
+
             /** @var User|null $user */
             $user = $this->getUser();
 
@@ -50,11 +50,10 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            // Je notifie l'utilisateur du succès
+
             $this->addFlash('success', 'Produit ajouté avec succès.');
             return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
         } elseif ($form->isSubmitted()) {
-            // Si le formulaire est soumis mais invalide, je notifie l'utilisateur
             $this->addFlash('error', 'Le formulaire contient des erreurs.');
         }
 

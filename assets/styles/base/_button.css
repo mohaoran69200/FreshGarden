@@ -87,6 +87,13 @@
     background-color: var(--dark-green);
 }
 
+/* Sticky buttons */
+.sticky-buttons li {
+    display: none;
+    margin: 0;
+    list-style-type: none;
+}
+
 @media (max-width: 768px) {
     .sticky-buttons {
         display: flex;
