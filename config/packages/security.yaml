@@ -27,6 +27,7 @@ security:
                 check_path: login
                 enable_csrf: true
 
+
             # Déconnexion
             logout:
                 path: logout

@@ -26,7 +26,7 @@ class ProductVoter extends Voter
     {
         $user = $token->getUser();
 
-        // On vérifie que l'utilisateur est authentifié
+        // Je vérifie que l'utilisateur est authentifié
         if (!$user instanceof UserInterface) {
             return false;
         }

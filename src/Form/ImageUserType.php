@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\Image as ImageConstraint;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ImageUserType extends AbstractType
@@ -19,6 +20,13 @@ class ImageUserType extends AbstractType
                 'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,
+                'constraints' => [
+                    new ImageConstraint([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                        'mimeTypesMessage' => 'Veuillez uploader une image au format JPEG, PNG ou GIF.',
+                    ]),
+                    ],
             ]);
     }
 

@@ -50,6 +50,12 @@ main {
     flex: 1;
 }
 
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
+
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2em;

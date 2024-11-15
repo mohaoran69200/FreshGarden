@@ -15,7 +15,9 @@
 		<div class="form-group">
 			{{ form_label(registrationForm.email) }}
 			{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+			<div class="text-danger">
 			{{ form_errors(registrationForm.email) }}
+			</div>
 		</div>
 
 		<div class="form-group password-group">
@@ -29,7 +31,9 @@
 					</svg>
 				</label>
 			</div>
+			<div class="text-danger">
 			{{ form_errors(registrationForm.plainPassword.first) }}
+			</div>
 		</div>
 
 		<div class="form-group password-group">
@@ -43,14 +47,18 @@
 					</svg>
 				</label>
 			</div>
+			<div class="text-danger">
 			{{ form_errors(registrationForm.plainPassword.second) }}
+			</div>
 		</div>
 
 
 		<div class="terms__container">
 			{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'checkbox'}}) }}
 			{{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'terms'}}) }}
+			<div class="text-danger">
 			{{ form_errors(registrationForm.agreeTerms) }}
+			</div>
 		</div>
 
 		<button type="submit" class="btn-primary">S'inscrire</button>
