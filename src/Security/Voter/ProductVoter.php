@@ -41,4 +41,3 @@ class ProductVoter extends Voter
         };
     }
 }
-

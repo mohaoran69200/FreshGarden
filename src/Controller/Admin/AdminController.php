@@ -17,10 +17,10 @@ class AdminController extends AbstractController
     public function dashboard(UserRepository $userRepository, ProductRepository $productRepository): Response
     {
         //Je récupére le nombre total d'utilisateur
-        $totalUsers = $userRepository->count([]);
+        $totalUsers = $userRepository->count();
 
         //Je récupére le nombre total d'annonces
-        $totalProducts = $productRepository->count([]);
+        $totalProducts = $productRepository->count();
 
         return $this->render('admin/index.html.twig', [
             'totalUsers' => $totalUsers,

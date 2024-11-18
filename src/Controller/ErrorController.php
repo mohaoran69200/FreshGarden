@@ -24,7 +24,7 @@ class ErrorController
      */
     public function show(int $code): Response
     {
-        $template = 'error/500.html.twig'; // Template par défaut
+        $template = 'error/500.html.twig';
 
         switch ($code) {
             case 404:

@@ -2,7 +2,8 @@
 
 namespace App\Enum;
 
-enum DeliveryMode: string {
+enum DeliveryMode: string
+{
     case Retrait = 'Retrait';
     case Livraison = 'Livraison';
 }

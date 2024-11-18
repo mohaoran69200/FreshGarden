@@ -55,8 +55,8 @@ class MessageController extends AbstractController
     public function send(
         int $id,
         Request $request,
-        EntityManagerInterface $entityManager): Response
-    {
+        EntityManagerInterface $entityManager
+    ): Response {
         // Je récupère le destinataire à partir de son ID
         $recipient = $entityManager->getRepository(User::class)->find($id);
         if (!$recipient) {
@@ -97,10 +97,11 @@ class MessageController extends AbstractController
 
 
     #[Route('/sent', name: 'sent')]
-    public function sent(MessageRepository $messageRepository,
-                         Request $request,
-                         PaginatorInterface $pagination): Response
-    {
+    public function sent(
+        MessageRepository $messageRepository,
+        Request $request,
+        PaginatorInterface $pagination
+    ): Response {
         $this->getUser();
 
         // Récupérer la page actuelle, par défaut 1 si aucune page n'est spécifiée
@@ -181,8 +182,8 @@ class MessageController extends AbstractController
     #[Route('/read/{id}', name: 'read')]
     public function read(
         EntityManagerInterface $entityManager,
-        Message $message): Response
-    {
+        Message $message
+    ): Response {
         // Je vérifie que l'utilisateur a bien les droits pour lire ce message
         $this->denyAccessUnlessGranted('view', $message);
 
@@ -202,8 +203,8 @@ class MessageController extends AbstractController
     #[Route('/delete/{id}', name: 'delete')]
     public function delete(
         EntityManagerInterface $entityManager,
-        Message $message): Response
-    {
+        Message $message
+    ): Response {
         // Je m'assure que l'utilisateur a les droits pour supprimer ce message
         $this->denyAccessUnlessGranted('delete', $message);
 

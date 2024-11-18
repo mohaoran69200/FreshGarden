@@ -92,4 +92,3 @@ class CartService
         return $this->requestStack->getSession();
     }
 }
-

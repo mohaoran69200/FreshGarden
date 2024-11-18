@@ -90,11 +90,12 @@ class ResetPasswordController extends AbstractController
      */
     // Validation du token et affichage du formulaire de réinitialisation du mot de passe
     #[Route('/reset/{token}', name: 'app_reset_password')]
-    public function reset(Request $request,
-                          UserPasswordHasherInterface $passwordHasher,
-                          TranslatorInterface $translator,
-                          string $token = null): Response
-    {
+    public function reset(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        TranslatorInterface $translator,
+        string $token = null
+    ): Response {
         if ($token) {
             $this->storeTokenInSession($token);
             return $this->redirectToRoute('app_reset_password');
@@ -119,11 +120,11 @@ class ResetPasswordController extends AbstractController
             $this->resetPasswordHelper->removeResetRequest($token);
 
             if (!$user instanceof PasswordAuthenticatedUserInterface) {
-                throw new Exception("L'utilisateur ne peut pas être haché car il n'implémente pas PasswordAuthenticatedUserInterface.");
+                throw new Exception();
             }
             $encodedPassword = $passwordHasher->hashPassword(
-                $user,  // Assurez-vous que $user est une instance de PasswordAuthenticatedUserInterface
-                $form->get('plainPassword')->getData()  // Le mot de passe en clair du formulaire
+                $user,
+                $form->get('plainPassword')->getData()
             );
 
             $user->setPassword($encodedPassword);
@@ -142,9 +143,10 @@ class ResetPasswordController extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    private function processSendingPasswordResetEmail(string          $emailFormData,
-                                                      MailerInterface $mailer): RedirectResponse
-    {
+    private function processSendingPasswordResetEmail(
+        string $emailFormData,
+        MailerInterface $mailer
+    ): RedirectResponse {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
@@ -157,16 +159,6 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
-
             return $this->redirectToRoute('app_check_email');
         }
 
@@ -181,8 +173,6 @@ class ResetPasswordController extends AbstractController
         ;
 
         $mailer->send($email);
-
-        // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
         return $this->redirectToRoute('app_check_email');

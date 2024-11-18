@@ -2,7 +2,8 @@
 
 namespace App\Enum;
 
-enum ProductUnit: string {
+enum ProductUnit: string
+{
     case Kg = 'Kg';
     case Pièce = 'Piece';
 

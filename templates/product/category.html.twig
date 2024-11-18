@@ -3,8 +3,7 @@
 {% block title %}{{ categorie }}{% endblock %}
 
 {% block body %}
-    <main>
-        <section>
+        <section class="page-container">
             <h2>Annonces de {{ categorie }}</h2>
             <div class="grid-container">
                 <div class="grid">
@@ -19,5 +18,4 @@
 
             {% include '_partials/_pagination.html.twig' with {'pagination': products} %}
         </section>
-    </main>
 {% endblock %}

@@ -3,29 +3,30 @@
 {% block title %}Modifier mes informations de contact{% endblock %}
 
 {% block body %}
-    <h1>Modifier mes informations de contact</h1>
+    <div class="section-container">
+        <h2>Modifier mes informations de contact</h2>
 
-    <!-- Formulaire de modification d'email -->
-    <div class="form-container">
-        <h2>Modifier mon Email</h2>
-        {{ form_start(emailForm) }}
-        {{ form_row(emailForm.email) }}
-        {{ form_row(emailForm.new_email) }}
-        {{ form_end(emailForm) }}
+        <!-- Formulaire de modification d'email -->
+        <div class="form-container">
+            <h2>Modifier mon Email</h2>
+            {{ form_start(emailForm) }}
+            {{ form_row(emailForm.email) }}
+            {{ form_row(emailForm.new_email) }}
+            {{ form_end(emailForm) }}
+        </div>
+
+        <!-- Formulaire de modification du numéro de téléphone -->
+        <div class="form-container">
+            <h2>Modifier mon Numéro de Téléphone</h2>
+            {{ form_start(phoneForm) }}
+
+            {# Affiche l'ancien numéro seulement s'il est présent dans le formulaire #}
+            {% if phoneForm.old_phone is defined %}
+                {{ form_row(phoneForm.old_phone) }}
+            {% endif %}
+
+            {{ form_row(phoneForm.new_phone) }}
+            {{ form_end(phoneForm) }}
+        </div>
     </div>
-
-    <!-- Formulaire de modification du numéro de téléphone -->
-    <div class="form-container">
-        <h2>Modifier mon Numéro de Téléphone</h2>
-        {{ form_start(phoneForm) }}
-
-        {# Affiche l'ancien numéro seulement s'il est présent dans le formulaire #}
-        {% if phoneForm.old_phone is defined %}
-            {{ form_row(phoneForm.old_phone) }}
-        {% endif %}
-
-        {{ form_row(phoneForm.new_phone) }}
-        {{ form_end(phoneForm) }}
-    </div>
-
 {% endblock %}

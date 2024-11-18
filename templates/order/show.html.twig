@@ -3,54 +3,56 @@
 {% block title %}Détails de la commande{% endblock %}
 
 {% block body %}
-    <div class="order-details">
-        <h1>Détails de la commande</h1>
+    <section class="section-container">
+        <div class="order-details">
+            <h1>Détails de la commande</h1>
 
-        <div class="order-info">
-            <p><strong>Date de création :</strong> {{ order.createdAt|date('d/m/Y H:i') }}</p>
-            <p><strong>Total :</strong> {{ order.total }} €</p>
-        </div>
+            <div class="order-info">
+                <p><strong>Date de création :</strong> {{ order.createdAt|date('d/m/Y H:i') }}</p>
+                <p><strong>Total :</strong> {{ order.total }} €</p>
+            </div>
 
-        <h3>Produits commandés</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Produit</th>
-                <th>Producteur</th>
-                <th>Mode de récupération</th>
-                <th>Quantité</th>
-                <th>Prix unitaire</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for orderLine in order.orderLines %}
+            <h3>Produits commandés</h3>
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>{{ orderLine.product.name }}</td>
-                    <td>
-                        {% if orderLine.product.user.userProfile.userName %}
-                            {{ orderLine.product.user.userProfile.userName }}
-                        {% elseif orderLine.product.user.userProfile.firstName %}
-                            {{ orderLine.product.user.userProfile.firstName }}
-                        {% else %}
-                            {{ orderLine.product.user.email }}
-                        {% endif %}
-                    </td>
-                    {% if order.deliveryMode is not null %}
-                        <td>{{ order.deliveryMode.name }}</td>
-                    {% else %}
-                        <td>Aucun mode de livraison encore choisi</td>
-                    {% endif %}
-                    <td>{{ orderLine.quantity }}</td>
-                    <td>{{ orderLine.product.price }} €</td>
-                    <td>{{ orderLine.product.price * orderLine.quantity }} €</td>
+                    <th>Produit</th>
+                    <th>Producteur</th>
+                    <th>Mode de récupération</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for orderLine in order.orderLines %}
+                    <tr>
+                        <td>{{ orderLine.product.name }}</td>
+                        <td>
+                            {% if orderLine.product.user.userProfile.userName %}
+                                {{ orderLine.product.user.userProfile.userName }}
+                            {% elseif orderLine.product.user.userProfile.firstName %}
+                                {{ orderLine.product.user.userProfile.firstName }}
+                            {% else %}
+                                {{ orderLine.product.user.email }}
+                            {% endif %}
+                        </td>
+                        {% if order.deliveryMode is not null %}
+                            <td>{{ order.deliveryMode.name }}</td>
+                        {% else %}
+                            <td>Aucun mode de livraison encore choisi</td>
+                        {% endif %}
+                        <td>{{ orderLine.quantity }}</td>
+                        <td>{{ orderLine.product.price }} €</td>
+                        <td>{{ orderLine.product.price * orderLine.quantity }} €</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-        <div class="actions">
-            <a href="{{ path('app_order') }}" class="back-btn">Retour à mes commandes</a>
+            <div class="actions">
+                <a href="{{ path('app_order') }}" class="back-btn">Retour à mes commandes</a>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

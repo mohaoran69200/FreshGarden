@@ -6,7 +6,6 @@ use App\DTO\SearchDto;
 use App\Form\SearchType;
 use App\Repository\ProductRepository;
 use App\Repository\FavoriteRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +19,7 @@ class SearchController extends AbstractController
     public function index(
         Request $request,
         ProductRepository $productRepository,
-        FavoriteRepository $favoriteRepository,
-        PaginatorInterface $paginator
+        FavoriteRepository $favoriteRepository
     ): Response {
         // Créer un objet SearchDto pour stocker les critères de recherche
         $search = new SearchDto();
@@ -29,18 +27,14 @@ class SearchController extends AbstractController
         $form->handleRequest($request);
 
         // Récupérer la page actuelle de la requête
-        $page = $request->query->getInt('page', 1);
-
         // Récupérer les résultats paginés en fonction du formulaire
-        if ($form->isSubmitted() && $form->isValid()) {
-            $results = $productRepository->search($search, $page, 12);
-        } else {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $searchTerm = $request->query->get('search');
             if ($searchTerm) {
                 $search->setSearch($searchTerm);
             }
-            $results = $productRepository->search($search, $page, 12);
         }
+        $results = $productRepository->search($search, $request->query->getInt('page', 1));
 
         // Vérifier si l'utilisateur est connecté pour obtenir ses favoris
         $user = $this->getUser();

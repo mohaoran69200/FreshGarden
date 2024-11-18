@@ -17,7 +17,8 @@ class UserFixtures extends Fixture
 {
     // Constructeur pour injecter le service de hashage de mot de passe
     public function __construct(public UserPasswordHasherInterface $userPasswordHasherInterface)
-    {}
+    {
+    }
 
     // Méthode principale de chargement des fixtures
     public function load(ObjectManager $manager): void

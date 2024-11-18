@@ -3,27 +3,29 @@
 {% block title %}Mes Favoris{% endblock %}
 
 {% block body %}
-    <h2>Produits Favoris</h2>
-    {% if productFavorites is not empty %}
-        <div class="grid-container">
-            <div class="grid">
-                {% for product in productFavorites %}
-                    {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': true } %}
-                {% endfor %}
+    <section class="section-container">
+        <h2>Produits Favoris</h2>
+        {% if productFavorites is not empty %}
+            <div class="grid-container">
+                <div class="grid">
+                    {% for product in productFavorites %}
+                        {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': true } %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    {% else %}
-        <span class="fav-none">Vous n'avez pas encore de produits favoris.</span>
-    {% endif %}
-
-    <div class="favorites-list user-favorites">
-        <h2>Utilisateurs Favoris</h2>
-        {% if userFavorites is not empty %}
-            {% for user in userFavorites %}
-                {% include '_partials/user/_cardUserSmall.html.twig' with { 'user': user, 'isFavorite': true } %}
-            {% endfor %}
         {% else %}
-            <span class="fav-none">Vous n'avez pas encore d'utilisateurs favoris.</span>
+            <span class="fav-none">Vous n'avez pas encore de produits favoris.</span>
         {% endif %}
-    </div>
+
+        <div class="favorites-list user-favorites">
+            <h2>Utilisateurs Favoris</h2>
+            {% if userFavorites is not empty %}
+                {% for user in userFavorites %}
+                    {% include '_partials/user/_cardUserSmall.html.twig' with { 'user': user, 'isFavorite': true } %}
+                {% endfor %}
+            {% else %}
+                <span class="fav-none">Vous n'avez pas encore d'utilisateurs favoris.</span>
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}

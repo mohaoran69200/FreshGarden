@@ -16,7 +16,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('search', TextType::class,[
+            ->add('search', TextType::class, [
                 'required' => false,
                 'attr' => [
                     'style' => 'margin: 0; width: 100%;',
@@ -54,7 +54,6 @@ class SearchType extends AbstractType
                     'min' => 0,
                 ]
             ]);
-
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

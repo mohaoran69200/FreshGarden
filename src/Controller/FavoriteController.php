@@ -49,10 +49,11 @@ class FavoriteController extends AbstractController
 
     // Je gère l'ajout/retrait d'un produit aux favoris de l'utilisateur connecté.
     #[Route('/toggle/product/{id}', name: 'toggle_product')]
-    public function toggleProductFavorite(int $id,
-                                          ProductRepository $productRepository,
-                                          EntityManagerInterface $entityManager): Response
-    {
+    public function toggleProductFavorite(
+        int $id,
+        ProductRepository $productRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         $user = $this->getUser();
 
         if (!$user) {
@@ -97,10 +98,11 @@ class FavoriteController extends AbstractController
 
     // Je gère l'ajout/retrait d'un utilisateur aux favoris de l'utilisateur connecté.
     #[Route('/toggle/user/{id}', name: 'toggle_user')]
-    public function toggleUserFavorite(int $id,
-                                       UserRepository $userRepository,
-                                       EntityManagerInterface $entityManager): Response
-    {
+    public function toggleUserFavorite(
+        int $id,
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         $user = $this->getUser();
 
         if (!$user) {

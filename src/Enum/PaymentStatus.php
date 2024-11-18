@@ -2,7 +2,8 @@
 
 namespace App\Enum;
 
-enum PaymentStatus: string {
+enum PaymentStatus: string
+{
     case PAYE = 'Payé';
     case ENATTENTE = 'En attente';
     case REMBOURSE = 'Remboursé';

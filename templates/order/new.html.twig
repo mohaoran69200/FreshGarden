@@ -3,55 +3,72 @@
 {% block title %}Nouvelle commande{% endblock %}
 
 {% block body %}
-    <h1>Nouvelle commande</h1>
+    <div class="section-container">
+        <h2>Nouvelle commande</h2>
+        <div class="order-details">
 
-    <div class="order-summary">
-        <h3>Produits sélectionnés</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>Prix unitaire</th>
-                <th>Total</th>
+            <!-- Résumé des produits -->
+            <div class="order-summary">
+                <h3>Produits sélectionnés</h3>
 
-            </tr>
-            </thead>
-            <tbody>
-            {% set totalAmount = 0 %} {# Initialisation du montant total #}
-            {% for orderLine in order.orderLines %}
-                {% set lineTotal = orderLine.product.price * orderLine.quantity %}
-                {% set totalAmount = totalAmount + lineTotal %} {# Ajout du total de la ligne au montant total #}
-                <tr>
-                    <td>{{ orderLine.product.name }}</td>
-                    <td>{{ orderLine.quantity }}</td>
-                    <td>{{ orderLine.product.price }} €</td>
-                    <td>{{ lineTotal }} €</td>
-{#                    <td>#}
-{#                        {% if orderLine.deliveryMode is defined %}#}
-{#                            {{ form_row(orderLine.deliveryMode) }}#}
-{#                        {% else %}#}
-{#                            <p>Mode de livraison non défini</p>#}
-{#                        {% endif %}#}
-{#                    </td>#}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                {% if cart is not empty %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set totalAmount = 0 %}
+                        {% for item in cart %}
+                            {% set lineTotal = item.product.price * item.quantity %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('app_product_show', {'id': item.product.id}) }}">
+                                        {{ item.product.name }}
+                                    </a>
+                                </td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.product.price|number_format(2, ',', ' ') }} €</td>
+                                <td>{{ lineTotal|number_format(2, ',', ' ') }} €</td>
+                            </tr>
+                            {% set totalAmount = totalAmount + lineTotal %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
 
-        <div class="total">
-            <strong>Total de la commande :</strong> {{ totalAmount }} €
+                    <!-- Affichage du total -->
+                    <div class="total">
+                        <strong>Total de la commande :</strong> {{ totalAmount|number_format(2, ',', ' ') }} €
+                    </div>
+                {% else %}
+                    <p>Votre panier est vide.</p>
+                {% endif %}
+            </div>
+
+            <!-- Formulaire de sélection du mode de livraison -->
+            <h3>Choisissez votre mode de livraison</h3>
+            <div class="delivery-method">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.deliveryMode) }}
+                </div>
+
+                {% if form.vars.errors|length > 0 %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+
+                <div class="form-actions mt-3">
+                    <button type="submit" class="view-btn">Confirmer la commande</button>
+                    <button type="submit" name="cancel" class="delete-btn">Annuler</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-    </div>
-
-    <h3>Choisissez votre mode de livraison</h3>
-    <div class="delivery-method">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <div class="form-actions">
-            <button type="submit" class="view-btn">Confirmer la commande</button>
-            <a href="{{ path('app_order') }}" class="delete-btn">Annuler</a>
-        </div>
-        {{ form_end(form) }}
     </div>
 {% endblock %}
