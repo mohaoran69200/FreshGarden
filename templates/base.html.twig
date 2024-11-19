@@ -10,7 +10,6 @@
 	</title>
 	<link rel="icon" type="image/png" href="{{ asset('logo/logo_fresh_garden-removebg.png') }}" sizes="32x32">
 
-
 	{% block stylesheets %}
 {#            {{ encore_entry_link_tags('app') }}#}
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -22,8 +21,8 @@
 			{{ importmap(['app', 'header', 'form', 'address']) }}
 		{% endblock %}
 	{% endblock %}
-
 </head>
+
 <body>
 <div class="wrapper">
 	{% block header %}
@@ -42,4 +41,5 @@
 	{% endblock %}
 </div>
 </body>
+
 </html>

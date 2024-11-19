@@ -434,7 +434,7 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/remove/{id}', name: 'remove', methods: ['POST'])]
+    #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function remove(
         Request $request,
