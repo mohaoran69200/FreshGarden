@@ -10,7 +10,6 @@ framework:
 
 when@test:
     framework:
-        error_controller: 'App\Controller\ErrorController::exception'
-        test: true
-        session:
+        error_controller: App\Controller\ErrorController::error
+    session:
             storage_factory_id: session.storage.factory.mock_file

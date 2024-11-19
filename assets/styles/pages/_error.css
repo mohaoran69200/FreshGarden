@@ -1,0 +1,43 @@
+/* Styles communs pour toutes les pages d'erreur */
+.error-page {
+    text-align: center;
+    padding: 50px;
+    font-family: Arial, sans-serif;
+    background-color: var(--white);
+    color: #333;
+}
+
+.error-page h1 {
+    font-size: 3rem;
+    color: var(--orange-hover);
+    margin-bottom: 20px;
+}
+
+.error-page p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.error-page img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.error-page a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--light-green);
+    color: var(--white2);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.error-page a:hover {
+    background-color: var(--dark-green);
+}
+
+.error-page a:focus {
+    outline: none;
+}

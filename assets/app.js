@@ -14,6 +14,7 @@ import './styles/pages/_message.css';
 import './styles/pages/_favorite.css';
 import './styles/pages/_order.css';
 import './styles/pages/_informations.css';
+import './styles/pages/_error.css';
 import './styles/components/_admin.css';
 import './styles/components/_card.css';
 import './styles/components/_footer.css';

@@ -28,7 +28,7 @@ class ErrorController
 
         switch ($code) {
             case 404:
-                $template = 'error/404.html.twig';
+                $template = 'bundles/TwigBundle/Exception/404.html.twig';
                 break;
             case 403:
                 $template = 'error/403.html.twig';
