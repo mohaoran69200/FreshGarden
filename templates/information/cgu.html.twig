@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions d'Utilisation - Fresh Garden{% endblock %}
+
+{% block body %}
+    <main class="terms-container">
+        <header class="terms-header">
+            <h1>Conditions d'Utilisation</h1>
+            <p class="terms-intro">
+                Bienvenue sur Fresh Garden ! En utilisant ce site, vous acceptez les conditions générales décrites ci-dessous.
+            </p>
+        </header>
+
+        <section class="terms-section">
+            <h2>1. Acceptation des Conditions</h2>
+            <p>
+                En accédant à notre site, vous acceptez sans réserve les présentes conditions d'utilisation.
+                Si vous n'êtes pas d'accord, veuillez cesser d'utiliser le site.
+            </p>
+        </section>
+
+        <section class="terms-section">
+            <h2>2. Modification des Conditions</h2>
+            <p>
+                Fresh Garden se réserve le droit de modifier ces conditions à tout moment. Nous vous encourageons à
+                consulter cette page régulièrement pour rester informé des éventuelles modifications.
+            </p>
+        </section>
+
+        <section class="terms-section">
+            <h2>3. Utilisation du Site</h2>
+            <p>
+                Vous vous engagez à utiliser le site de manière légale, en respectant les droits des autres utilisateurs et
+                les lois en vigueur. Toute utilisation abusive peut entraîner des sanctions.
+            </p>
+        </section>
+
+        <footer class="terms-footer">
+            <p>
+                Pour toute question, veuillez nous contacter à <a href="mailto:support@freshgarden.com">support@freshgarden.com</a>.
+            </p>
+            <p>Dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
+        </footer>
+    </main>
+{% endblock %}

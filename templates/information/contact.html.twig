@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contactez-nous - Fresh Garden{% endblock %}
+
+{% block body %}
+    <main class="contact-container">
+        <header class="contact-header">
+            <h1>Contactez-nous</h1>
+            <p class="contact-intro">
+                Une question, une suggestion ou besoin d'assistance ? Notre équipe est là pour vous répondre.
+            </p>
+        </header>
+
+        <section class="contact-info">
+            <h2>Nos Coordonnées</h2>
+            <ul class="contact-details">
+                <li><strong>Email :</strong> <a href="mailto:contact@freshgarden.com">contact@freshgarden.com</a></li>
+                <li><strong>Téléphone :</strong>+33 6 13 17 46 68</li>
+                <li><strong>Adresse :</strong> 63 boulevard Ambroise Croizat, 69200 Vénissieux, France</li>
+            </ul>
+        </section>
+
+        <section>
+            <div class="form-container">
+                <h1>Envoyer un message à l'Admin</h1>
+                {{ form_start(form, { 'action': path('message_send', {'id': adminId}) }) }}
+
+                <div class="form-group">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.message) }}
+                </div>
+
+                {{ form_end(form) }}
+
+                <div class="form-footer">
+                    <a href="{{ path('message_index') }}" class="back-btn">Retour aux messages</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="contact-footer">
+            <p>Nous nous engageons à répondre à vos messages dans les plus brefs délais.</p>
+        </footer>
+    </main>
+{% endblock %}

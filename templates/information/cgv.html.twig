@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales de Vente - Fresh Garden{% endblock %}
+
+{% block body %}
+    <main class="cgv-container">
+        <header class="cgv-header">
+            <h1>Conditions Générales de Vente (CGV)</h1>
+            <p class="cgv-intro">
+                Les présentes Conditions Générales de Vente régissent les relations contractuelles entre Fresh Garden et ses clients.
+            </p>
+        </header>
+
+        <section class="cgv-section">
+            <h2>1. Objet</h2>
+            <p>
+                Les présentes CGV définissent les droits et obligations des parties dans le cadre de la vente en ligne de produits proposés par Fresh Garden.
+            </p>
+        </section>
+
+        <section class="cgv-section">
+            <h2>2. Produits et Prix</h2>
+            <p>
+                Les descriptions et prix des produits sont indiqués sur notre site. Ils sont susceptibles de modification à tout moment sans préavis.
+                Les prix sont affichés en euros, toutes taxes comprises (TTC).
+            </p>
+        </section>
+
+        <section class="cgv-section">
+            <h2>3. Commande</h2>
+            <p>
+                La validation de la commande implique l'acceptation intégrale et sans réserve des présentes CGV.
+                Un email de confirmation sera envoyé après validation de votre commande.
+            </p>
+        </section>
+
+        <section class="cgv-section">
+            <h2>4. Livraison</h2>
+            <p>
+                Les délais de livraison varient selon la disponibilité des produits et la localisation du client.
+                Fresh Garden ne peut être tenu responsable en cas de retard dû à un tiers.
+            </p>
+        </section>
+
+        <section class="cgv-section">
+            <h2>5. Paiement</h2>
+            <p>
+                Le paiement s'effectue en ligne via des moyens sécurisés (carte bancaire, PayPal, etc.).
+                La commande ne sera validée qu'après confirmation du paiement.
+            </p>
+        </section>
+
+        <section class="cgv-section">
+            <h2>6. Droit de Rétractation</h2>
+            <p>
+                Conformément à la législation en vigueur, vous disposez d'un délai de 14 jours pour exercer votre droit de rétractation,
+                sauf pour les produits périssables ou personnalisés.
+            </p>
+        </section>
+
+        <footer class="cgv-footer">
+            <p>
+                Pour toute question relative à nos CGV, contactez-nous à <a href="mailto:support@freshgarden.com">support@freshgarden.com</a>.
+            </p>
+            <p>Dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
+        </footer>
+    </main>
+{% endblock %}

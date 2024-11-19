@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales - Fresh Garden{% endblock %}
+
+{% block body %}
+    <main class="legal-container">
+        <header class="legal-header">
+            <h1>Mentions Légales</h1>
+            <p class="legal-intro">
+                Conformément à l'article 6 de la loi pour la Confiance dans l'Économie Numérique (LCEN), nous mettons à disposition les informations suivantes.
+            </p>
+        </header>
+
+        <section class="legal-section">
+            <h2>1. Éditeur du Site</h2>
+            <p>
+                Le site <strong>Fresh Garden</strong> est édité par :
+            </p>
+            <p>
+                <strong>Nom de l'entreprise :</strong> Fresh Garden <br>
+                <strong>Adresse :</strong> 63 boulevard Ambroise Croizat, 69200 Vénissieux, France<br>
+                <strong>Téléphone :</strong> +33 6 13 17 46 68<br>
+                <strong>Email :</strong> <a href="mailto:contact@freshgarden.com">contact@freshgarden.com</a><br>
+                <strong>SIRET :</strong> 123 456 789 00012
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2>2. Hébergement</h2>
+            <p>
+                Le site est hébergé par :
+            </p>
+            <p>
+                <strong>Nom de l'hébergeur :</strong> OVHcloud<br>
+                <strong>Adresse :</strong> 2 Rue Kellermann, 59100 Roubaix, France<br>
+                <strong>Téléphone :</strong> +33 9 72 10 10 07<br>
+                <strong>Site web :</strong> <a href="https://www.ovhcloud.com" target="_blank">www.ovhcloud.com</a>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2>3. Propriété Intellectuelle</h2>
+            <p>
+                Tous les contenus présents sur le site (textes, images, logos, etc.) sont la propriété exclusive de Fresh Garden, sauf mention contraire. Toute reproduction, distribution ou utilisation est interdite sans autorisation écrite préalable.
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2>4. Données Personnelles</h2>
+            <p>
+                Conformément au Règlement Général sur la Protection des Données (RGPD), vos données personnelles sont collectées et utilisées de manière conforme à notre <a href="/politique-de-confidentialite">politique de confidentialité</a>.
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2>5. Limitation de Responsabilité</h2>
+            <p>
+                Fresh Garden s'efforce d'assurer l'exactitude des informations diffusées sur le site. Cependant, nous ne saurions être tenus responsables en cas d'erreurs ou d'omissions dans le contenu.
+            </p>
+        </section>
+
+        <footer class="legal-footer">
+            <p>
+                Pour toute question relative aux mentions légales, contactez-nous à <a href="mailto:legal@freshgarden.com">legal@freshgarden.com</a>.
+            </p>
+            <p>Dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
+        </footer>
+    </main>
+{% endblock %}
