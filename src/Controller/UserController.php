@@ -92,7 +92,7 @@ class UserController extends AbstractController
         // Comparer les identifiants des utilisateurs pour éviter de modifier un profil qui n'est pas à soi,
         // sauf si l'utilisateur a le rôle d'ADMIN
         if (!$currentUser instanceof User || ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN'))) {
-            $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte, sauf si vous êtes administrateur.');
+            $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte');
             return $this->redirectToRoute('home');
         }
 
