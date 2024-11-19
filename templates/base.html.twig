@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,14 +11,14 @@
 	<link rel="icon" type="image/png" href="{{ asset('logo/logo_fresh_garden-removebg.png') }}" sizes="32x32">
 
 	{% block stylesheets %}
-{#            {{ encore_entry_link_tags('app') }}#}
+		{#            {{ encore_entry_link_tags('app') }}#}
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 	{% endblock %}
 
 	{% block javascripts %}
-{#            {{ encore_entry_script_tags('app') }}#}
+		{#            {{ encore_entry_script_tags('app') }}#}
 		{% block importmap %}
-			{{ importmap(['app', 'header', 'form', 'address']) }}
+			{{ importmap(['app', 'header', 'form', 'address', 'cookie']) }}
 		{% endblock %}
 	{% endblock %}
 </head>
@@ -33,6 +33,7 @@
 
 	<main>
 		{% block body %}
+			{% include'_partials/_cookie.html.twig' %}
 		{% endblock %}
 	</main>
 
@@ -41,5 +42,4 @@
 	{% endblock %}
 </div>
 </body>
-
 </html>
