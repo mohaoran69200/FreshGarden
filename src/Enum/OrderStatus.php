@@ -2,8 +2,9 @@
 
 namespace App\Enum;
 
-enum OrderStatus: string {
-    case En_attente = "En attente";
-    case Confirmée = "Confirmé";
-    case Annulée = "Annulée";
+enum OrderStatus: string
+{
+    case EN_ATTENTE = 'En attente';
+    case CONFIRMEE = 'Confirmée';
+    case ANNULEE = 'Annulée';
 }

@@ -33,10 +33,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 #[Route('/user', name: 'app_user_')]
 class UserController extends AbstractController
 {
-    #[Route('/show/{id}', name: 'show')]
-    public function show(User               $user,
-                         FavoriteRepository $favoriteRepository): Response
-    {
+    #[Route('/show/{id}', name: 'show', methods: ['GET'])]
+    public function show(
+        User $user,
+        FavoriteRepository $favoriteRepository
+    ): Response {
         // Récupérer l'utilisateur actuellement connecté
         $currentUser = $this->getUser();
 
@@ -62,12 +63,13 @@ class UserController extends AbstractController
                 $productFavorites[$product->getId()] = false; // Par défaut, le produit n'est pas en favori
             }
             foreach ($favorites as $favorite) {
-
-                if ($favorite->getProductFavorite() && array_key_exists($favorite->getProductFavorite()->getId(), $productFavorites)) {
+                if (
+                    $favorite->getProductFavorite()
+                    && array_key_exists($favorite->getProductFavorite()->getId(), $productFavorites)
+                ) {
                     $productFavorites[$favorite->getProductFavorite()->getId()] = true;
                 }
             }
-
         }
 
         return $this->render('user/show.html.twig', [
@@ -78,21 +80,23 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/edit-user/{id}', name: 'edit_user')]
+    #[Route('/edit-user/{id}', name: 'edit_user', methods: ['GET', 'POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function edit(
-        User                   $user,
-        Request                $request,
+        User $user,
+        Request $request,
         EntityManagerInterface $entityManager
-    ): Response
-    {
+    ): Response {
 
         $currentUser = $this->getUser();
 
         // Comparer les identifiants des utilisateurs pour éviter de modifier un profil qui n'est pas à soi,
         // sauf si l'utilisateur a le rôle d'ADMIN
-        if (!$currentUser instanceof User || ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN'))) {
-            $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte');
+        if (
+            !$currentUser instanceof User ||
+            ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN'))
+        ) {
+            $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte.');
             return $this->redirectToRoute('home');
         }
 
@@ -163,15 +167,14 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/edit-user/edit-password/{id}', name: 'edit_user_password')]
+    #[Route('/edit-user/edit-password/{id}', name: 'edit_user_password', methods: ['GET', 'POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function editPassword(
-        User                        $user,
-        Request                     $request,
-        EntityManagerInterface      $entityManager,
+        User $user,
+        Request $request,
+        EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher
-    ): Response
-    {
+    ): Response {
         $currentUser = $this->getUser();
 
         if (!$currentUser || $currentUser !== $user) {
@@ -214,14 +217,15 @@ class UserController extends AbstractController
      * @throws RandomException
      * @throws TransportExceptionInterface
      */
-    #[Route('/edit-user/edit-contact/{id}', name: 'edit_user_contact')]
+    #[Route('/edit-user/edit-contact/{id}', name: 'edit_user_contact', methods: ['GET', 'POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
-    public function editContact(Request $request,
-                                User $user,
-                                EntityManagerInterface $entityManager,
-                                MailerInterface $mailer,
-                                UrlGeneratorInterface $router): Response
-    {
+    public function editContact(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer,
+        UrlGeneratorInterface $router
+    ): Response {
         // Vérifier si l'utilisateur connecté est bien l'utilisateur que l'on veut modifier
         $currentUser = $this->getUser();
         if (!($currentUser instanceof User)) {
@@ -257,12 +261,19 @@ class UserController extends AbstractController
                 $entityManager->flush();
 
                 // Envoyer l'email de confirmation
-                $url = $router->generate('app_user_confirm_email', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+                $url = $router->generate(
+                    'app_user_confirm_email',
+                    ['token' => $token],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
                 $email = (new Email())
                     ->from('noreply@freshgarden.com')
                     ->to($newEmail)
                     ->subject('Confirmation de changement d\'email')
-                    ->html("Cliquez sur le lien pour confirmer votre nouvel email : <a href=\"$url\">Confirmer mon email</a>");
+                    ->html(
+                        "Cliquez sur le lien pour confirmer votre nouvel email : 
+                                <a href=\"$url\">Confirmer mon email</a>"
+                    );
 
                 $mailer->send($email);
 
@@ -312,7 +323,7 @@ class UserController extends AbstractController
 
 
 
-    #[Route('/confirm-email/{token}', name: 'confirm_email')]
+    #[Route('/confirm-email/{token}', name: 'confirm_email', methods: ['GET'])]
     public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
     {
         // Rechercher l'utilisateur par le token
@@ -334,14 +345,12 @@ class UserController extends AbstractController
     }
 
 
-
     #[Route('/update-image', name: 'update_image', methods: ['POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function updateImage(
         Request $request,
         EntityManagerInterface $entityManager
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $user = $this->getUser();
         if (!$user) {
             return new JsonResponse(['error' => 'Unauthorized'], 401);
@@ -377,11 +386,10 @@ class UserController extends AbstractController
     #[Route('/delete-image', name: 'delete_image', methods: ['POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function deleteImage(
-        Request                       $request,
-        EntityManagerInterface        $entityManager,
+        Request $request,
+        EntityManagerInterface $entityManager,
         AuthorizationCheckerInterface $authChecker
-    ): Response
-    {
+    ): Response {
         // Fetch the logged-in user
         $user = $this->getUser();
         if (!$user || !$authChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -405,7 +413,9 @@ class UserController extends AbstractController
         }
 
         // Path to the image
-        $imagePath = $this->getParameter('kernel.project_dir') . '/public/uploads/user_profile' . $profile->getImageName();
+        $imagePath = $this->getParameter(
+            'kernel.project_dir'
+        ) . '/public/uploads/user_profile' . $profile->getImageName();
 
         // Delete the physical file if it exists
         if ($profile->getImageName() && file_exists($imagePath)) {
@@ -424,16 +434,14 @@ class UserController extends AbstractController
     }
 
 
-
-    #[Route('/remove/{id}', name: 'remove')]
+    #[Route('/remove/{id}', name: 'remove', methods: ['POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function remove(
-        Request                $request,
-        User                   $user,
+        Request $request,
+        User $user,
         EntityManagerInterface $entityManager,
-        TokenStorageInterface  $tokenStorage
-    ): Response
-    {
+        TokenStorageInterface $tokenStorage
+    ): Response {
         $currentUser = $this->getUser();
 
         // L'utilisateur peut supprimer son propre compte, ou l'admin peut supprimer n'importe quel compte
@@ -456,8 +464,3 @@ class UserController extends AbstractController
         return $this->redirectToRoute('home');
     }
 }
-
-
-
-
-

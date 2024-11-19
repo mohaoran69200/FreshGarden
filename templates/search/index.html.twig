@@ -3,11 +3,9 @@
 {% block title %}Recherchez{% endblock %}
 
 {% block body %}
-    <main>
         <section class="search-section">
             {{ form_start(form, {'action': path('app_search'), 'method': 'GET', 'attr': {'class': 'search-form'}}) }}
 
-            <!-- Ligne 1 : Barre de recherche -->
             <div class="form-row">
                 <div class="search-input">
                     {{ form_widget(form.search, {'attr': {'class': 'form-control', 'placeholder': 'Rechercher un produit...'}}) }}
@@ -15,7 +13,6 @@
                 </div>
             </div>
 
-            <!-- Ligne 2 : Catégorie et Ville -->
             <div class="form-row">
                 <div class="form-group">
                     {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
@@ -27,7 +24,6 @@
                 </div>
             </div>
 
-            <!-- Ligne 3 : Prix minimum et maximum -->
             <div class="form-row">
                 <div class="form-group">
                     <div class="input-symbol">
@@ -68,5 +64,4 @@
                 {% include '_partials/_pagination.html.twig' with {'pagination': results} %}
             </div>
         </section>
-    </main>
 {% endblock %}

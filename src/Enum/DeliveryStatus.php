@@ -2,7 +2,8 @@
 
 namespace App\Enum;
 
-enum DeliveryStatus: string {
+enum DeliveryStatus: string
+{
     case En_Attente = "En attente";
     case Expediée = "Expediée";
     case Livrée = "Livrée";

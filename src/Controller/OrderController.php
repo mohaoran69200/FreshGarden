@@ -42,17 +42,18 @@ class OrderController extends AbstractController
     // Création d'une commande apres validation du panier
     #[Route('/order/new', name: 'app_order_new')]
     #[IsGranted('ROLE_USER')]
-    public function create(Request $request,
-                           EntityManagerInterface $entityManager,
-                           CartService $cartService): Response
-    {
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        CartService $cartService
+    ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
         // Vérifier s'il existe déjà une commande avec le statut ENATTENTE
         $existingOrder = $entityManager->getRepository(Order::class)->findOneBy([
             'user' => $user,
-            'status' => OrderStatus::En_attente
+            'status' => OrderStatus::EN_ATTENTE
         ]);
 
         // Récupérer les produits du panier
@@ -65,7 +66,7 @@ class OrderController extends AbstractController
             // Si aucune commande en attente n'existe, créer une nouvelle commande
             $order = new Order();
             $order->setUser($user);
-            $order->setStatus(OrderStatus::En_attente);
+            $order->setStatus(OrderStatus::EN_ATTENTE);
             $order->setCreatedAt(new DateTimeImmutable());
 
             // Calcul du total de la commande
@@ -131,7 +132,7 @@ class OrderController extends AbstractController
             }
 
             // Mettre à jour le statut de la commande
-            $order->setStatus(OrderStatus::Confirmée);
+            $order->setStatus(OrderStatus::CONFIRMEE);
             $cartService->removeCartAll();
 
             // Enregistrer la commande et la livraison (si elle existe)
@@ -145,7 +146,8 @@ class OrderController extends AbstractController
 
         return $this->render('order/new.html.twig', [
             'form' => $form->createView(),
-            'order' => $order
+            'order' => $order,
+            'cart' => $cartItems
         ]);
     }
 
@@ -163,7 +165,7 @@ class OrderController extends AbstractController
         }
 
         // Mettre à jour le statut de la commande à 'ANNULEE'
-        $order->setStatus(OrderStatus::Annulée);
+        $order->setStatus(OrderStatus::ANNULEE);
 
         // Persist la mise à jour
         $entityManager->flush();

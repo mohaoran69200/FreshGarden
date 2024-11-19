@@ -35,6 +35,12 @@ p {
     font-size: var(--font-size-small);
 }
 
+span {
+    font-family: 'lato', sans-serif ;
+    color: var(--black);
+    font-size: var(--font-size-small);
+}
+
 a {
     font-family: 'Lato', sans-serif ;
     text-decoration: none;
@@ -53,6 +59,14 @@ main {
 .text-danger {
     color: red;
     font-weight: bold;
+}
+
+.section-container {
+    margin-top: 3rem;
+}
+
+strong {
+    font-family: 'Lato', sans-serif;
 }
 
 

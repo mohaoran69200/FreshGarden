@@ -22,8 +22,13 @@ class ImageType extends AbstractType
                 'constraints' => [
                     new ImageConstraint([
                         'maxSize' => '5M',
-                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
-                        'mimeTypesMessage' => 'Veuillez uploader une image au format JPEG, PNG ou GIF.',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                            'image/webp'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez uploader une image au format JPEG, PNG, GIF ou WebP.',
                     ]),
                 ],
             ]);

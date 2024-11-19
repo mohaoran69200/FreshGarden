@@ -8,6 +8,7 @@ use App\Repository\CategorieRepository;
 use App\Repository\ProductRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +26,8 @@ class ProductController extends AbstractController
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function new(
         Request $request,
-        EntityManagerInterface $entityManager): Response
-    {
+        EntityManagerInterface $entityManager
+    ): Response {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -38,7 +39,7 @@ class ProductController extends AbstractController
             $user = $this->getUser();
 
             if (!$user instanceof User) {
-                throw new \LogicException('L\'utilisateur doit être connecté pour créer un produit.');
+                throw new LogicException('L\'utilisateur doit être connecté pour créer un produit.');
             }
 
             $product->setUser($user)
@@ -69,8 +70,8 @@ class ProductController extends AbstractController
     public function edit(
         Product $product,
         Request $request,
-        EntityManagerInterface $entityManager): Response
-    {
+        EntityManagerInterface $entityManager
+    ): Response {
         $this->denyAccessUnlessGranted('edit', $product);  // Je vérifie que l'utilisateur peut modifier ce produit
 
         $form = $this->createForm(ProductType::class, $product);  // Je crée le formulaire pour l'édition du produit
@@ -120,7 +121,7 @@ class ProductController extends AbstractController
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function remove(Product $product, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('delete', $product);  // Je vérifie que l'utilisateur a le droit de supprimer ce produit
+        $this->denyAccessUnlessGranted('delete', $product);
 
         $entityManager->remove($product);  // Je supprime le produit de la base de données
         $entityManager->flush();  // Je sauvegarde cette action en base de données
@@ -132,11 +133,12 @@ class ProductController extends AbstractController
 
     // Je récupère et affiche les produits de la catégorie "Fruits"
     #[Route('/fruits', name: 'fruits')]
-    public function fruits(ProductRepository $productRepository,
-                           CategorieRepository $categorieRepository,
-                           FavoriteRepository $favoriteRepository,
-                           Request $request): Response
-    {
+    public function fruits(
+        ProductRepository $productRepository,
+        CategorieRepository $categorieRepository,
+        FavoriteRepository $favoriteRepository,
+        Request $request
+    ): Response {
         $categorie = $categorieRepository->findOneBy(['name' => 'Fruits']);
 
         // Utiliser la méthode dans le repository pour récupérer les produits paginés
@@ -181,11 +183,12 @@ class ProductController extends AbstractController
 
     // Je récupère et affiche les produits de la catégorie "Légumes"
     #[Route('/legumes', name: 'legumes')]
-    public function legumes(ProductRepository $productRepository,
-                            CategorieRepository $categorieRepository,
-                            FavoriteRepository $favoriteRepository,
-                            Request $request): Response
-    {
+    public function legumes(
+        ProductRepository $productRepository,
+        CategorieRepository $categorieRepository,
+        FavoriteRepository $favoriteRepository,
+        Request $request
+    ): Response {
 
         $categorie = $categorieRepository->findOneBy(['name' => 'Légumes']);
 
@@ -232,11 +235,12 @@ class ProductController extends AbstractController
 
     // Je récupère et affiche les produits de la catégorie "Produits divers"
     #[Route('/autres', name: 'autres')]
-    public function autres(ProductRepository $productRepository,
-                           CategorieRepository $categorieRepository,
-                           FavoriteRepository $favoriteRepository,
-                           Request $request): Response
-    {
+    public function autres(
+        ProductRepository $productRepository,
+        CategorieRepository $categorieRepository,
+        FavoriteRepository $favoriteRepository,
+        Request $request
+    ): Response {
         $categorie = $categorieRepository->findOneBy(['name' => 'Autre']);
 
         // Utiliser la méthode dans le repository pour récupérer les produits paginés

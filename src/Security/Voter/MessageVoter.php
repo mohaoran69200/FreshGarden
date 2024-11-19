@@ -25,10 +25,11 @@ class MessageVoter extends Voter
     }
 
     // Cette méthode détermine si l'utilisateur est autorisé à effectuer l'action sur le sujet
-    protected function voteOnAttribute(string $attribute,
-                                       $subject,
-                                       TokenInterface $token): bool
-    {
+    protected function voteOnAttribute(
+        string $attribute,
+        $subject,
+        TokenInterface $token
+    ): bool {
         $user = $token->getUser();
 
         // Vérifie que l'utilisateur est authentifié
