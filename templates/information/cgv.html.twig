@@ -4,12 +4,12 @@
 
 {% block body %}
     <main class="cgv-container">
-        <header class="cgv-header">
+        <section class="cgv-header">
             <h1>Conditions Générales de Vente (CGV)</h1>
             <p class="cgv-intro">
                 Les présentes Conditions Générales de Vente régissent les relations contractuelles entre Fresh Garden et ses clients.
             </p>
-        </header>
+        </section>
 
         <section class="cgv-section">
             <h2>1. Objet</h2>
@@ -58,11 +58,11 @@
             </p>
         </section>
 
-        <footer class="cgv-footer">
+        <section class="cgv-footer">
             <p>
                 Pour toute question relative à nos CGV, contactez-nous à <a href="mailto:support@freshgarden.com">support@freshgarden.com</a>.
             </p>
             <p>Dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
-        </footer>
+        </section>
     </main>
 {% endblock %}

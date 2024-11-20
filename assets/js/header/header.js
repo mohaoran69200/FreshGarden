@@ -36,9 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const mobileDropdownContent = document.getElementById("mobile-dropdown-content");
 
     // Gestion du clic sur le bouton de connexion mobile
-    mobileConnexionButton.addEventListener("click", function() {
-        mobileDropdownContent.classList.toggle("dropdown-content--active");
-    });
+    // mobileConnexionButton.addEventListener("click", function() {
+    //     mobileDropdownContent.classList.toggle("dropdown-content--active");
+    // });
 
     // Je ferme le dropdown si l'utilisateur clique en dehors
     window.addEventListener("click", function(event) {

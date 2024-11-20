@@ -21,10 +21,6 @@ return [
         'path' => './assets/js/address/address.js',
         'entrypoint' => true,
     ],
-    'cookie' => [
-        'path' => './assets/js/cookie.js',
-        'entrypoint' => true,
-    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

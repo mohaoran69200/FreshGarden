@@ -23,7 +23,7 @@
 
 	<section class="main-container">
 		<div class="full-height">
-			<section class="about-section">
+			<article class="about-section">
 				<h1 class="about-title">À propos de Fresh Garden</h1>
 				<p class="about-text">
 					Fresh Garden est une plateforme dédiée à la vente et à l'achat de produits frais et locaux entre particuliers.
@@ -32,14 +32,14 @@
 					Notre mission est de créer une communauté où chacun peut partager les fruits de son jardin,
 					manger sainement, et contribuer à un mode de vie plus durable.
 				</p>
-			</section>
+			</article>
 
-			<section class="reason-section">
+			<article class="reason-section">
 				<h1 class="reason-title">Les 4 bonnes raisons de choisir FRESH GARDEN</h1>
 				<div class="card-container">
 					<div class="reason-card">
 						<div class="reason-image">
-							<img src="{{ asset('images/vegetables.jpg') }}" alt="Produit frais">
+							<img src="{{ asset('images/vegetables.jpg') }}" alt="Produit frais" loading="lazy">
 						</div>
 						<div class="reason-text">
 							<h3>MANGEZ DES PRODUITS FRAIS ET SAINS</h3>
@@ -49,7 +49,7 @@
 					</div>
 					<div class="reason-card">
 						<div class="reason-image">
-							<img src="{{ asset('images/gaspillage.jpg') }}" alt="Gaspillage alimentaire">
+							<img src="{{ asset('images/gaspillage.jpg') }}" alt="Gaspillage alimentaire" loading="lazy">
 						</div>
 						<div class="reason-text">
 							<h3>EVITEZ LE GASPILLAGE ALIMENTAIRE</h3>
@@ -59,7 +59,7 @@
 					</div>
 					<div class="reason-card">
 						<div class="reason-image">
-							<img src="{{ asset('images/potato-field.jpg') }}" alt="Agriculture">
+							<img src="{{ asset('images/potato-field.jpg') }}" alt="Agriculture" loading="lazy">
 						</div>
 						<div class="reason-text">
 							<h3>SOUTENEZ L'AGRICULTURE LOCALE</h3>
@@ -69,7 +69,7 @@
 					</div>
 					<div class="reason-card">
 						<div class="reason-image">
-							<img src="{{ asset('images/stock.jpg') }}" alt="Produits et stock">
+							<img src="{{ asset('images/stock.jpg') }}" alt="Produits et stock" loading="lazy">
 						</div>
 						<div class="reason-text">
 							<h3>CONTRÔLE SUR VOS PRODUITS ET VOTRE STOCK</h3>
@@ -77,13 +77,13 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</article>
 		</div>
 
 		<section class="product-container">
 			<h2>Découvrez les produits</h2>
 			<div class="grid-container">
-				<div class="category">
+				<article class="category">
 					<div class="card-title">
 						<h3>Fruits</h3>
 						<a href="{{ path('app_product_fruits') }}" class="link-arrow">Voir plus <span class="arrow">→</span></a>
@@ -98,9 +98,9 @@
 							<p>Aucun produit trouvé.</p>
 						{% endif %}
 					</div>
-				</div>
+				</article>
 
-				<div class="category">
+				<article class="category">
 					<div class="card-title">
 						<h3>Légumes</h3>
 						<a href="{{ path('app_product_legumes') }}" class="link-arrow">Voir plus <span class="arrow">→</span></a>
@@ -115,9 +115,9 @@
 							<p>Aucun produit trouvé.</p>
 						{% endif %}
 					</div>
-				</div>
+				</article>
 
-				<div class="category">
+				<article class="category">
 					<div class="card-title">
 						<h3>Produits divers</h3>
 						<a href="{{ path('app_product_autres') }}" class="link-arrow">Voir plus <span class="arrow">→</span></a>
@@ -132,7 +132,7 @@
 							<p>Aucun produit trouvé.</p>
 						{% endif %}
 					</div>
-				</div>
+				</article>
 			</div>
 		</section>
 	</section>

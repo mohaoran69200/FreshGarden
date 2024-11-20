@@ -41,18 +41,16 @@
                 </div>
             </div>
 
-            <!-- Ligne 4 : Bouton de recherche -->
             <div class="form-row">
                 <button type="submit" class="search-btn">Rechercher</button>
             </div>
-
             {{ form_end(form) }}
         </section>
 
 
         <section class="products-section">
             <h2>Nos Produits</h2>
-            <div class="grid-container">
+            <article class="grid-container">
                 <div class="grid">
                     {% for product in results %}
                         {% set isFavorite = favorites[product.id] ?? false %}
@@ -62,6 +60,6 @@
                     {% endfor %}
                 </div>
                 {% include '_partials/_pagination.html.twig' with {'pagination': results} %}
-            </div>
+            </article>
         </section>
 {% endblock %}

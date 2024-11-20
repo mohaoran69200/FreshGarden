@@ -3,7 +3,7 @@
     <div class="product-card-large card">
 
         <div class="product-details-container-large">
-            <img src="{{ vich_uploader_asset(product.image) }}" alt="Image du produit" class="product-image">
+            <img src="{{ vich_uploader_asset(product.image) }}" alt="Image du produit" class="product-image" loading="lazy">
 
             <div class="product-info-large">
                 <h2>{{ product.name }}</h2>

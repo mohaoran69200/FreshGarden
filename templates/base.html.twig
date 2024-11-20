@@ -8,17 +8,16 @@
 			Fresh Garden
 		{% endblock %}
 	</title>
+	<meta name="description" content="{% block meta_description %}Découvrez Fresh Garden, votre marketplace dédiée aux fruits et légumes frais, locaux et de saison. Commandez en ligne des produits de qualité près de chez vous !{% endblock %}">
 	<link rel="icon" type="image/png" href="{{ asset('logo/logo_fresh_garden-removebg.png') }}" sizes="32x32">
 
 	{% block stylesheets %}
-		{#            {{ encore_entry_link_tags('app') }}#}
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 	{% endblock %}
 
 	{% block javascripts %}
-		{#            {{ encore_entry_script_tags('app') }}#}
 		{% block importmap %}
-			{{ importmap(['app', 'header', 'form', 'address', 'cookie']) }}
+			{{ importmap(['app', 'header', 'form', 'address']) }}
 		{% endblock %}
 	{% endblock %}
 </head>
@@ -28,15 +27,13 @@
 	{% block header %}
 		{% include '_partials/_header.html.twig' %}
 	{% endblock %}
-
 	{% include '_partials/_flash_messages.html.twig' %}
 
 	<main>
 		{% block body %}
-			{% include'_partials/_cookie.html.twig' %}
 		{% endblock %}
 	</main>
-
+	{% include'_partials/_cookie.html.twig' %}
 	{% block footer %}
 		{% include '_partials/_footer.html.twig' %}
 	{% endblock %}

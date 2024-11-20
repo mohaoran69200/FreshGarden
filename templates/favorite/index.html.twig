@@ -6,18 +6,18 @@
     <section class="section-container">
         <h2>Produits Favoris</h2>
         {% if productFavorites is not empty %}
-            <div class="grid-container">
+            <article class="grid-container">
                 <div class="grid">
                     {% for product in productFavorites %}
                         {% include '_partials/product/_cardProductSmall.html.twig' with { 'product': product, 'isFavorite': true } %}
                     {% endfor %}
                 </div>
-            </div>
+            </article>
         {% else %}
             <span class="fav-none">Vous n'avez pas encore de produits favoris.</span>
         {% endif %}
 
-        <div class="favorites-list user-favorites">
+        <article class="favorites-list user-favorites">
             <h2>Utilisateurs Favoris</h2>
             {% if userFavorites is not empty %}
                 {% for user in userFavorites %}
@@ -26,6 +26,6 @@
             {% else %}
                 <span class="fav-none">Vous n'avez pas encore d'utilisateurs favoris.</span>
             {% endif %}
-        </div>
+        </article>
     </section>
 {% endblock %}

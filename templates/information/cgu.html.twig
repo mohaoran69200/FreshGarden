@@ -4,12 +4,12 @@
 
 {% block body %}
     <main class="terms-container">
-        <header class="terms-header">
+        <section class="terms-header">
             <h1>Conditions d'Utilisation</h1>
             <p class="terms-intro">
                 Bienvenue sur Fresh Garden ! En utilisant ce site, vous acceptez les conditions générales décrites ci-dessous.
             </p>
-        </header>
+        </section>
 
         <section class="terms-section">
             <h2>1. Acceptation des Conditions</h2>
@@ -35,11 +35,11 @@
             </p>
         </section>
 
-        <footer class="terms-footer">
+        <section class="terms-footer">
             <p>
                 Pour toute question, veuillez nous contacter à <a href="mailto:support@freshgarden.com">support@freshgarden.com</a>.
             </p>
             <p>Dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
-        </footer>
+        </section>
     </main>
 {% endblock %}

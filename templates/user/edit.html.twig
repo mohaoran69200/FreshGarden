@@ -14,7 +14,7 @@
                 <img id="profile-image" class="profile-image"
                      src="{{ user.userProfile is not null and user.userProfile.imageName is not null ? vich_uploader_asset(user.userProfile, 'imageFile')
                      : asset('images/utilisateur.png') }}"
-                     alt="Photo de profil">
+                     alt="Photo de profil" loading="lazy">
 
                 <!-- Formulaire pour l'image -->
                 {{ form_start(imageForm, { 'attr': {'id': 'image-form'} }) }}

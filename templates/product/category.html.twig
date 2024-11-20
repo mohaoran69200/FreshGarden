@@ -5,7 +5,7 @@
 {% block body %}
         <section class="page-container">
             <h2>Annonces de {{ categorie }}</h2>
-            <div class="grid-container">
+            <article class="grid-container">
                 <div class="grid">
                     {% for product in products %}
                         {% set isFavorite = favorites[product.id] is defined and favorites[product.id] %}
@@ -14,7 +14,7 @@
                         <p>Aucun produit disponible dans cette catégorie.</p>
                     {% endfor %}
                 </div>
-            </div>
+            </article>
 
             {% include '_partials/_pagination.html.twig' with {'pagination': products} %}
         </section>

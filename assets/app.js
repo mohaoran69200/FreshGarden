@@ -21,9 +21,6 @@ import './styles/components/_card.css';
 import './styles/components/_footer.css';
 import './styles/components/_header.css';
 import './styles/components/_search.css';
-
+import './js/cookie/cookie.js';
 
 console.log('This log comes from assets/js/app.js - welcome to AssetMapper! 🎉');
-
-
-
