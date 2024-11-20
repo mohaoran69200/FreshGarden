@@ -257,7 +257,7 @@ class UserController extends AbstractController
 
                 // Générer un token de confirmation
                 $token = bin2hex(random_bytes(32));
-                $user->setResetToken($token); // Utiliser setResetToken
+                $user->setResetToken($token);
                 $entityManager->flush();
 
                 // Envoyer l'email de confirmation
@@ -323,8 +323,8 @@ class UserController extends AbstractController
 
 
 
-    #[Route('/confirm-email/{token}', name: 'confirm_email', methods: ['GET'])]
-    public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
+    #[Route('/confirm-new-email/{token}', name: 'confirm_email', methods: ['GET'])]
+    public function confirmNewEmail(string $token, EntityManagerInterface $entityManager): Response
     {
         // Rechercher l'utilisateur par le token
         $user = $entityManager->getRepository(User::class)->findOneBy(['emailToken' => $token]);

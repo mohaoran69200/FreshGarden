@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -53,6 +55,7 @@ class RegistrationController extends AbstractController
 
             // Générer un token de confirmation unique
             $user->setConfirmationToken(Uuid::v4()->toRfc4122());
+            $user->setResetTokenCreatedAt(new DateTimeImmutable());
             $this->logger->info('Confirmation token: ' . $user->getConfirmationToken());
 
 
@@ -85,17 +88,30 @@ class RegistrationController extends AbstractController
     #[Route('/confirm-email/{token}', name: 'email_confirmation')]
     public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
     {
-        // Rechercher l'utilisateur avec le token fourni
-        $user = $entityManager->getRepository(User::class)->findOneBy(['confirmationToken' => $token]);
+        // Rechercher l'utilisateur avec le token et vérifier sa validité
+        $user = $entityManager->getRepository(User::class)->findOneBy([
+            'confirmationToken' => $token,
+            'isVerified' => false
+        ]);
 
         if (!$user) {
             $this->addFlash('danger', 'Le token de confirmation est invalide ou a déjà été utilisé.');
             return $this->redirectToRoute('home');
         }
 
+        // Vérifiez si le délai de 48 heures est dépassé
+        $now = new DateTime();
+        $resetTokenCreatedAt = $user->getResetTokenCreatedAt();
+
+        if ($resetTokenCreatedAt && $now > (clone $resetTokenCreatedAt)->modify('+48 hours')) {
+            $this->addFlash('danger', 'Le lien de confirmation a expiré. Veuillez demander un nouveau lien.');
+            return $this->redirectToRoute('home'); // Ajoutez cette route si nécessaire
+        }
+
         // Confirmer l'email de l'utilisateur
         $user->setConfirmationToken(null);
-        $user->setIsVerified(true); // Assurez-vous d'avoir un champ isVerified dans votre entité User
+        $user->setResetTokenCreatedAt(new \DateTimeImmutable());
+        $user->setIsVerified(true);
         $entityManager->flush();
 
         $this->addFlash('success', 'Votre adresse email a été confirmée avec succès.');

@@ -188,6 +188,10 @@
     transform: scale(1.2);
 }
 
+.form-container label{
+    font-family: 'Montserrat', sans-serif;
+}
+
 label.required::after {
     content: ' *';
     color: var(--dark-gray);

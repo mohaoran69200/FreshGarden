@@ -426,6 +426,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->resetToken;
     }
 
+    public function getResetTokenCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->resetTokenCreatedAt;
+    }
+
     public function setResetTokenCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->resetTokenCreatedAt = $createdAt;

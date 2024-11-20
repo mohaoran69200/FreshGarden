@@ -39,7 +39,7 @@ class EditPhoneNumberType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Mettre à jour le Numéro',
-                'attr' => ['class' => 'btn btn-primary'], // Ajout de la classe Bootstrap
+                'attr' => ['class' => 'btn btn-primary'],
             ]);
     }
 

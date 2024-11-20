@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recherchez{% endblock %}
-
+{% block title %}Recherche - Fresh Garden{% endblock %}
+{% block meta_description %}Recherchez ce que vous souhaitez{% endblock %}
 {% block body %}
         <section class="search-section">
             {{ form_start(form, {'action': path('app_search'), 'method': 'GET', 'attr': {'class': 'search-form'}}) }}

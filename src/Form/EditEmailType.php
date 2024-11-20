@@ -34,7 +34,7 @@ class EditEmailType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Mettre à jour l\'Email',
-                'attr' => ['class' => 'btn'],
+                'attr' => ['class' => 'btn-primary'],
             ]);
     }
 }
