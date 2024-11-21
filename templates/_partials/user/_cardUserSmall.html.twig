@@ -6,8 +6,7 @@
 			<img src="{{ asset('images/utilisateur.png') }}" alt="Photo de profil par défaut" class="user-profile-pic" loading="lazy">
 		{% endif %}
 		<div class="user-card-content">
-			<h3>{{ user.email }}</h3>
-			<span class="user-name">{{ user.userProfile.userName ?: user.userProfile.firstName }}</span>
+			<h3 class="user-name">{{ user.userProfile.userName ?: user.userProfile.firstName }}</h3>
 			<span class="user-city">{{ user.userProfile.city }}</span>
 
 			<div class="actions-user-small">
@@ -22,7 +21,6 @@
 						</svg>
 					</button>
 				</form>
-
 			</div>
 
 			<div class="ads-count">
