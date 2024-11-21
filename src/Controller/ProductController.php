@@ -28,29 +28,43 @@ class ProductController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
+        // Récupération de l'utilisateur connecté
+        /** @var User|null $user */
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw new LogicException('L\'utilisateur doit être connecté pour créer un produit.');
+        }
+
+        // Vérification des informations de l'utilisateur
+        $userProfile = $user->getUserProfile();
+        if (
+            !$userProfile ||
+            (empty($userProfile->getUserName()) && empty($userProfile->getFirstName())) ||
+            empty($userProfile->getCity())
+        ) {
+            $this->addFlash(
+                'warning',
+                'Veuillez compléter votre profil avec un pseudo ou prénom et votre ville avant d\'ajouter un produit.'
+            );
+
+            // Redirection vers la page de mise à jour du profil (à adapter selon votre application)
+            return $this->redirectToRoute('app_user_edit_user');
+        }
+
+        // Création du produit
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-            /** @var User|null $user */
-            $user = $this->getUser();
-
-            if (!$user instanceof User) {
-                throw new LogicException('L\'utilisateur doit être connecté pour créer un produit.');
-            }
-
             $product->setUser($user)
                 ->setCreatedAt(new DateTimeImmutable())
                 ->setUpdatedAt(new DateTimeImmutable());
 
-
             // Je persiste le produit dans la base de données
             $entityManager->persist($product);
             $entityManager->flush();
-
 
             $this->addFlash('success', 'Produit ajouté avec succès.');
             return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
@@ -62,6 +76,7 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
 
     // Je modifie un produit existant
