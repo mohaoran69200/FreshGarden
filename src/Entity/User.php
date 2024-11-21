@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Product>
      */
 
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $products;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
@@ -62,19 +62,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Favorite>
      */
-    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $favorites;
 
     /**
      * @var Collection<int, Order>
      */
-    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $orders;
 
     /**
      * @var Collection<int, Payment>
      */
-    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $payments;
 
     #[ORM\Column(length: 64, nullable: true)]
