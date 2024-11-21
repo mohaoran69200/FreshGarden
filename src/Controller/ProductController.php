@@ -49,7 +49,7 @@ class ProductController extends AbstractController
             );
 
             // Redirection vers la page de mise à jour du profil (à adapter selon votre application)
-            return $this->redirectToRoute('app_user_edit_user');
+            return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
         }
 
         // Création du produit
