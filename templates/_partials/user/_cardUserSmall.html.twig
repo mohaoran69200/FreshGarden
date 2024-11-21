@@ -7,7 +7,13 @@
 		{% endif %}
 		<div class="user-card-content">
 			<h3>{{ user.email }}</h3>
-			<span class="user-name">{{ user.userProfile.userName ?: user.userProfile.firstName }}</span>
+			<span class="user-name">
+        {% if user.userProfile and (user.userProfile.userName or user.userProfile.firstName) %}
+			{{ user.userProfile.userName ?: user.userProfile.firstName }}
+		{% else %}
+			Profil non disponible
+		{% endif %}
+    </span>
 			<span class="user-city">{{ user.userProfile.city }}</span>
 
 			<div class="actions-user-small">
