@@ -38,7 +38,7 @@ class Order
     /**
      * @var Collection<int, OrderLine>
      */
-    #[ORM\OneToMany(targetEntity: OrderLine::class, mappedBy: 'command')]
+    #[ORM\OneToMany(targetEntity: OrderLine::class, mappedBy: 'command', cascade: ['persist', 'remove'])]
     private Collection $orderLines;
 
     #[ORM\OneToOne(mappedBy: 'command', cascade: ['persist', 'remove'])]
