@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
     private TokenStorageInterface $tokenStorage;
     private AuthenticationUtils $authenticationUtils;
 
-// Injecter AuthenticationUtils
+    // Injecter AuthenticationUtils
     public function __construct(TokenStorageInterface $tokenStorage, AuthenticationUtils $authenticationUtils)
     {
         $this->tokenStorage = $tokenStorage;
@@ -28,24 +28,24 @@ class SecurityController extends AbstractController
     {
         $session->set('login_origin', true);
 
-// Vérifiez si l'utilisateur est connecté
+        // Vérifiez si l'utilisateur est connecté
         $user = $this->getUser();
 
-// Si l'utilisateur est déjà connecté, redirigez vers la page d'accueil
+        // Si l'utilisateur est déjà connecté, redirigez vers la page d'accueil
         if ($user instanceof User) {
-// Si l'utilisateur n'est pas vérifié, déconnectez-le
+            // Si l'utilisateur n'est pas vérifié, déconnectez-le
             if (!$user->isVerified()) {
-// Déconnecter l'utilisateur
+                // Déconnecter l'utilisateur
                 $this->tokenStorage->setToken(null);  // Déconnecte l'utilisateur
                 $this->addFlash('warning', 'Votre compte n\'est pas activé. Vous allez être déconnecté.');
                 return $this->redirectToRoute('logout');  // Redirection vers la page de déconnexion
             }
 
-// Si l'utilisateur est connecté et validé, redirigez-le vers la page d'accueil
+            // Si l'utilisateur est connecté et validé, redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
 
-// Récupérer l'email saisi lors de la dernière tentative de connexion
+        // Récupérer l'email saisi lors de la dernière tentative de connexion
         $lastUsername = $this->authenticationUtils->getLastUsername();
         $error = $this->authenticationUtils->getLastAuthenticationError();
 

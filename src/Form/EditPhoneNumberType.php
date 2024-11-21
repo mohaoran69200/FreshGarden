@@ -47,7 +47,7 @@ class EditPhoneNumberType extends AbstractType
     {
         // Ajout d'une option pour indiquer si l'utilisateur a un numéro de téléphone ou non
         $resolver->setDefaults([
-            'userHasPhone' => false, // Par défaut l'utilisateur n'a pas de numéro
+            'userHasPhone' => false,
         ]);
     }
 }

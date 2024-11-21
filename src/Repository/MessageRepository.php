@@ -45,7 +45,7 @@ class MessageRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('m')
             ->where('m.sender = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('m.createdAt', 'DESC'); // Trier par date de création (du plus récent au plus ancien)
+            ->orderBy('m.createdAt', 'DESC');
 
         // Appliquer la pagination
         return $this->paginator->paginate($qb, $page, $limit);

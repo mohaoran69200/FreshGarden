@@ -34,8 +34,8 @@ class CartController extends AbstractController
     #[Route('/update/{id}', name: 'update_quantity')]
     public function updateQuantity(CartService $cartService, int $id, Request $request): Response
     {
-        $quantity = (int)$request->request->get('quantity', 0); // Récupère la quantité depuis le formulaire
-        $cartService->updateCartQuantity($id, $quantity); // Met à jour la quantité
+        $quantity = (int)$request->request->get('quantity', 0);
+        $cartService->updateCartQuantity($id, $quantity);
         return $this->redirectToRoute('cart_index');
     }
 

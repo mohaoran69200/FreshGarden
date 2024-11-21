@@ -43,6 +43,7 @@ class ResetPasswordController extends AbstractController
     #[Route('', name: 'app_forgot_password_request')]
     public function request(Request $request, MailerInterface $mailer): Response
     {
+        // Je crée et gère le formulaire pour la demande de réinitialisation de mot de passe
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -65,19 +66,18 @@ class ResetPasswordController extends AbstractController
     #[Route('/check-email', name: 'app_check_email')]
     public function checkEmail(): Response
     {
-        // Generate a fake token if the user does not exist or someone hit this page directly.
-        // This prevents exposing whether or not a user was found with the given email address or not
+        // Je génère un jeton fictif si l'utilisateur n'existe pas ou si la page est consultée directement.
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        // Extraire le jeton de réinitialisation sous forme de chaîne
+        // Je récupère le jeton de réinitialisation sous forme de chaîne
         $resetTokenString = $resetToken instanceof ResetPasswordToken
-            ? $resetToken->getToken()  // J'utilise la méthode getToken() pour récupérer le token
+            ? $resetToken->getToken()
             : '';
 
 
-        // Passer uniquement la chaîne du jeton au template
+        // Je passe uniquement la chaîne du jeton au template
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetTokenString,
         ]);
@@ -88,7 +88,7 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      * @throws Exception
      */
-    // Validation du token et affichage du formulaire de réinitialisation du mot de passe
+    // Je valide le token et affiche le formulaire de réinitialisation du mot de passe
     #[Route('/reset/{token}', name: 'app_reset_password')]
     public function reset(
         Request $request,
@@ -147,11 +147,12 @@ class ResetPasswordController extends AbstractController
         string $emailFormData,
         MailerInterface $mailer
     ): RedirectResponse {
+        // Je cherche l'utilisateur avec l'email fourni dans le formulaire
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
 
-        // Do not reveal whether a user account was found or not.
+        // Je ne révèle pas si un compte utilisateur a été trouvé ou non.
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
         }

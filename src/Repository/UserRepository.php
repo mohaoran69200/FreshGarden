@@ -48,12 +48,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function findPaginatedUsers(int $page = 1, int $limit = 20): PaginationInterface
     {
-        // Créez la requête pour récupérer les utilisateurs
+        // Création de la requête pour récupérer les utilisateurs
         $query = $this->createQueryBuilder('u')
             ->orderBy('u.id', 'ASC')
             ->getQuery();
 
-        // Utilisez le paginator pour paginer les résultats
+        // Utilisation du paginator pour paginer les résultats
         return $this->paginator->paginate(
             $query, // La requête
             $page,  // Le numéro de la page

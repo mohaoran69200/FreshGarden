@@ -100,9 +100,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-
-
-        // Je récupére le profil utilisateur
+        // Je récupère le profil utilisateur
         $profile = $user->getUserProfile();
 
         // Si l'utilisateur n'a pas de profil, en créer un nouveau
@@ -154,7 +152,6 @@ class UserController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Le rôle de l\'utilisateur a été modifié avec succès');
         }
-
 
         // Rendre le template Twig avec toutes les informations nécessaires
         return $this->render('user/edit.html.twig', [
@@ -214,7 +211,6 @@ class UserController extends AbstractController
 
 
     /**
-     * @throws RandomException
      * @throws TransportExceptionInterface
      */
     #[Route('/edit-user/edit-contact/{id}', name: 'edit_user_contact', methods: ['GET', 'POST'])]
@@ -223,110 +219,52 @@ class UserController extends AbstractController
         Request $request,
         User $user,
         EntityManagerInterface $entityManager,
-        MailerInterface $mailer,
-        UrlGeneratorInterface $router
+        MailerInterface $mailer
     ): Response {
         // Vérifier si l'utilisateur connecté est bien l'utilisateur que l'on veut modifier
         $currentUser = $this->getUser();
         if (!($currentUser instanceof User)) {
-            // Gérer le cas où l'utilisateur connecté n'est pas du bon type ou n'est pas connecté
-            throw new AccessDeniedException('Vous devez être connecté en tant qu\'utilisateur.');
+            // Gérer le cas où l'utilisateur n'est pas connecté
+            throw new AccessDeniedException();
         }
 
         if ($currentUser->getId() !== $user->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            // Gérer le cas où l'utilisateur connecté n'est pas le même que l'utilisateur cible
-            throw new AccessDeniedException('Vous n\'avez pas la permission d\'accéder à cette ressource.');
+            $this->addFlash('danger', 'Vous ne pouvez modifier que votre propre compte.');
+            return $this->redirectToRoute('home');
         }
 
-        // Formulaire de modification d'email
-        $emailForm = $this->createForm(EditEmailType::class, $user, [
-            'csrf_protection' => true,
-        ]);
-        $emailForm->handleRequest($request);
+        // Formulaire d'édition du contact
+        $form = $this->createForm(EditEmailType::class, $user);
+        $form->handleRequest($request);
 
-        if ($emailForm->isSubmitted() && $emailForm->isValid()) {
-            $oldEmail = $emailForm->get('email')->getData();
-            $newEmail = $emailForm->get('new_email')->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Envoi du mail
+            $email = (new Email())
+                ->from($user->getEmail())
+                ->to('support@example.com') // Destinataire
+                ->subject('Demande de modification de contact')
+                ->text('Une demande de modification de vos informations a été effectuée.');
 
-            // Vérifier si l'ancien email correspond à l'email actuel de l'utilisateur
-            if ($oldEmail !== $user->getEmail()) {
-                $this->addFlash('danger', 'L\'ancien email est incorrect.');
-            } else {
-                $user->setEmailTemporary($newEmail);
-                $entityManager->flush();
+            $mailer->send($email);
 
-                // Générer un token de confirmation
-                $token = bin2hex(random_bytes(32));
-                $user->setResetToken($token);
-                $entityManager->flush();
-
-                // Envoyer l'email de confirmation
-                $url = $router->generate(
-                    'app_user_confirm_email',
-                    ['token' => $token],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                );
-                $email = (new Email())
-                    ->from('noreply@freshgarden.com')
-                    ->to($newEmail)
-                    ->subject('Confirmation de changement d\'email')
-                    ->html(
-                        "Cliquez sur le lien pour confirmer votre nouvel email : 
-                                <a href=\"$url\">Confirmer mon email</a>"
-                    );
-
-                $mailer->send($email);
-
-                $this->addFlash('success', 'Un email de confirmation a été envoyé à votre nouvelle adresse.');
-                return $this->redirectToRoute('home');
-            }
-        }
-
-        // Récupérer le profil utilisateur et vérifier s'il existe
-        $userProfile = $user->getUserProfile();
-
-        // On vérifie si le profil existe et s'il contient un numéro de téléphone
-        $hasPhone = $userProfile !== null && $userProfile->getPhoneNumber() !== null;
-
-        // Formulaire de modification du numéro de téléphone
-        $phoneForm = $this->createForm(EditPhoneNumberType::class, null, [
-            'userHasPhone' => $hasPhone,
-        ]);
-        $phoneForm->handleRequest($request);
-
-        if ($phoneForm->isSubmitted() && $phoneForm->isValid()) {
-            $newPhone = $phoneForm->get('new_phone')->getData();
-
-            if ($hasPhone) {
-                $oldPhone = $phoneForm->get('old_phone')->getData();
-
-                // Vérifier si l'ancien numéro correspond à celui actuel de l'utilisateur
-                if ($oldPhone !== $user->getUserProfile()->getPhoneNumber()) {
-                    $this->addFlash('danger', 'L\'ancien numéro de téléphone est incorrect.');
-                    return $this->redirectToRoute('app_user_edit_user_contact', ['id' => $user->getId()]);
-                }
-            }
-
-            // Mettre à jour le nouveau numéro
-            $user->getUserProfile()->setPhoneNumber($newPhone);
+            // Mise à jour de l'utilisateur
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre numéro de téléphone a bien été mis à jour.');
-            return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
+            $this->addFlash('success', 'Votre contact a été mis à jour.');
+
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('user/edit_contact.html.twig', [
-            'emailForm' => $emailForm->createView(),
-            'phoneForm' => $phoneForm->createView(),
+            'form' => $form->createView(),
         ]);
     }
-
 
 
     #[Route('/confirm-new-email/{token}', name: 'confirm_email', methods: ['GET'])]
     public function confirmNewEmail(string $token, EntityManagerInterface $entityManager): Response
     {
-        // Rechercher l'utilisateur par le token
+        // Je recherche l'utilisateur par le token
         $user = $entityManager->getRepository(User::class)->findOneBy(['emailToken' => $token]);
 
         if (!$user) {
@@ -334,7 +272,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        // Mettre à jour l'email
+        // Je mets à jour l'email de l'utilisateur
         $user->setEmail($user->getEmailTemporary());
         $user->setEmailTemporary(null); // Remise à zéro de l'email temporaire
         $user->setToken(null); // Suppression du token
@@ -343,7 +281,6 @@ class UserController extends AbstractController
         $this->addFlash('success', 'Votre email a bien été confirmé.');
         return $this->redirectToRoute('home');
     }
-
 
     #[Route('/update-image', name: 'update_image', methods: ['POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -356,7 +293,7 @@ class UserController extends AbstractController
             return new JsonResponse(['error' => 'Unauthorized'], 401);
         }
 
-        $user = $this->getUser();
+        // Je m'assure que l'utilisateur est valide
         if (!$user instanceof User) {
             throw new AccessDeniedException('L\'utilisateur connecté n\'est pas valide.');
         }
@@ -367,6 +304,7 @@ class UserController extends AbstractController
             return new JsonResponse(['error' => 'User profile not found.'], 404);
         }
 
+        // Je traite l'upload de l'image
         if ($request->files->has('image')) {
             $imageFile = $request->files->get('image');
             $imageName = uniqid() . '.' . $imageFile->guessExtension();
@@ -382,7 +320,6 @@ class UserController extends AbstractController
         return new JsonResponse(['error' => 'No image uploaded.'], 400);
     }
 
-
     #[Route('/delete-image', name: 'delete_image', methods: ['POST'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
     public function deleteImage(
@@ -390,7 +327,7 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         AuthorizationCheckerInterface $authChecker
     ): Response {
-        // Fetch the logged-in user
+        // Je récupère l'utilisateur connecté
         $user = $this->getUser();
         if (!$user || !$authChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
@@ -407,32 +344,31 @@ class UserController extends AbstractController
             throw $this->createNotFoundException('User profile not found.');
         }
 
-        // Check CSRF token
+        // Je vérifie le token CSRF
         if (!$this->isCsrfTokenValid('delete_image' . $profile->getId(), $request->request->get('_token'))) {
             throw new AccessDeniedException('Invalid CSRF token.');
         }
 
-        // Path to the image
+        // Je récupère le chemin de l'image
         $imagePath = $this->getParameter(
             'kernel.project_dir'
         ) . '/public/uploads/user_profile' . $profile->getImageName();
 
-        // Delete the physical file if it exists
+        // Je supprime le fichier physique si il existe
         if ($profile->getImageName() && file_exists($imagePath)) {
-            unlink($imagePath); // Delete the file
+            unlink($imagePath); // Suppression du fichier
         }
 
-        // Remove the image from the profile entity
+        // Je retire l'image du profil
         $profile->setImageName(null);
         $entityManager->persist($profile);
         $entityManager->flush();
 
-        // Add a flash message and redirect
+        // Je mets un message flash et je redirige
         $this->addFlash('success', 'L\'image de profil a été supprimée avec succès.');
 
         return $this->redirectToRoute('app_user_edit_user', ['id' => $user->getId()]);
     }
-
 
     #[Route('/remove/{id}', name: 'remove')]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -444,7 +380,7 @@ class UserController extends AbstractController
     ): Response {
         $currentUser = $this->getUser();
 
-        // L'utilisateur peut supprimer son propre compte, ou l'admin peut supprimer n'importe quel compte
+        // Je vérifie si l'utilisateur peut supprimer son propre compte ou si l'admin peut supprimer n'importe quel compte
         if (!$currentUser || ($currentUser !== $user && !$this->isGranted('ROLE_ADMIN'))) {
             $this->addFlash('danger', 'Vous ne pouvez supprimer que votre propre compte.');
             return $this->redirectToRoute('home');
@@ -456,7 +392,7 @@ class UserController extends AbstractController
             $tokenStorage->setToken(null);
         }
 
-        // Suppression de l'utilisateur
+        // Je supprime l'utilisateur
         $entityManager->remove($user);
         $entityManager->flush();
 

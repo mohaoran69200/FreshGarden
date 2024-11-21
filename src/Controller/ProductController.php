@@ -87,10 +87,10 @@ class ProductController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
-        $this->denyAccessUnlessGranted('edit', $product);  // Je vérifie que l'utilisateur peut modifier ce produit
+        $this->denyAccessUnlessGranted('edit', $product);
 
-        $form = $this->createForm(ProductType::class, $product);  // Je crée le formulaire pour l'édition du produit
-        $form->handleRequest($request);  // Je traite la requête du formulaire
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
@@ -111,7 +111,7 @@ class ProductController extends AbstractController
     #[Route('/show/{id}', name: 'show')]
     public function show(Product $product, FavoriteRepository $favoriteRepository): Response
     {
-        $user = $this->getUser();  // Je récupère l'utilisateur connecté
+        $user = $this->getUser();
         $isFavorite = false;
 
         // Si l'utilisateur est connecté, je vérifie si le produit est dans ses favoris
@@ -121,12 +121,12 @@ class ProductController extends AbstractController
                 'productFavorite' => $product,
             ]);
 
-            $isFavorite = $favorite !== null;  // Si un favori est trouvé, je marque le produit comme favori
+            $isFavorite = $favorite !== null;
         }
 
         return $this->render('product/show.html.twig', [
             'product' => $product,
-            'isFavorite' => $isFavorite,  // Je passe l'information du favori à la vue
+            'isFavorite' => $isFavorite,
         ]);
     }
 
@@ -138,11 +138,11 @@ class ProductController extends AbstractController
     {
         $this->denyAccessUnlessGranted('delete', $product);
 
-        $entityManager->remove($product);  // Je supprime le produit de la base de données
-        $entityManager->flush();  // Je sauvegarde cette action en base de données
+        $entityManager->remove($product);
+        $entityManager->flush();
         $this->addFlash('success', 'Produit supprimé avec succès.');
 
-        return $this->redirectToRoute('home');  // Je redirige vers la page d'accueil
+        return $this->redirectToRoute('home');
     }
 
 

@@ -25,6 +25,7 @@ class RegistrationController extends AbstractController
 
     public function __construct(LoggerInterface $logger)
     {
+        // Initialisation du logger
         $this->logger = $logger;
     }
 
@@ -38,6 +39,7 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager,
         MailerInterface $mailer
     ): Response {
+        // Crée un nouvel utilisateur et le formulaire d'inscription
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -53,17 +55,16 @@ class RegistrationController extends AbstractController
 
             $user->setRoles(['ROLE_USER']);
 
-            // Générer un token de confirmation unique
+            // Génère un token de confirmation unique
             $user->setConfirmationToken(Uuid::v4()->toRfc4122());
             $user->setResetTokenCreatedAt(new DateTimeImmutable());
             $this->logger->info('Confirmation token: ' . $user->getConfirmationToken());
 
-
-            // Enregistrer l'utilisateur dans la base de données
+            // Enregistre l'utilisateur dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Envoi d'un email de confirmation
+            // Envoie un email de confirmation
             $email = (new TemplatedEmail())
                 ->from(new Address('no-reply@freshgarden.com', 'Fresh Garden'))
                 ->to($user->getEmail())
@@ -75,11 +76,12 @@ class RegistrationController extends AbstractController
 
             $mailer->send($email);
 
-            // Rediriger vers la page de connexion
+            // Redirige vers la page de connexion
             $this->addFlash('success', 'Votre inscription est réussie. Un email de confirmation vous a été envoyé.');
             return $this->redirectToRoute('login');
         }
 
+        // Rend le formulaire d'inscription
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form,
         ]);
@@ -88,7 +90,7 @@ class RegistrationController extends AbstractController
     #[Route('/confirm-email/{token}', name: 'email_confirmation')]
     public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
     {
-        // Rechercher l'utilisateur avec le token et vérifier sa validité
+        // Recherche l'utilisateur avec le token et vérifie sa validité
         $user = $entityManager->getRepository(User::class)->findOneBy([
             'confirmationToken' => $token,
             'isVerified' => false
@@ -99,16 +101,16 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        // Vérifiez si le délai de 48 heures est dépassé
+        // Vérifie si le délai de 48 heures est dépassé
         $now = new DateTime();
         $resetTokenCreatedAt = $user->getResetTokenCreatedAt();
 
         if ($resetTokenCreatedAt && $now > (clone $resetTokenCreatedAt)->modify('+48 hours')) {
             $this->addFlash('danger', 'Le lien de confirmation a expiré. Veuillez demander un nouveau lien.');
-            return $this->redirectToRoute('home'); // Ajoutez cette route si nécessaire
+            return $this->redirectToRoute('home');
         }
 
-        // Confirmer l'email de l'utilisateur
+        // Confirme l'email de l'utilisateur
         $user->setConfirmationToken(null);
         $user->setResetTokenCreatedAt(new \DateTimeImmutable());
         $user->setIsVerified(true);

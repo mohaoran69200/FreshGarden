@@ -37,14 +37,14 @@ class HomeController extends AbstractController
         $autres = $productRepository->findBy(['categorie' => $categorieAutres]);
 
         // Mélanger et limiter à 4 produits par catégorie
-        shuffle($fruits); // Mélange le tableau des fruits
-        $randomFruits = array_slice($fruits, 0, 4); // Récupère les 4 premiers
+        shuffle($fruits);
+        $randomFruits = array_slice($fruits, 0, 4);
 
         shuffle($legumes); // Mélange le tableau des légumes
-        $randomLegumes = array_slice($legumes, 0, 4); // Récupère les 4 premiers
+        $randomLegumes = array_slice($legumes, 0, 4);
 
-        shuffle($autres); // Mélange le tableau des autres produits
-        $randomAutres = array_slice($autres, 0, 4); // Récupère les 4 premiers
+        shuffle($autres);
+        $randomAutres = array_slice($autres, 0, 4);
 
         // Gestion des favoris
         $favorites = [];
